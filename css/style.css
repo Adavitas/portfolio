@@ -2,7 +2,7 @@
 :root {
     --bg-color: #f8f9fa;
     --text-color: #1a1a1a;
-    --primary-color: #007bff;
+    --primary-color: #00bbff;
     --font-family: system-ui, -apple-system, sans-serif;
 }
 
@@ -39,6 +39,29 @@ nav a {
 #hero h1 {
     font-size: 3rem;
     margin-bottom: 1rem;
+}
+
+.call-to-action {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.75rem 1.25rem;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.call-to-action:hover {
+    background-color: #b3008f;
+    transform: translateY(-2px);
+}
+
+.call-to-action:focus-visible {
+    outline: 3px solid var(--text-color);
+    outline-offset: 3px;
 }
 
 .grid-gallery {
