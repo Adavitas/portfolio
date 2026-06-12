@@ -1,79 +1,166 @@
 /* style.css */
 :root {
-    --bg-color: #f8f9fa;
-    --text-color: #1a1a1a;
-    --primary-color: #00bbff;
-    --font-family: system-ui, -apple-system, sans-serif;
+  --bg-color: #f8f9fa;
+  --text-color: #1a1a1a;
+  --primary-color: #00bbff;
+  --font-family: system-ui, -apple-system, sans-serif;
 }
 
 body {
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    font-family: var(--font-family);
-    padding: 2rem;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: var(--font-family);
+  padding: 2rem;
 }
 
 header nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4rem;
 }
 
 nav .nav-links {
-    display: flex;
-    list-style: none;
-    gap: 1.5rem;
+  display: flex;
+  list-style: none;
+  gap: 1.5rem;
 }
 
 nav a {
-    text-decoration: none;
-    color: inherit;
-    font-weight: 500;
+  text-decoration: none;
+  color: inherit;
+  font-weight: 500;
 }
 
 #hero {
-    margin-bottom: 5rem;
+  margin-bottom: 5rem;
 }
 
 #hero h1 {
-    font-size: 3rem;
-    margin-bottom: 1rem;
+  font-size: 3rem;
+  margin-bottom: 1rem;
 }
 
 .call-to-action {
-    display: inline-block;
-    margin-top: 1rem;
-    padding: 0.75rem 1.25rem;
-    background-color: var(--primary-color);
-    color: white;
-    border: none;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    text-decoration: none;
-    transition: background-color 0.2s ease, transform 0.2s ease;
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.75rem 1.25rem;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .call-to-action:hover {
-    background-color: #b3008f;
-    transform: translateY(-2px);
+  background-color: #b3008f;
+  transform: translateY(-2px);
 }
 
 .call-to-action:focus-visible {
-    outline: 3px solid var(--text-color);
-    outline-offset: 3px;
+  outline: 3px solid var(--text-color);
+  outline-offset: 3px;
 }
 
 .grid-gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-    margin-top: 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-block: 1rem;
+  padding: 0;
+  list-style: none;
+}
+
+.tag-list li {
+  padding: 0.4rem 0.75rem;
+  border: 1px solid #cccccc;
+  border-radius: 999px;
+}
+
+.info-grid {
+  display: grid;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+@media (min-width: 700px) {
+  .info-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+  }
+
+  .contact-card {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: min(100%, 44rem);
+  }
+}
+
+.contact-card {
+  text-align: center;
+}
+
+#contact-form {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  text-align: left;
+}
+
+#contact-form label {
+  font-weight: 600;
+}
+
+#contact-form input,
+#contact-form textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #cccccc;
+  border-radius: 0.5rem;
+  background-color: white;
+  color: var(--text-color);
+}
+
+#contact-form input {
+  min-height: 2.75rem;
+}
+
+#contact-form textarea {
+  min-height: 8rem;
+  resize: vertical;
+}
+
+#contact-form input:focus,
+#contact-form textarea:focus {
+  border-color: var(--primary-color);
+  outline: 3px solid rgb(0 187 255 / 20%);
+}
+
+#contact-form button {
+  justify-self: center;
+  padding: 0.75rem 1.25rem;
+  border: none;
+  border-radius: 0.5rem;
+  background-color: var(--primary-color);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
 }
 
 footer {
-    margin-top: 5rem;
-    padding-top: 2rem;
-    border-top: 1px solid #ddd;
-    text-align: center;
+  margin-top: 5rem;
+  padding-top: 2rem;
+  border-top: 1px solid #ddd;
+  text-align: center;
 }
