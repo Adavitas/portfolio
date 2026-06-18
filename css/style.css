@@ -1,23 +1,42 @@
 /* style.css */
 :root {
-  --bg-color: #f8f9fa;
-  --text-color: #1a1a1a;
+  --bg-color: #111111;
+  --surface-color: #171717;
+  --surface-color-soft: #1f1f1f;
+  --border-color: #383838;
+  --text-color: #f7f7f7;
+  --muted-text-color: #b5b5b5;
   --primary-color: #00bbff;
+  --primary-color-hover: #b3008f;
   --font-family: system-ui, -apple-system, sans-serif;
+  --radius-card: 0.75rem;
+  --space-page: clamp(1rem, 4vw, 2rem);
+  --content-width: 72rem;
 }
 
 body {
   background-color: var(--bg-color);
   color: var(--text-color);
   font-family: var(--font-family);
-  padding: 2rem;
+  padding: var(--space-page);
+  min-height: 100vh;
+  background-image:
+    linear-gradient(var(--border-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border-color) 1px, transparent 1px);
+  background-size: 5rem 5rem;
+}
+
+header {
+  max-width: var(--content-width);
+  margin-inline: auto;
 }
 
 header nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 4rem;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 nav .nav-links {
@@ -32,13 +51,71 @@ nav a {
   font-weight: 500;
 }
 
+.portfolio-grid {
+  display: grid;
+  gap: 1.5rem;
+  max-width: var(--content-width);
+  margin-inline: auto;
+}
+
+.card {
+  background-color: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-card);
+  padding: 1.5rem;
+}
+
+.card h2,
+.card h3 {
+  margin-bottom: 0.75rem;
+}
+
+.card p {
+  color: var(--muted-text-color);
+}
+
 #hero {
-  margin-bottom: 5rem;
+  margin-bottom: 0;
 }
 
 #hero h1 {
-  font-size: 3rem;
+  font-size: clamp(2.25rem, 8vw, 4.5rem);
+  line-height: 0.95;
   margin-bottom: 1rem;
+}
+
+.hero-card {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.hero-copy {
+  display: grid;
+  gap: 1rem;
+}
+
+.eyebrow {
+  color: var(--muted-text-color);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.8rem;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.hero-card img,
+.project-card img {
+  width: 100%;
+  border-radius: calc(var(--radius-card) - 0.25rem);
+  object-fit: cover;
+}
+
+.hero-card img {
+  max-height: 22rem;
 }
 
 .call-to-action {
@@ -57,7 +134,7 @@ nav a {
 }
 
 .call-to-action:hover {
-  background-color: #b3008f;
+  background-color: var(--primary-color-hover);
   transform: translateY(-2px);
 }
 
@@ -71,6 +148,11 @@ nav a {
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 1.5rem;
   margin-top: 2rem;
+}
+
+.project-card {
+  display: grid;
+  gap: 0.75rem;
 }
 
 .tag-list {
@@ -129,7 +211,7 @@ nav a {
   border: 1px solid #cccccc;
   border-radius: 0.5rem;
   background-color: white;
-  color: var(--text-color);
+  color: #1a1a1a;
 }
 
 #contact-form input {
@@ -159,8 +241,28 @@ nav a {
 }
 
 footer {
+  max-width: var(--content-width);
+  margin-inline: auto;
   margin-top: 5rem;
   padding-top: 2rem;
-  border-top: 1px solid #ddd;
+  border-top: 1px solid var(--border-color);
   text-align: center;
+}
+
+@media (min-width: 900px) {
+  .portfolio-grid {
+    grid-template-columns: 2fr 1fr;
+    align-items: start;
+  }
+
+  .hero-card,
+  .projects-card,
+  .info-grid {
+    grid-column: 1 / -1;
+  }
+
+  .hero-card {
+    grid-template-columns: minmax(0, 1.6fr) minmax(16rem, 0.8fr);
+    align-items: center;
+  }
 }
