@@ -74,6 +74,27 @@ nav a {
   color: var(--muted-text-color);
 }
 
+.about-card {
+  background-color: #1f1f1f;
+  padding: 2rem;
+  border-color: #505050;
+  text-align: center;
+
+  grid-column: 1 / -1;
+  justify-self: center;
+  width: min(100%, 80rem);
+}
+
+.about-card h2 {
+  color: #00bbff;
+  margin-bottom: 1rem;
+}
+
+.about-card p {
+  color: #d0d0d0;
+  line-height: 1.7;
+}
+
 #hero {
   margin-bottom: 0;
 }
@@ -162,6 +183,10 @@ nav a {
   margin-block: 1rem;
   padding: 0;
   list-style: none;
+}
+
+.about-card .tag-list {
+  justify-content: center;
 }
 
 .tag-list li {
