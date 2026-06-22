@@ -84,7 +84,7 @@
         />
       </section>
 
-      <section id="about" class="card about-card">
+      <section id="about" class="card about-card" data-reveal>
         <h2>About me</h2>
         <p>
           I am learning front-end web development by turning ideas into useful,
@@ -115,7 +115,7 @@
         </p>
 
         <div class="grid-gallery">
-          <article class="card project-card featured-project">
+          <article class="card project-card featured-project" data-reveal>
             <img
               src="assets/images/project-placeholder.svg"
               alt="Placeholder preview for a personal portfolio project"
@@ -136,7 +136,7 @@
             </div>
           </article>
 
-          <article class="card project-card">
+          <article class="card project-card" data-reveal>
             <img
               src="assets/images/project-placeholder.svg"
               alt="Placeholder preview for a responsive landing page project"
@@ -157,7 +157,11 @@
             </div>
           </article>
 
-          <article class="card project-card">
+          <article
+            class="card project-card"
+            data-reveal
+            data-reveal-delay="short"
+          >
             <img
               src="assets/images/project-placeholder.svg"
               alt="Placeholder preview for an interactive JavaScript project"
@@ -182,7 +186,7 @@
       </section>
 
       <div class="info-grid">
-        <section id="now" class="card now-card">
+        <section id="now" class="card now-card" data-reveal>
           <h2>Now</h2>
           <time datetime="2026-06-10">June 10, 2026</time>
           <p>
@@ -191,12 +195,17 @@
           </p>
         </section>
 
-        <section class="card time-card" aria-labelledby="time-heading">
+        <section
+          class="card time-card"
+          aria-labelledby="time-heading"
+          data-reveal
+          data-reveal-delay="short"
+        >
           <h2 id="time-heading">My local time</h2>
           <time id="local-time">Loading...</time>
         </section>
 
-        <section id="contact" class="card contact-card">
+        <section id="contact" class="card contact-card" data-reveal>
           <h2>Let's work together</h2>
           <p>
             Have a project, learning suggestion, or opportunity? Send me a

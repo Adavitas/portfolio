@@ -74,6 +74,52 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // One-time Card Reveals
+    const revealElements = document.querySelectorAll('[data-reveal]');
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    if (
+        revealElements.length > 0 &&
+        !reducedMotion.matches &&
+        'IntersectionObserver' in window
+    ) {
+        document.documentElement.classList.add('reveal-enabled');
+        let remainingElements = revealElements.length;
+
+        const revealObserver = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (!entry.isIntersecting) {
+                        return;
+                    }
+
+                    entry.target.classList.add('is-visible');
+                    revealObserver.unobserve(entry.target);
+                    remainingElements -= 1;
+                });
+
+                if (remainingElements === 0) {
+                    revealObserver.disconnect();
+                }
+            },
+            {
+                rootMargin: '0px 0px -8% 0px',
+                threshold: 0.12,
+            },
+        );
+
+        revealElements.forEach((element) => {
+            revealObserver.observe(element);
+        });
+
+        reducedMotion.addEventListener('change', (event) => {
+            if (event.matches) {
+                revealObserver.disconnect();
+                document.documentElement.classList.remove('reveal-enabled');
+            }
+        });
+    }
+
     // Dynamic Time Display
     const timeElement = document.getElementById('local-time');
 
