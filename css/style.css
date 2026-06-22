@@ -1,19 +1,52 @@
 /* style.css */
 :root {
+  color-scheme: dark;
   --bg-color: #111111;
   --surface-color: #171717;
   --surface-color-soft: #1f1f1f;
   --border-color: #383838;
+  --strong-border-color: #505050;
   --text-color: #f7f7f7;
   --muted-text-color: #b5b5b5;
+  --about-text-color: #d0d0d0;
   --primary-color: #00bbff;
-  --primary-color-hover: #b3008f;
+  --primary-color-hover: #0098cf;
+  --accent-text-color: #071317;
   --error-color: #ff9a9a;
   --success-color: #82d9a7;
+  --input-bg-color: #ffffff;
+  --input-text-color: #1a1a1a;
+  --input-border-color: #cccccc;
+  --focus-outline-color: #f7f7f7;
+  --primary-focus-color: rgb(0 187 255 / 20%);
+  --error-focus-color: rgb(255 154 154 / 25%);
   --font-family: system-ui, -apple-system, sans-serif;
   --radius-card: 0.75rem;
   --space-page: clamp(1rem, 4vw, 2rem);
   --content-width: 72rem;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg-color: #f3f6f7;
+  --surface-color: #ffffff;
+  --surface-color-soft: #e8eef1;
+  --border-color: #cbd5da;
+  --strong-border-color: #9cabb3;
+  --text-color: #182126;
+  --muted-text-color: #5d6970;
+  --about-text-color: #354149;
+  --primary-color: #006f98;
+  --primary-color-hover: #005675;
+  --accent-text-color: #ffffff;
+  --error-color: #b42318;
+  --success-color: #166534;
+  --input-bg-color: #ffffff;
+  --input-text-color: #182126;
+  --input-border-color: #9cabb3;
+  --focus-outline-color: #182126;
+  --primary-focus-color: rgb(0 111 152 / 20%);
+  --error-focus-color: rgb(180 35 24 / 20%);
 }
 
 body {
@@ -45,7 +78,14 @@ header nav {
   line-height: 1.2;
 }
 
-.menu-button {
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.menu-button,
+.theme-button {
   display: none;
   align-items: center;
   justify-content: center;
@@ -64,23 +104,27 @@ header nav {
     transform 0.2s ease;
 }
 
-.js-enabled .menu-button {
+.js-enabled .menu-button,
+.js-enabled .theme-button.is-ready {
   display: inline-flex;
 }
 
 .menu-button:hover,
-.menu-button[aria-expanded="true"] {
+.menu-button[aria-expanded="true"],
+.theme-button:hover {
   border-color: var(--primary-color);
   color: var(--primary-color);
 }
 
-.menu-button:active {
+.menu-button:active,
+.theme-button:active {
   transform: translateY(1px);
 }
 
 .menu-button:focus-visible,
+.theme-button:focus-visible,
 nav a:focus-visible {
-  outline: 3px solid var(--text-color);
+  outline: 3px solid var(--focus-outline-color);
   outline-offset: 3px;
 }
 
@@ -143,9 +187,9 @@ nav .nav-links a:hover {
 }
 
 .about-card {
-  background-color: #1f1f1f;
+  background-color: var(--surface-color-soft);
   padding: 2rem;
-  border-color: #505050;
+  border-color: var(--strong-border-color);
   text-align: center;
 
   grid-column: 1 / -1;
@@ -154,12 +198,12 @@ nav .nav-links a:hover {
 }
 
 .about-card h2 {
-  color: #00bbff;
+  color: var(--primary-color);
   margin-bottom: 1rem;
 }
 
 .about-card p {
-  color: #d0d0d0;
+  color: var(--about-text-color);
   line-height: 1.7;
 }
 
@@ -212,7 +256,7 @@ nav .nav-links a:hover {
   margin-top: 1rem;
   padding: 0.75rem 1.25rem;
   background-color: var(--primary-color);
-  color: white;
+  color: var(--accent-text-color);
   border: none;
   border-radius: 0.5rem;
   cursor: pointer;
@@ -228,7 +272,7 @@ nav .nav-links a:hover {
 }
 
 .call-to-action:focus-visible {
-  outline: 3px solid var(--text-color);
+  outline: 3px solid var(--focus-outline-color);
   outline-offset: 3px;
 }
 
@@ -267,7 +311,7 @@ nav .nav-links a:hover {
 }
 
 .project-copy > a:focus-visible {
-  outline: 3px solid var(--text-color);
+  outline: 3px solid var(--focus-outline-color);
   outline-offset: 3px;
 }
 
@@ -286,7 +330,7 @@ nav .nav-links a:hover {
 
 .tag-list li {
   padding: 0.4rem 0.75rem;
-  border: 1px solid #cccccc;
+  border: 1px solid var(--input-border-color);
   border-radius: 999px;
 }
 
@@ -298,18 +342,25 @@ nav .nav-links a:hover {
 
 @media (min-width: 700px) {
   header nav {
-    display: flex;
-    justify-content: space-between;
+    grid-template-columns: auto minmax(0, 1fr) auto;
   }
 
   .js-enabled .menu-button {
     display: none;
   }
 
+  .nav-actions {
+    grid-column: 3;
+    grid-row: 1;
+  }
+
   nav .nav-links,
   .js-enabled nav .nav-links,
   .js-enabled nav .nav-links.is-open {
+    grid-column: 2;
+    grid-row: 1;
     display: flex;
+    justify-self: end;
     width: auto;
     gap: 1.5rem;
     padding-top: 0;
@@ -386,10 +437,10 @@ nav .nav-links a:hover {
 #contact-form textarea {
   width: 100%;
   padding: 0.75rem;
-  border: 1px solid #cccccc;
+  border: 1px solid var(--input-border-color);
   border-radius: 0.5rem;
-  background-color: white;
-  color: #1a1a1a;
+  background-color: var(--input-bg-color);
+  color: var(--input-text-color);
 }
 
 #contact-form input {
@@ -404,7 +455,7 @@ nav .nav-links a:hover {
 #contact-form input:focus,
 #contact-form textarea:focus {
   border-color: var(--primary-color);
-  outline: 3px solid rgb(0 187 255 / 20%);
+  outline: 3px solid var(--primary-focus-color);
 }
 
 #contact-form input[aria-invalid="true"],
@@ -414,7 +465,7 @@ nav .nav-links a:hover {
 
 #contact-form input[aria-invalid="true"]:focus,
 #contact-form textarea[aria-invalid="true"]:focus {
-  outline-color: rgb(255 154 154 / 25%);
+  outline-color: var(--error-focus-color);
 }
 
 #contact-form button {
@@ -423,7 +474,7 @@ nav .nav-links a:hover {
   border: none;
   border-radius: 0.5rem;
   background-color: var(--primary-color);
-  color: white;
+  color: var(--accent-text-color);
   font-weight: 600;
   cursor: pointer;
   transition:
@@ -441,7 +492,7 @@ nav .nav-links a:hover {
 
 #contact-form button:focus-visible,
 .email-draft-link:focus-visible {
-  outline: 3px solid var(--text-color);
+  outline: 3px solid var(--focus-outline-color);
   outline-offset: 3px;
 }
 
@@ -472,7 +523,7 @@ nav .nav-links a:hover {
 
 .email-draft-link:hover {
   background-color: var(--primary-color);
-  color: var(--bg-color);
+  color: var(--accent-text-color);
 }
 
 footer {
@@ -521,6 +572,7 @@ footer {
 @media (prefers-reduced-motion: reduce) {
   .call-to-action,
   .menu-button,
+  .theme-button,
   #contact-form button,
   .project-card {
     transition: none;
@@ -528,6 +580,7 @@ footer {
 
   .call-to-action:hover,
   .menu-button:active,
+  .theme-button:active,
   #contact-form button:active,
   .project-card:hover,
   .project-card:focus-within {

@@ -3,6 +3,77 @@
 document.documentElement.classList.add('js-enabled');
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Theme Switcher
+    const themeButton = document.querySelector('.theme-button');
+    const themeButtonLabel = document.querySelector('.theme-button-label');
+    const systemTheme = window.matchMedia('(prefers-color-scheme: dark)');
+    const themeStorageKey = 'portfolio-theme';
+
+    if (themeButton && themeButtonLabel) {
+        function readSavedTheme() {
+            try {
+                const savedTheme = localStorage.getItem(themeStorageKey);
+                return savedTheme === 'light' || savedTheme === 'dark'
+                    ? savedTheme
+                    : null;
+            } catch {
+                return null;
+            }
+        }
+
+        function saveTheme(theme) {
+            try {
+                localStorage.setItem(themeStorageKey, theme);
+            } catch {
+                // The selected theme still works for this page load.
+            }
+        }
+
+        function updateThemeButton(theme) {
+            const nextTheme = theme === 'dark' ? 'light' : 'dark';
+            const nextThemeName = nextTheme === 'light' ? 'Light' : 'Dark';
+
+            themeButtonLabel.textContent = nextThemeName;
+            themeButton.setAttribute(
+                'aria-label',
+                `Switch to ${nextTheme} theme`,
+            );
+        }
+
+        function setTheme(theme, shouldSave = false) {
+            document.documentElement.dataset.theme = theme;
+            updateThemeButton(theme);
+
+            if (shouldSave) {
+                saveTheme(theme);
+            }
+        }
+
+        let hasExplicitTheme = Boolean(readSavedTheme());
+        const initialTheme =
+            document.documentElement.dataset.theme === 'light'
+                ? 'light'
+                : 'dark';
+        updateThemeButton(initialTheme);
+        themeButton.classList.add('is-ready');
+
+        themeButton.addEventListener('click', () => {
+            const currentTheme =
+                document.documentElement.dataset.theme === 'light'
+                    ? 'light'
+                    : 'dark';
+            const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            hasExplicitTheme = true;
+            setTheme(nextTheme, true);
+        });
+
+        systemTheme.addEventListener('change', (event) => {
+            if (!hasExplicitTheme) {
+                setTheme(event.matches ? 'dark' : 'light');
+            }
+        });
+    }
+
     // Dynamic Time Display
     const timeElement = document.getElementById('local-time');
 
