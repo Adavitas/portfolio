@@ -372,7 +372,15 @@ nav .nav-links a:hover {
   padding-top: 1rem;
 }
 
-.project-copy > a {
+.project-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.25rem;
+}
+
+.project-copy > a,
+.project-links a {
   justify-self: start;
   padding-block: 0.25rem;
   color: var(--primary-color);
@@ -380,7 +388,8 @@ nav .nav-links a:hover {
   text-underline-offset: 0.25rem;
 }
 
-.project-copy > a:focus-visible {
+.project-copy > a:focus-visible,
+.project-links a:focus-visible {
   outline: 3px solid var(--focus-outline-color);
   outline-offset: 3px;
 }
@@ -614,6 +623,172 @@ footer a:focus-visible {
   color: var(--accent-text-color);
 }
 
+.case-study-page {
+  display: grid;
+  gap: 1rem;
+  max-width: var(--content-width);
+  margin-inline: auto;
+}
+
+.case-study {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.case-study-back-link {
+  justify-self: start;
+  padding-block: 0.35rem;
+  color: var(--primary-color);
+  font-weight: 600;
+  text-underline-offset: 0.25rem;
+}
+
+.case-study-back-link:focus-visible,
+.case-study-navigation a:focus-visible {
+  outline: 3px solid var(--focus-outline-color);
+  outline-offset: 3px;
+}
+
+.case-study-hero {
+  display: grid;
+  gap: 1.5rem;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  border: 1px solid var(--strong-border-color);
+  border-radius: var(--radius-card);
+  background-color: var(--surface-color-soft);
+}
+
+.case-study-hero-copy {
+  display: grid;
+  align-content: center;
+  gap: 1rem;
+}
+
+.case-study-hero h1 {
+  max-width: 15ch;
+  font-size: clamp(2.5rem, 8vw, 4.25rem);
+  line-height: 0.98;
+}
+
+.case-study-introduction {
+  max-width: 62ch;
+  color: var(--about-text-color);
+  font-size: clamp(1.05rem, 2vw, 1.2rem);
+}
+
+.case-study-hero img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 8 / 5;
+  align-self: center;
+  border-radius: calc(var(--radius-card) - 0.25rem);
+  object-fit: cover;
+}
+
+.case-study-meta {
+  display: grid;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.case-study-meta div {
+  display: grid;
+  gap: 0.2rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.case-study-meta dt {
+  color: var(--primary-color);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.case-study-meta dd {
+  color: var(--text-color);
+  font-weight: 600;
+}
+
+.case-study-section {
+  display: grid;
+  gap: 1rem;
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+.case-study-section > :not(.tag-list) {
+  max-width: 72ch;
+}
+
+.case-study-section h2 {
+  color: var(--text-color);
+  font-size: clamp(1.65rem, 4vw, 2.3rem);
+  line-height: 1.1;
+}
+
+.case-study-section h3 {
+  margin-top: 0.5rem;
+  color: var(--primary-color);
+  font-size: 1.1rem;
+}
+
+.case-study-section code {
+  padding: 0.1rem 0.3rem;
+  border: 1px solid var(--border-color);
+  border-radius: 0.25rem;
+  background-color: var(--surface-color-soft);
+  color: var(--text-color);
+  font-size: 0.9em;
+}
+
+.case-study-section-list {
+  display: grid;
+  gap: 0.65rem;
+  padding-left: 1.25rem;
+  color: var(--muted-text-color);
+}
+
+.case-study-section .tag-list {
+  margin-bottom: 0;
+}
+
+.case-study-navigation {
+  display: grid;
+  gap: 1.25rem;
+  align-items: center;
+}
+
+.case-study-navigation h2 {
+  margin-bottom: 0;
+}
+
+.case-study-navigation-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.case-study-navigation a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: 0.65rem 1rem;
+  border: 1px solid var(--primary-color);
+  border-radius: 0.5rem;
+  color: var(--primary-color);
+  font-weight: 600;
+  text-decoration: none;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.case-study-navigation a:hover {
+  background-color: var(--primary-color);
+  color: var(--accent-text-color);
+}
+
 footer {
   display: grid;
   gap: 0.35rem;
@@ -657,6 +832,23 @@ footer {
   .featured-project .project-copy {
     padding-top: 0;
   }
+
+  .case-study-hero {
+    grid-template-columns: minmax(0, 1.05fr) minmax(20rem, 0.95fr);
+    align-items: center;
+  }
+
+  .case-study-meta {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .case-study-navigation {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .case-study-navigation-links {
+    justify-content: flex-end;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -672,7 +864,8 @@ footer {
   .menu-button,
   .theme-button,
   #contact-form button,
-  .project-card {
+  .project-card,
+  .case-study-navigation a {
     transition: none;
   }
 
