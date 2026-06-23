@@ -5,14 +5,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Portfolio of Aleksandre Davitashvili, a beginner web developer learning to build accessible websites with HTML, CSS, and JavaScript."
+      content="Portfolio of Aleksandre Davitashvili, a software developer and 42 Wolfsburg student building accessible web interfaces and Unix systems projects."
     />
-    <title>Aleksandre Davitashvili | Web Developer Portfolio</title>
+    <meta name="author" content="Aleksandre Davitashvili" />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="robots" content="index, follow" />
+    <meta
+      property="og:title"
+      content="Aleksandre Davitashvili | Software Developer"
+    />
+    <meta
+      property="og:description"
+      content="Accessible web interfaces and Unix systems projects built by Aleksandre Davitashvili."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta
+      property="og:site_name"
+      content="Aleksandre Davitashvili Portfolio"
+    />
+    <meta name="twitter:card" content="summary" />
+    <meta
+      name="twitter:title"
+      content="Aleksandre Davitashvili | Software Developer"
+    />
+    <meta
+      name="twitter:description"
+      content="Accessible web interfaces and Unix systems projects built by Aleksandre Davitashvili."
+    />
+    <title>Aleksandre Davitashvili | Software Developer Portfolio</title>
+    <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml" />
     <script src="js/theme-init.js"></script>
     <link rel="stylesheet" href="css/reset.css" />
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
     <header>
       <nav aria-label="Main navigation">
         <a class="logo" href="#hero">Aleksandre Davitashvili</a>
@@ -38,18 +67,18 @@
       </nav>
     </header>
 
-    <main id="main-content" class="portfolio-grid">
+    <main id="main-content" class="portfolio-grid" tabindex="-1">
       <section id="hero" class="card hero-card">
         <div class="hero-copy">
           <p class="eyebrow">Welcome</p>
-          <h1>Hi, I'm Aleksandre, a web developer learning by building.</h1>
+          <h1>Hi, I'm Aleksandre, a software developer learning by building.</h1>
           <p>
-            I create accessible and responsive websites while developing my
-            HTML, CSS, and JavaScript skills.
+            I build accessible web interfaces with HTML, CSS, and JavaScript,
+            alongside systems projects in C and Unix.
           </p>
           <p>
-            This portfolio documents the projects I build and the lessons I
-            learn along the way.
+            I study at 42 Wolfsburg and use each project to practice clear
+            structure, careful testing, and maintainable code.
           </p>
 
           <div class="hero-actions">
@@ -63,14 +92,14 @@
               class="call-to-action"
               href="https://github.com/Adavitas"
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               >GitHub</a
             >
             <a
               class="call-to-action"
               href="https://www.linkedin.com/in/aleksandre-davitashvili-01b339362/"
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               >LinkedIn</a
             >
           </div>
@@ -78,17 +107,19 @@
 
         <img
           src="assets/images/portrait.jpeg"
-          alt="Placeholder portrait for Aleksandre Davitashvili"
-          width="380"
-          height="340"
+          alt="Aleksandre Davitashvili standing in front of a geometric wall decoration"
+          width="560"
+          height="560"
+          fetchpriority="high"
         />
       </section>
 
       <section id="about" class="card about-card" data-reveal>
         <h2>About me</h2>
         <p>
-          I am learning front-end web development by turning ideas into useful,
-          understandable websites.
+          I am a software developer and 42 Wolfsburg student focused on
+          understanding how software works from browser interfaces down to Unix
+          processes and memory.
         </p>
 
         <h3>Skills and tools</h3>
@@ -96,64 +127,85 @@
           <li>HTML</li>
           <li>CSS</li>
           <li>JavaScript</li>
+          <li>C</li>
+          <li>Unix</li>
           <li>Git</li>
           <li>Responsive design</li>
           <li>Accessibility</li>
         </ul>
 
         <p>
-          I enjoy understanding how websites work, improving them one step at a
-          time, and writing code that other people can follow.
+          I enjoy breaking complex problems into smaller steps, testing edge
+          cases, and writing code that another developer can follow.
         </p>
       </section>
 
       <section id="projects" class="card projects-card">
         <h2>Selected projects</h2>
         <p>
-          These starter projects will be replaced and expanded as my skills
-          grow.
+          These projects show my current work across frontend development,
+          process management, parsing, algorithms, and data structures.
         </p>
 
         <div class="grid-gallery">
           <article class="card project-card featured-project" data-reveal>
             <img
-              src="assets/images/project-placeholder.svg"
-              alt="Placeholder preview for a personal portfolio project"
-              width="640"
-              height="400"
+              src="assets/images/portfolio-preview.svg"
+              alt="Abstract preview of this portfolio's bento card layout"
+              width="800"
+              height="500"
+              loading="lazy"
+              decoding="async"
             />
             <div class="project-copy">
               <h3>Personal portfolio</h3>
               <p>
-                I built this portfolio to practice semantic HTML and learn how
-                page content should be organized.
+                A responsive vanilla website with semantic HTML, an accessible
+                menu and contact workflow, persistent themes, and motion-aware
+                card reveals.
               </p>
               <ul class="tag-list">
                 <li>HTML</li>
+                <li>CSS</li>
+                <li>JavaScript</li>
                 <li>Accessibility</li>
               </ul>
-              <a href="#hero">View project</a>
+              <a
+                href="https://github.com/Adavitas/portfolio"
+                target="_blank"
+                rel="noopener noreferrer"
+                >View portfolio source</a
+              >
             </div>
           </article>
 
           <article class="card project-card" data-reveal>
             <img
-              src="assets/images/project-placeholder.svg"
-              alt="Placeholder preview for a responsive landing page project"
-              width="640"
-              height="400"
+              src="assets/images/minishell-preview.svg"
+              alt="Terminal illustration representing the Minishell project"
+              width="800"
+              height="500"
+              loading="lazy"
+              decoding="async"
             />
             <div class="project-copy">
-              <h3>Responsive landing page</h3>
+              <h3>Minishell</h3>
               <p>
-                A planned landing page project for practicing layouts that
-                adapt to mobile, tablet, and desktop screens.
+                A Unix shell in C with pipelines, redirections, environment
+                variables, built-in commands, signal handling, and an abstract
+                syntax tree.
               </p>
               <ul class="tag-list">
-                <li>HTML</li>
-                <li>CSS</li>
+                <li>C</li>
+                <li>Unix</li>
+                <li>Parsing</li>
               </ul>
-              <a href="#projects">Project coming soon</a>
+              <a
+                href="https://github.com/Adavitas/minishell"
+                target="_blank"
+                rel="noopener noreferrer"
+                >View Minishell source</a
+              >
             </div>
           </article>
 
@@ -163,23 +215,31 @@
             data-reveal-delay="short"
           >
             <img
-              src="assets/images/project-placeholder.svg"
-              alt="Placeholder preview for an interactive JavaScript project"
-              width="640"
-              height="400"
+              src="assets/images/push-swap-preview.svg"
+              alt="Two numbered stacks representing the Push Swap sorting project"
+              width="800"
+              height="500"
+              loading="lazy"
+              decoding="async"
             />
             <div class="project-copy">
-              <h3>Interactive JavaScript project</h3>
+              <h3>Push Swap</h3>
               <p>
-                A planned project for practicing events, DOM updates, and clear
-                feedback for users.
+                A constrained sorting project that ranks integers, moves them
+                between two stacks, validates input, and reduces the number of
+                operations.
               </p>
               <ul class="tag-list">
-                <li>HTML</li>
-                <li>CSS</li>
-                <li>JavaScript</li>
+                <li>C</li>
+                <li>Algorithms</li>
+                <li>Data structures</li>
               </ul>
-              <a href="#projects">Project coming soon</a>
+              <a
+                href="https://github.com/Adavitas/push_swap"
+                target="_blank"
+                rel="noopener noreferrer"
+                >View Push Swap source</a
+              >
             </div>
           </article>
         </div>
@@ -188,10 +248,10 @@
       <div class="info-grid">
         <section id="now" class="card now-card" data-reveal>
           <h2>Now</h2>
-          <time datetime="2026-06-10">June 10, 2026</time>
+          <time datetime="2026-06-23">June 23, 2026</time>
           <p>
-            Currently learning semantic HTML and building the first complete
-            version of this portfolio.
+            Refining this portfolio for publication through accessibility
+            audits, metadata improvements, and performance testing.
           </p>
         </section>
 
@@ -201,8 +261,11 @@
           data-reveal
           data-reveal-delay="short"
         >
-          <h2 id="time-heading">My local time</h2>
-          <time id="local-time">Loading...</time>
+          <h2 id="time-heading">Your local time</h2>
+          <time id="local-time" aria-label="Current local time"></time>
+          <noscript>
+            <p>JavaScript is required to display the live clock.</p>
+          </noscript>
         </section>
 
         <section id="contact" class="card contact-card" data-reveal>
@@ -292,7 +355,7 @@
     </main>
 
     <footer>
-      <p>&copy; 2026 Leqso Davitashvili.</p>
+      <p>&copy; 2026 Aleksandre Davitashvili.</p>
       <p>Built with HTML, CSS, and JavaScript.</p>
       <p><a href="#hero">Back to top</a></p>
     </footer>

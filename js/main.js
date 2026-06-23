@@ -127,6 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
         function updateTime() {
             const now = new Date();
             timeElement.textContent = now.toLocaleTimeString();
+            timeElement.dateTime = now.toISOString();
         }
 
         // Initial call and set interval

@@ -55,10 +55,33 @@ body {
   font-family: var(--font-family);
   padding: var(--space-page);
   min-height: 100vh;
+  min-height: 100dvh;
   background-image:
     linear-gradient(var(--border-color) 1px, transparent 1px),
     linear-gradient(90deg, var(--border-color) 1px, transparent 1px);
   background-size: 5rem 5rem;
+}
+
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 1;
+  padding: 0.7rem 1rem;
+  border: 2px solid var(--primary-color);
+  border-radius: 0.5rem;
+  background-color: var(--surface-color);
+  color: var(--text-color);
+  font-weight: 700;
+  text-decoration: none;
+  transform: translateY(calc(-100% - 1rem));
+  transition: transform 0.2s ease;
+}
+
+.skip-link:focus-visible {
+  outline: 3px solid var(--focus-outline-color);
+  outline-offset: 3px;
+  transform: translateY(0);
 }
 
 header {
@@ -236,6 +259,11 @@ nav .nav-links a:hover {
   line-height: 1.7;
 }
 
+.about-card > p {
+  max-width: 62ch;
+  margin-inline: auto;
+}
+
 #hero {
   margin-bottom: 0;
 }
@@ -254,6 +282,10 @@ nav .nav-links a:hover {
 .hero-copy {
   display: grid;
   gap: 1rem;
+}
+
+.hero-copy > p {
+  max-width: 65ch;
 }
 
 .eyebrow {
@@ -277,7 +309,14 @@ nav .nav-links a:hover {
 }
 
 .hero-card img {
+  aspect-ratio: 1;
   max-height: 22rem;
+}
+
+.project-card img {
+  aspect-ratio: 8 / 5;
+  height: auto;
+  align-self: start;
 }
 
 .call-to-action {
@@ -334,6 +373,8 @@ nav .nav-links a:hover {
 }
 
 .project-copy > a {
+  justify-self: start;
+  padding-block: 0.25rem;
   color: var(--primary-color);
   font-weight: 600;
   text-underline-offset: 0.25rem;
@@ -423,6 +464,24 @@ nav .nav-links a:hover {
 
 .contact-card {
   text-align: center;
+}
+
+.contact-card address {
+  margin-top: 1rem;
+  font-style: normal;
+  overflow-wrap: anywhere;
+}
+
+.contact-card address a,
+footer a {
+  color: var(--primary-color);
+  text-underline-offset: 0.25rem;
+}
+
+.contact-card address a:focus-visible,
+footer a:focus-visible {
+  outline: 3px solid var(--focus-outline-color);
+  outline-offset: 3px;
 }
 
 .contact-card .form-note {
@@ -556,6 +615,8 @@ nav .nav-links a:hover {
 }
 
 footer {
+  display: grid;
+  gap: 0.35rem;
   max-width: var(--content-width);
   margin-inline: auto;
   margin-top: 5rem;
@@ -607,6 +668,7 @@ footer {
   }
 
   .call-to-action,
+  .skip-link,
   .menu-button,
   .theme-button,
   #contact-form button,

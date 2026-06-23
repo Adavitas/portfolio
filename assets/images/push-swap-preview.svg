@@ -1,0 +1,39 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 800 500"
+  role="img"
+  aria-labelledby="title description"
+>
+  <title id="title">Push Swap stack preview</title>
+  <desc id="description">
+    Two labeled stacks of numbered blocks connected by sorting operations.
+  </desc>
+  <rect width="800" height="500" fill="#101415" />
+  <g stroke="#263337" stroke-width="1">
+    <path d="M0 100h800M0 200h800M0 300h800M0 400h800" />
+    <path d="M100 0v500M200 0v500M300 0v500M400 0v500M500 0v500M600 0v500M700 0v500" />
+  </g>
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+    <text x="210" y="78" fill="#f4f7f8" font-size="28" text-anchor="middle">STACK A</text>
+    <text x="590" y="78" fill="#f4f7f8" font-size="28" text-anchor="middle">STACK B</text>
+    <g font-size="24" text-anchor="middle">
+      <rect x="130" y="116" width="160" height="56" rx="10" fill="#00bbff" />
+      <text x="210" y="152" fill="#071317">42</text>
+      <rect x="130" y="188" width="160" height="56" rx="10" fill="#dce6e9" />
+      <text x="210" y="224" fill="#182126">-7</text>
+      <rect x="130" y="260" width="160" height="56" rx="10" fill="#7f9197" />
+      <text x="210" y="296" fill="#101415">19</text>
+      <rect x="130" y="332" width="160" height="56" rx="10" fill="#dce6e9" />
+      <text x="210" y="368" fill="#182126">3</text>
+      <rect x="510" y="188" width="160" height="56" rx="10" fill="#7f9197" />
+      <text x="590" y="224" fill="#101415">19</text>
+      <rect x="510" y="260" width="160" height="56" rx="10" fill="#00bbff" />
+      <text x="590" y="296" fill="#071317">42</text>
+    </g>
+    <path d="M320 205h136l-18-18m18 18-18 18" fill="none" stroke="#00bbff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M480 300H344l18-18m-18 18 18 18" fill="none" stroke="#dce6e9" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+    <text x="400" y="182" fill="#00bbff" font-size="20" text-anchor="middle">pb</text>
+    <text x="400" y="338" fill="#dce6e9" font-size="20" text-anchor="middle">pa</text>
+    <text x="400" y="430" fill="#7f9197" font-size="20" text-anchor="middle">rank - move - validate</text>
+  </g>
+</svg>

@@ -1,0 +1,33 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 800 500"
+  role="img"
+  aria-labelledby="title description"
+>
+  <title id="title">Minishell terminal preview</title>
+  <desc id="description">
+    A terminal window showing commands, a pipeline, and environment output.
+  </desc>
+  <rect width="800" height="500" fill="#101415" />
+  <g stroke="#263337" stroke-width="1">
+    <path d="M0 100h800M0 200h800M0 300h800M0 400h800" />
+    <path d="M100 0v500M200 0v500M300 0v500M400 0v500M500 0v500M600 0v500M700 0v500" />
+  </g>
+  <rect x="58" y="50" width="684" height="400" rx="20" fill="#171d1f" stroke="#425156" stroke-width="2" />
+  <path d="M58 102h684" stroke="#425156" stroke-width="2" />
+  <circle cx="90" cy="76" r="7" fill="#00bbff" />
+  <circle cx="116" cy="76" r="7" fill="#425156" />
+  <circle cx="142" cy="76" r="7" fill="#425156" />
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="21">
+    <text x="92" y="150" fill="#00bbff">minishell$</text>
+    <text x="238" y="150" fill="#f4f7f8">echo $USER | wc -c</text>
+    <text x="92" y="192" fill="#aab8bd">11</text>
+    <text x="92" y="246" fill="#00bbff">minishell$</text>
+    <text x="238" y="246" fill="#f4f7f8">export MODE=learning</text>
+    <text x="92" y="300" fill="#00bbff">minishell$</text>
+    <text x="238" y="300" fill="#f4f7f8">env | grep MODE</text>
+    <text x="92" y="342" fill="#aab8bd">MODE=learning</text>
+    <text x="92" y="396" fill="#00bbff">minishell$</text>
+    <rect x="238" y="376" width="12" height="24" fill="#f4f7f8" />
+  </g>
+</svg>

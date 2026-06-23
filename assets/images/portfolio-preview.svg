@@ -1,0 +1,31 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 800 500"
+  role="img"
+  aria-labelledby="title description"
+>
+  <title id="title">Portfolio bento layout preview</title>
+  <desc id="description">
+    An abstract browser window containing an asymmetric grid of portfolio cards.
+  </desc>
+  <rect width="800" height="500" fill="#101415" />
+  <g stroke="#263337" stroke-width="1">
+    <path d="M0 100h800M0 200h800M0 300h800M0 400h800" />
+    <path d="M100 0v500M200 0v500M300 0v500M400 0v500M500 0v500M600 0v500M700 0v500" />
+  </g>
+  <rect x="56" y="44" width="688" height="412" rx="22" fill="#171d1f" stroke="#425156" stroke-width="2" />
+  <circle cx="84" cy="72" r="6" fill="#00bbff" />
+  <circle cx="106" cy="72" r="6" fill="#425156" />
+  <circle cx="128" cy="72" r="6" fill="#425156" />
+  <rect x="80" y="106" width="412" height="164" rx="16" fill="#20282b" stroke="#425156" />
+  <rect x="516" y="106" width="204" height="164" rx="16" fill="#dce6e9" />
+  <rect x="80" y="294" width="236" height="130" rx="16" fill="#dce6e9" />
+  <rect x="340" y="294" width="380" height="130" rx="16" fill="#20282b" stroke="#425156" />
+  <rect x="108" y="136" width="84" height="10" rx="5" fill="#00bbff" />
+  <rect x="108" y="162" width="306" height="18" rx="9" fill="#f4f7f8" />
+  <rect x="108" y="194" width="244" height="10" rx="5" fill="#7f9197" />
+  <rect x="108" y="222" width="132" height="24" rx="8" fill="#00bbff" />
+  <rect x="368" y="326" width="180" height="14" rx="7" fill="#f4f7f8" />
+  <rect x="368" y="354" width="292" height="9" rx="4.5" fill="#7f9197" />
+  <rect x="368" y="376" width="246" height="9" rx="4.5" fill="#7f9197" />
+</svg>
