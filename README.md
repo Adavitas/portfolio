@@ -28,6 +28,9 @@ systems work.
 
 ```text
 portfolio/
+|-- .github/
+|   `-- workflows/
+|       `-- quality.yml
 |-- assets/
 |   `-- images/
 |-- css/
@@ -36,8 +39,18 @@ portfolio/
 |-- js/
 |   |-- main.js
 |   `-- theme-init.js
+|-- projects/
+|   |-- minishell.html
+|   |-- portfolio.html
+|   `-- push-swap.html
+|-- scripts/
+|   `-- check.mjs
+|-- tests/
+|   |-- main-behavior.test.mjs
+|   `-- site-contracts.test.mjs
 |-- .nojekyll
 |-- index.html
+|-- package.json
 `-- README.md
 ```
 
@@ -59,7 +72,28 @@ The site has no installation step because it uses browser-native technologies.
 
 ## Quality Checks
 
-Check both JavaScript files:
+Node is used only for development checks. The website remains ordinary static
+HTML, CSS, and JavaScript in the browser, so there is no build step and no
+package installation.
+
+Run the automated test suite:
+
+```bash
+npm test
+```
+
+Run the full local quality check:
+
+```bash
+npm run check
+```
+
+`npm run check` performs JavaScript syntax checks and then runs the Node test
+suite. These tests verify source contracts, internal links, metadata,
+accessibility references, and important JavaScript behavior. They do not replace
+manual browser, keyboard, screen-reader, reduced-motion, or Lighthouse checks.
+
+For troubleshooting, you can still run the syntax checks directly:
 
 ```bash
 node --check js/theme-init.js
@@ -79,20 +113,20 @@ git status --short
 git diff
 ```
 
-## GitHub Pages Deployment
+GitHub Actions also runs `npm run check` on pushes and pull requests. The
+workflow is quality-only: it does not deploy, publish, require secrets, or write
+to the repository.
 
-This repository is prepared for branch-based GitHub Pages deployment. Relative
-asset paths allow it to work from the `/portfolio/` project path, and
-`.nojekyll` prevents an unnecessary Jekyll build.
+## Deployment Status
 
-1. Push the `main` branch to GitHub.
-2. Open the repository's **Settings**.
-3. Select **Pages** under **Code and automation**.
-4. Choose **Deploy from a branch**.
-5. Select the `main` branch and the `/ (root)` folder.
-6. Save the configuration.
-7. Open the published URL shown by GitHub and repeat the mobile, keyboard, link,
-   theme, form, and reduced-motion checks.
+Deployment is intentionally deferred. The repository is prepared for a future
+branch-based GitHub Pages setup, but GitHub Pages should not be enabled until
+that decision is made explicitly. Relative asset paths allow the site to work
+from the `/portfolio/` project path, and `.nojekyll` prevents an unnecessary
+Jekyll build if deployment is approved later.
+
+Before any future deployment, repeat the local quality checks and the manual
+mobile, keyboard, link, theme, form, reduced-motion, and browser checks.
 
 ## Contact
 
