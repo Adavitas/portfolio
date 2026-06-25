@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Case study of a collaborative C shell project using tokenization, an abstract syntax tree, Unix processes, pipes, redirections, built-ins, environment expansion, and signal handling."
+    />
+    <meta name="author" content="Aleksandre Davitashvili" />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="robots" content="index, follow" />
+    <meta
+      property="og:title"
+      content="Minishell Case Study | Aleksandre Davitashvili"
+    />
+    <meta
+      property="og:description"
+      content="How a small Unix shell was structured around parsing, an abstract syntax tree, process management, redirections, and built-in commands."
+    />
+    <meta property="og:type" content="article" />
+    <meta property="og:locale" content="en_US" />
+    <meta
+      property="og:site_name"
+      content="Aleksandre Davitashvili Portfolio"
+    />
+    <meta name="twitter:card" content="summary" />
+    <meta
+      name="twitter:title"
+      content="Minishell Case Study | Aleksandre Davitashvili"
+    />
+    <meta
+      name="twitter:description"
+      content="How a small Unix shell was structured around parsing, an abstract syntax tree, process management, redirections, and built-in commands."
+    />
+    <title>Minishell Case Study | Aleksandre Davitashvili</title>
+    <link
+      rel="icon"
+      href="../assets/images/favicon.svg"
+      type="image/svg+xml"
+    />
+    <script src="../js/theme-init.js"></script>
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <header>
+      <nav aria-label="Main navigation">
+        <a class="logo" href="../index.html#hero">Aleksandre Davitashvili</a>
+        <div class="nav-actions">
+          <button class="theme-button" type="button" aria-label="Switch theme">
+            <span class="theme-button-label" aria-hidden="true">Theme</span>
+          </button>
+          <button
+            class="menu-button"
+            type="button"
+            aria-expanded="false"
+            aria-controls="nav-links"
+          >
+            <span class="menu-button-label">Menu</span>
+          </button>
+        </div>
+        <ul class="nav-links" id="nav-links">
+          <li><a href="../index.html#about">About</a></li>
+          <li><a href="../index.html#projects">Projects</a></li>
+          <li><a href="../index.html#now">Now</a></li>
+          <li><a href="../index.html#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main id="main-content" class="case-study-page" tabindex="-1">
+      <a class="case-study-back-link" href="../index.html#projects"
+        >Back to selected projects</a
+      >
+
+      <article class="case-study">
+        <header class="case-study-hero">
+          <div class="case-study-hero-copy">
+            <p class="eyebrow">Case study / Unix systems</p>
+            <h1>Building a shell from tokens to processes</h1>
+            <p class="case-study-introduction">
+              Minishell is a collaborative C project that recreates a focused
+              subset of shell behavior through parsing, process management,
+              file descriptors, environment state, and signal handling.
+            </p>
+
+            <dl class="case-study-meta">
+              <div>
+                <dt>Role</dt>
+                <dd>Collaborative C development</dd>
+              </div>
+              <div>
+                <dt>Stack</dt>
+                <dd>C, Unix, Readline</dd>
+              </div>
+              <div>
+                <dt>Focus</dt>
+                <dd>Parsing and process management</dd>
+              </div>
+            </dl>
+          </div>
+
+          <img
+            src="../assets/images/minishell-preview.svg"
+            alt="Terminal illustration representing the Minishell project"
+            width="800"
+            height="500"
+          />
+        </header>
+
+        <section class="card case-study-section">
+          <p class="eyebrow">Overview</p>
+          <h2 id="overview-heading">A focused shell built in C</h2>
+          <p>
+            This two-person 42 project reads commands through Readline, records
+            command history, turns input into structured syntax, and executes
+            the resulting commands. It supports pipelines, input and output
+            redirections, append mode, heredocs, environment expansion, and the
+            previous command status through <code>$?</code>.
+          </p>
+          <p>
+            The project also implements seven built-ins: <code>echo</code>,
+            <code>cd</code>, <code>pwd</code>, <code>export</code>,
+            <code>unset</code>, <code>env</code>, and <code>exit</code>. External
+            programs are resolved from the environment and launched through
+            Unix process APIs.
+          </p>
+        </section>
+
+        <section class="card case-study-section">
+          <p class="eyebrow">Problem and goals</p>
+          <h2 id="problem-heading">
+            Coordinate language rules with operating-system behavior
+          </h2>
+          <p>
+            A shell has to interpret text and manage processes at the same time.
+            Quote handling, variable expansion, redirections, and pipes all
+            influence what should execute and which file descriptors each
+            process should receive.
+          </p>
+          <ul class="case-study-section-list">
+            <li>Separate lexical analysis, syntax analysis, and execution.</li>
+            <li>Represent command relationships before starting processes.</li>
+            <li>Connect pipeline stages without leaking unused descriptors.</li>
+            <li>Keep environment-changing built-ins in the parent shell.</li>
+            <li>Restore an interactive prompt after signals and command errors.</li>
+            <li>Release transient tokens, syntax nodes, strings, and heredocs.</li>
+          </ul>
+        </section>
+
+        <section class="card case-study-section">
+          <p class="eyebrow">Implementation</p>
+          <h2 id="decisions-heading">A staged route from text to execution</h2>
+
+          <h3>Tokenize while preserving quote context</h3>
+          <p>
+            The lexical-analysis modules split input into words and operators
+            while retaining quote information. Keeping this context allows a
+            later expansion stage to distinguish literal text from values that
+            should be expanded.
+          </p>
+
+          <h3>Build an abstract syntax tree</h3>
+          <p>
+            Syntax analysis validates the token sequence and creates nodes for
+            commands, pipes, input, output, append, and heredoc redirections.
+            Left and right child pointers represent how pipeline stages relate
+            instead of making execution depend on the original text.
+          </p>
+
+          <h3>Expand environment values after parsing</h3>
+          <p>
+            The environment is stored as a linked list. Expansion resolves
+            named variables and <code>$?</code>, which carries the previous
+            command's status, while quote data controls where expansion applies.
+          </p>
+
+          <h3>Execute pipelines through Unix primitives</h3>
+          <p>
+            External commands use <code>fork</code>, <code>execve</code>, and
+            <code>waitpid</code>. Pipeline nodes create descriptors with
+            <code>pipe</code>, connect standard input and output with
+            <code>dup2</code>, and close descriptors that each process no longer
+            needs.
+          </p>
+
+          <h3>Preserve shell state for built-ins</h3>
+          <p>
+            A standalone built-in runs in the parent process so commands such as
+            <code>cd</code>, <code>export</code>, and <code>unset</code> can change
+            the continuing shell state. Commands inside pipelines execute in
+            child-process paths where their changes should not affect the parent.
+          </p>
+
+          <h3>Use different signal behavior for different modes</h3>
+          <p>
+            The interactive parent, child commands, and heredoc input install
+            different signal behavior. This reflects that Ctrl+C at a prompt is
+            not the same event as interrupting a running command or a heredoc.
+          </p>
+        </section>
+
+        <section class="card case-study-section">
+          <p class="eyebrow">Reliability and scope</p>
+          <h2 id="reliability-heading">Define the supported shell clearly</h2>
+          <p>
+            The code checks syntax before building the final execution tree and
+            routes cleanup through dedicated token, AST, heredoc, environment,
+            and descriptor helpers. Redirection logic preserves and restores
+            standard descriptors around parent-process built-ins.
+          </p>
+          <p>
+            This is intentionally a learning shell, not a complete Bash or
+            POSIX implementation. Logical operators, wildcard expansion,
+            subshells, and job control are outside its implemented scope. Naming
+            those limits is more accurate than presenting a subset as a full
+            replacement.
+          </p>
+        </section>
+
+        <section class="card case-study-section">
+          <p class="eyebrow">Testing</p>
+          <h2 id="testing-heading">Check architecture, behavior, and portability</h2>
+          <p>
+            The repository builds with <code>-Wall -Wextra -Werror</code> and
+            links against Readline. Testing a shell also requires focused cases
+            for quoting, expansion, pipelines, redirection order, built-ins,
+            exit statuses, heredoc interruption, and signals.
+          </p>
+          <ul class="case-study-section-list">
+            <li>Trace representative input from tokens through the AST.</li>
+            <li>Compare simple command and pipeline output with Bash behavior.</li>
+            <li>Verify parent-state changes for environment built-ins.</li>
+            <li>Exercise missing commands, invalid syntax, and failed files.</li>
+            <li>Interrupt the prompt, child processes, and heredocs separately.</li>
+            <li>Inspect cleanup paths after both successful and failed commands.</li>
+          </ul>
+          <p>
+            A current macOS compile check found a Readline API compatibility
+            difference: the available headers expose <code>clear_history</code>
+            while this source calls <code>rl_clear_history</code>. Therefore this
+            case study does not claim that the current checkout is portable
+            across every Readline environment without adjustment.
+          </p>
+        </section>
+
+        <section class="card case-study-section">
+          <p class="eyebrow">Outcome</p>
+          <h2 id="lessons-heading">What the project made concrete</h2>
+          <p>
+            Minishell connected data structures and parsing decisions directly
+            to observable operating-system behavior. A token type can determine
+            an AST shape, and that shape can determine which processes and file
+            descriptors exist at runtime.
+          </p>
+          <ul class="case-study-section-list">
+            <li>Parsing first makes complex execution paths easier to reason about.</li>
+            <li>File-descriptor ownership must be explicit in every process.</li>
+            <li>Parent and child execution have different state responsibilities.</li>
+            <li>Signals are application state, not only isolated callbacks.</li>
+            <li>Shared interfaces matter when two developers own connected stages.</li>
+            <li>Portability needs to be tested against actual system libraries.</li>
+          </ul>
+        </section>
+
+        <section class="card case-study-section">
+          <p class="eyebrow">Technology</p>
+          <h2 id="technology-heading">Systems concepts used</h2>
+          <ul class="tag-list">
+            <li>C</li>
+            <li>Unix processes</li>
+            <li>File descriptors</li>
+            <li>Readline</li>
+            <li>Tokenization</li>
+            <li>Abstract syntax tree</li>
+            <li>Linked lists</li>
+            <li>Signals</li>
+            <li>Make</li>
+          </ul>
+        </section>
+
+        <nav
+          class="card case-study-navigation"
+          aria-labelledby="project-navigation-heading"
+        >
+          <div>
+            <p class="eyebrow">Project navigation</p>
+            <h2 id="project-navigation-heading">Continue exploring</h2>
+          </div>
+          <div class="case-study-navigation-links">
+            <a href="portfolio.html">Previous project: Portfolio</a>
+            <a href="../index.html#projects">All selected projects</a>
+            <a href="push-swap.html">Next project: Push Swap</a>
+            <a
+              href="https://github.com/Adavitas/minishell"
+              target="_blank"
+              rel="noopener noreferrer"
+              >View Minishell source</a
+            >
+          </div>
+        </nav>
+      </article>
+    </main>
+
+    <footer>
+      <p>&copy; 2026 Aleksandre Davitashvili.</p>
+      <p>Built with HTML, CSS, and JavaScript.</p>
+      <p><a href="#main-content">Back to case study top</a></p>
+    </footer>
+
+    <script src="../js/main.js" defer></script>
+  </body>
+</html>

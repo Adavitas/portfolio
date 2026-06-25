@@ -843,7 +843,7 @@ footer {
   }
 
   .case-study-navigation {
-    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-columns: minmax(14rem, 0.7fr) minmax(0, 1.3fr);
   }
 
   .case-study-navigation-links {
