@@ -68,9 +68,9 @@
     </header>
 
     <main id="main-content" class="portfolio-grid" tabindex="-1">
-      <section id="hero" class="card hero-card">
+      <section id="hero" class="card hero-card card-spotlight">
         <div class="hero-copy">
-          <p class="eyebrow">Welcome</p>
+          <p class="eyebrow">Portfolio / 2026</p>
           <h1>Hi, I'm Aleksandre, a software developer learning by building.</h1>
           <p>
             I build accessible web interfaces with HTML, CSS, and JavaScript,
@@ -105,6 +105,13 @@
           </div>
         </div>
 
+      </section>
+
+      <aside
+        class="card portrait-card card-spotlight"
+        aria-label="Portrait and current role"
+        data-reveal
+      >
         <img
           src="assets/images/portrait.jpeg"
           alt="Aleksandre Davitashvili standing in front of a geometric wall decoration"
@@ -112,9 +119,79 @@
           height="560"
           fetchpriority="high"
         />
+        <div class="portrait-card-copy">
+          <p class="eyebrow">42 Wolfsburg</p>
+          <p>Software developer focused on frontend craft and Unix systems.</p>
+        </div>
+      </aside>
+
+      <section
+        class="card status-card availability-card card-spotlight"
+        aria-labelledby="availability-heading"
+        data-reveal
+      >
+        <p class="eyebrow">Available</p>
+        <h2 id="availability-heading">Open to focused frontend and systems work.</h2>
+        <p>
+          Best fit: small teams that care about accessible interfaces, clear
+          code, and learning in public.
+        </p>
+        <a
+          class="inline-card-link"
+          href="mailto:leqso.davitashvili.st@gmail.com?subject=Portfolio%20enquiry"
+          >Email me</a
+        >
       </section>
 
-      <section id="about" class="card about-card" data-reveal>
+      <section
+        class="card stack-card card-spotlight"
+        aria-labelledby="stack-heading"
+        data-reveal
+        data-reveal-delay="short"
+      >
+        <p class="eyebrow">Core stack</p>
+        <h2 id="stack-heading">Browser-native first</h2>
+        <ul class="signal-list">
+          <li>
+            <strong>HTML</strong>
+            <span>Structure and semantics</span>
+          </li>
+          <li>
+            <strong>CSS</strong>
+            <span>Grid, tokens, responsive systems</span>
+          </li>
+          <li>
+            <strong>JavaScript</strong>
+            <span>Small progressive enhancements</span>
+          </li>
+        </ul>
+      </section>
+
+      <section
+        class="card globe-card card-spotlight"
+        aria-labelledby="globe-heading"
+        data-reveal
+        data-reveal-delay="short"
+      >
+        <div class="globe-visual" aria-hidden="true">
+          <span class="globe-axis"></span>
+          <span class="globe-ring globe-ring-horizontal"></span>
+          <span class="globe-ring globe-ring-vertical"></span>
+          <span class="globe-dot globe-dot-one"></span>
+          <span class="globe-dot globe-dot-two"></span>
+          <span class="globe-dot globe-dot-three"></span>
+        </div>
+        <div>
+          <p class="eyebrow">Reach</p>
+          <h2 id="globe-heading">Remote-friendly collaboration</h2>
+          <p>
+            Built to share work clearly through source links, case studies, and
+            direct email contact.
+          </p>
+        </div>
+      </section>
+
+      <section id="about" class="card about-card card-spotlight" data-reveal>
         <h2>About me</h2>
         <p>
           I am a software developer and 42 Wolfsburg student focused on
@@ -140,7 +217,20 @@
         </p>
       </section>
 
-      <section id="projects" class="card projects-card">
+      <section
+        class="card focus-card card-spotlight"
+        aria-labelledby="focus-heading"
+        data-reveal
+      >
+        <p class="eyebrow">Current focus</p>
+        <h2 id="focus-heading">Make the simple version solid.</h2>
+        <p>
+          Each project starts with working HTML, readable CSS, guarded
+          JavaScript, and checks that catch regressions before polish.
+        </p>
+      </section>
+
+      <section id="projects" class="card projects-card card-spotlight">
         <h2>Selected projects</h2>
         <p>
           These projects show my current work across frontend development,
@@ -148,7 +238,10 @@
         </p>
 
         <div class="grid-gallery">
-          <article class="card project-card featured-project" data-reveal>
+          <article
+            class="card project-card featured-project card-spotlight"
+            data-reveal
+          >
             <img
               src="assets/images/portfolio-preview.svg"
               alt="Abstract preview of this portfolio's bento card layout"
@@ -184,7 +277,7 @@
             </div>
           </article>
 
-          <article class="card project-card" data-reveal>
+          <article class="card project-card card-spotlight" data-reveal>
             <img
               src="assets/images/minishell-preview.svg"
               alt="Terminal illustration representing the Minishell project"
@@ -218,7 +311,7 @@
           </article>
 
           <article
-            class="card project-card"
+            class="card project-card card-spotlight"
             data-reveal
             data-reveal-delay="short"
           >
@@ -257,7 +350,7 @@
       </section>
 
       <div class="info-grid">
-        <section id="now" class="card now-card" data-reveal>
+        <section id="now" class="card now-card card-spotlight" data-reveal>
           <h2>Now</h2>
           <time datetime="2026-06-25">June 25, 2026</time>
           <p>
@@ -267,7 +360,7 @@
         </section>
 
         <section
-          class="card time-card"
+          class="card time-card card-spotlight"
           aria-labelledby="time-heading"
           data-reveal
           data-reveal-delay="short"
@@ -279,7 +372,7 @@
           </noscript>
         </section>
 
-        <section id="contact" class="card contact-card" data-reveal>
+        <section id="contact" class="card contact-card card-spotlight" data-reveal>
           <h2>Let's work together</h2>
           <p>
             Have a project, learning suggestion, or opportunity? Send me a

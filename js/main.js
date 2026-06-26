@@ -120,6 +120,28 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Pointer Spotlight Cards
+    const spotlightCards = document.querySelectorAll('.card-spotlight');
+    const finePointer = window.matchMedia('(pointer: fine)');
+
+    if (spotlightCards.length > 0 && finePointer.matches) {
+        spotlightCards.forEach((card) => {
+            card.addEventListener('pointermove', (event) => {
+                const rect = card.getBoundingClientRect();
+                const x = ((event.clientX - rect.left) / rect.width) * 100;
+                const y = ((event.clientY - rect.top) / rect.height) * 100;
+
+                card.style.setProperty('--spotlight-x', `${x}%`);
+                card.style.setProperty('--spotlight-y', `${y}%`);
+            });
+
+            card.addEventListener('pointerleave', () => {
+                card.style.removeProperty('--spotlight-x');
+                card.style.removeProperty('--spotlight-y');
+            });
+        });
+    }
+
     // Dynamic Time Display
     const timeElement = document.getElementById('local-time');
 
