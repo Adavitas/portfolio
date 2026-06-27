@@ -405,7 +405,10 @@
 
       <div class="info-grid">
         <section id="now" class="card now-card card-spotlight" data-reveal>
-          <h2>Now</h2>
+          <div class="now-card-header">
+            <h2>Now</h2>
+            <span class="status-pulse" aria-hidden="true"></span>
+          </div>
           <time datetime="2026-06-25">June 25, 2026</time>
           <p>
             Completing the final portfolio quality audit and setting up a
@@ -419,10 +422,85 @@
           data-reveal
           data-reveal-delay="short"
         >
-          <h2 id="time-heading">Your local time</h2>
-          <time id="local-time" aria-label="Current local time"></time>
+          <h2 id="time-heading">Time zones</h2>
+          <div class="timezone-list">
+            <div class="timezone-row">
+              <span class="timezone-label">Wolfsburg time</span>
+              <div class="timezone-value">
+                <time
+                  id="home-time"
+                  data-timezone="Europe/Berlin"
+                  aria-label="Current time in Wolfsburg"
+                ></time>
+                <span id="home-timezone-label" class="timezone-code"
+                  >Europe/Berlin</span
+                >
+              </div>
+            </div>
+            <div class="timezone-row">
+              <span class="timezone-label">Your time</span>
+              <div class="timezone-value">
+                <time
+                  id="visitor-time"
+                  aria-label="Current time in your timezone"
+                ></time>
+                <span id="visitor-timezone-label" class="timezone-code"
+                  >Local</span
+                >
+              </div>
+            </div>
+          </div>
           <noscript>
-            <p>JavaScript is required to display the live clock.</p>
+            <p>JavaScript is required to display the live timezone comparison.</p>
+          </noscript>
+        </section>
+
+        <section
+          class="card accent-card card-spotlight"
+          aria-labelledby="accent-heading"
+          data-reveal
+        >
+          <div>
+            <p class="eyebrow">Palette</p>
+            <h2 id="accent-heading">Accent color</h2>
+            <p>Keep dark or light mode, then tune the color signal.</p>
+          </div>
+          <div class="accent-swatches" role="group" aria-label="Accent colors">
+            <button
+              class="accent-swatch"
+              type="button"
+              data-accent="mint"
+              aria-pressed="true"
+            >
+              Mint
+            </button>
+            <button
+              class="accent-swatch"
+              type="button"
+              data-accent="amber"
+              aria-pressed="false"
+            >
+              Amber
+            </button>
+            <button
+              class="accent-swatch"
+              type="button"
+              data-accent="blue"
+              aria-pressed="false"
+            >
+              Blue
+            </button>
+            <button
+              class="accent-swatch"
+              type="button"
+              data-accent="rose"
+              aria-pressed="false"
+            >
+              Rose
+            </button>
+          </div>
+          <noscript>
+            <p>JavaScript is required to change the accent color.</p>
           </noscript>
         </section>
 

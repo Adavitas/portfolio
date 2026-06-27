@@ -60,6 +60,48 @@
   --shadow-color: rgb(34 55 47 / 12%);
 }
 
+:root[data-accent="amber"] {
+  --primary-color: #e4b95b;
+  --primary-color-hover: #f0ca78;
+  --accent-text-color: #171104;
+  --primary-focus-color: rgb(228 185 91 / 24%);
+}
+
+:root[data-theme="light"][data-accent="amber"] {
+  --primary-color: #946516;
+  --primary-color-hover: #704b0d;
+  --accent-text-color: #ffffff;
+  --primary-focus-color: rgb(148 101 22 / 22%);
+}
+
+:root[data-accent="blue"] {
+  --primary-color: #8fc7ff;
+  --primary-color-hover: #b8dcff;
+  --accent-text-color: #07111a;
+  --primary-focus-color: rgb(143 199 255 / 24%);
+}
+
+:root[data-theme="light"][data-accent="blue"] {
+  --primary-color: #236da8;
+  --primary-color-hover: #174f7d;
+  --accent-text-color: #ffffff;
+  --primary-focus-color: rgb(35 109 168 / 22%);
+}
+
+:root[data-accent="rose"] {
+  --primary-color: #f0a4b8;
+  --primary-color-hover: #ffc1cf;
+  --accent-text-color: #1a0710;
+  --primary-focus-color: rgb(240 164 184 / 24%);
+}
+
+:root[data-theme="light"][data-accent="rose"] {
+  --primary-color: #a83d5c;
+  --primary-color-hover: #7d2a43;
+  --accent-text-color: #ffffff;
+  --primary-focus-color: rgb(168 61 92 / 22%);
+}
+
 body {
   background-color: var(--bg-color);
   color: var(--text-color);
@@ -717,11 +759,34 @@ nav .nav-links a:hover {
 
 .project-copy > a,
 .project-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
   justify-self: start;
   padding-block: 0.25rem;
   color: var(--primary-color);
   font-weight: 600;
   text-underline-offset: 0.25rem;
+}
+
+.project-copy > a::after,
+.project-links a::after {
+  display: inline-block;
+  content: "\2197";
+  font-size: 0.85em;
+  line-height: 1;
+  opacity: 0.72;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.project-copy > a:hover::after,
+.project-copy > a:focus-visible::after,
+.project-links a:hover::after,
+.project-links a:focus-visible::after {
+  opacity: 1;
+  transform: translate(0.12rem, -0.12rem);
 }
 
 .project-copy > a:focus-visible,
@@ -755,6 +820,160 @@ nav .nav-links a:hover {
 .info-grid {
   display: grid;
   gap: var(--grid-gap);
+}
+
+.now-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.now-card-header h2 {
+  margin-bottom: 0;
+}
+
+.status-pulse {
+  position: relative;
+  width: 0.8rem;
+  aspect-ratio: 1;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background-color: var(--primary-color);
+  box-shadow: 0 0 1rem var(--primary-color);
+}
+
+.status-pulse::after {
+  position: absolute;
+  inset: -0.45rem;
+  border: 1px solid var(--primary-color);
+  border-radius: inherit;
+  content: "";
+  opacity: 0;
+  animation: status-pulse 1.9s ease-out infinite;
+}
+
+@keyframes status-pulse {
+  from {
+    opacity: 0.68;
+    scale: 0.55;
+  }
+
+  to {
+    opacity: 0;
+    scale: 1.8;
+  }
+}
+
+.timezone-list,
+.accent-card {
+  display: grid;
+  gap: 1rem;
+}
+
+.timezone-row {
+  display: grid;
+  gap: 0.35rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.timezone-label,
+.timezone-code {
+  color: var(--muted-text-color);
+  font-size: 0.85rem;
+}
+
+.timezone-value {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.75rem;
+}
+
+.timezone-value time {
+  color: var(--text-color);
+  font-family: var(--mono-family);
+  font-size: clamp(1.8rem, 6vw, 2.75rem);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.06em;
+  line-height: 1;
+}
+
+.accent-swatches {
+  display: none;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.js-enabled .accent-swatches {
+  display: flex;
+}
+
+.accent-swatch {
+  --swatch-color: #9adbc8;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 2.5rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background-color: transparent;
+  color: var(--muted-text-color);
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.accent-swatch::before {
+  width: 0.85rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background-color: var(--swatch-color);
+  box-shadow: 0 0 0 0.2rem rgb(255 255 255 / 8%);
+  content: "";
+}
+
+.accent-swatch[data-accent="amber"] {
+  --swatch-color: #e4b95b;
+}
+
+.accent-swatch[data-accent="blue"] {
+  --swatch-color: #8fc7ff;
+}
+
+.accent-swatch[data-accent="rose"] {
+  --swatch-color: #f0a4b8;
+}
+
+.accent-swatch:hover,
+.accent-swatch:focus-visible {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.accent-swatch:active {
+  transform: translateY(1px);
+}
+
+.accent-swatch[aria-pressed="true"] {
+  border-color: var(--primary-color);
+  background-color: var(--primary-color);
+  color: var(--accent-text-color);
+}
+
+.accent-swatch:focus-visible {
+  outline: 3px solid var(--focus-outline-color);
+  outline-offset: 3px;
 }
 
 @media (min-width: 700px) {
@@ -1136,6 +1355,7 @@ footer a:focus-visible {
 .case-study-navigation a {
   display: inline-flex;
   align-items: center;
+  gap: 0.35rem;
   min-height: 2.75rem;
   padding: 0.65rem 1rem;
   border: 1px solid var(--primary-color);
@@ -1148,9 +1368,26 @@ footer a:focus-visible {
     color 0.2s ease;
 }
 
+.case-study-navigation a::after {
+  display: inline-block;
+  content: "\2197";
+  font-size: 0.85em;
+  line-height: 1;
+  opacity: 0.72;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
 .case-study-navigation a:hover {
   background-color: var(--primary-color);
   color: var(--accent-text-color);
+}
+
+.case-study-navigation a:hover::after,
+.case-study-navigation a:focus-visible::after {
+  opacity: 1;
+  transform: translate(0.12rem, -0.12rem);
 }
 
 footer {
@@ -1243,10 +1480,15 @@ footer {
   .skip-link,
   .menu-button,
   .theme-button,
+  .accent-swatch,
   .project-filter-button,
   #contact-form button,
   .project-card,
   .case-study-navigation a,
+  .case-study-navigation a::after,
+  .project-copy > a::after,
+  .project-links a::after,
+  .status-pulse::after,
   .card-spotlight::before,
   .globe-dot {
     transition: none;
@@ -1256,10 +1498,17 @@ footer {
   .call-to-action:hover,
   .menu-button:active,
   .theme-button:active,
+  .accent-swatch:active,
   .project-filter-button:active,
   #contact-form button:active,
   .project-card:hover,
-  .project-card:focus-within {
+  .project-card:focus-within,
+  .case-study-navigation a:hover::after,
+  .case-study-navigation a:focus-visible::after,
+  .project-copy > a:hover::after,
+  .project-copy > a:focus-visible::after,
+  .project-links a:hover::after,
+  .project-links a:focus-visible::after {
     transform: none;
   }
 }

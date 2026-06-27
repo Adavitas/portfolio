@@ -3,6 +3,9 @@
 document.documentElement.classList.add('js-enabled');
 
 document.addEventListener('DOMContentLoaded', () => {
+    const accentStorageKey = 'portfolio-accent';
+    const allowedAccents = ['mint', 'amber', 'blue', 'rose'];
+
     // Theme Switcher
     const themeButton = document.querySelector('.theme-button');
     const themeButtonLabel = document.querySelector('.theme-button-label');
@@ -71,6 +74,58 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!hasExplicitTheme) {
                 setTheme(event.matches ? 'dark' : 'light');
             }
+        });
+    }
+
+    // Accent Palette
+    const accentButtons = document.querySelectorAll('.accent-swatch');
+
+    if (accentButtons.length > 0) {
+        function readSavedAccent() {
+            try {
+                const savedAccent = localStorage.getItem(accentStorageKey);
+                return allowedAccents.includes(savedAccent) ? savedAccent : null;
+            } catch {
+                return null;
+            }
+        }
+
+        function saveAccent(accent) {
+            try {
+                localStorage.setItem(accentStorageKey, accent);
+            } catch {
+                // The selected accent still works for this page load.
+            }
+        }
+
+        function setAccent(accent, shouldSave = false) {
+            const nextAccent = allowedAccents.includes(accent) ? accent : 'mint';
+
+            document.documentElement.dataset.accent = nextAccent;
+
+            accentButtons.forEach((button) => {
+                const isActive = button.dataset.accent === nextAccent;
+                button.classList.toggle('is-active', isActive);
+                button.setAttribute('aria-pressed', String(isActive));
+            });
+
+            if (shouldSave) {
+                saveAccent(nextAccent);
+            }
+        }
+
+        const initialAccent = allowedAccents.includes(
+            document.documentElement.dataset.accent,
+        )
+            ? document.documentElement.dataset.accent
+            : readSavedAccent() ?? 'mint';
+
+        setAccent(initialAccent);
+
+        accentButtons.forEach((button) => {
+            button.addEventListener('click', () => {
+                setAccent(button.dataset.accent, true);
+            });
         });
     }
 
@@ -218,19 +273,71 @@ document.addEventListener('DOMContentLoaded', () => {
         updateProjectFilter(initialActiveButton);
     }
 
-    // Dynamic Time Display
-    const timeElement = document.getElementById('local-time');
+    // Dynamic Timezone Display
+    const homeTimeElement = document.getElementById('home-time');
+    const visitorTimeElement = document.getElementById('visitor-time');
+    const homeTimezoneLabel = document.getElementById('home-timezone-label');
+    const visitorTimezoneLabel = document.getElementById(
+        'visitor-timezone-label',
+    );
 
-    if (timeElement) {
-        function updateTime() {
-            const now = new Date();
-            timeElement.textContent = now.toLocaleTimeString();
-            timeElement.dateTime = now.toISOString();
+    if (homeTimeElement && visitorTimeElement) {
+        const homeTimezone =
+            homeTimeElement.dataset.timezone || 'Europe/Berlin';
+
+        function getVisitorTimezone() {
+            try {
+                return Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
+            } catch {
+                return 'UTC';
+            }
         }
 
-        // Initial call and set interval
-        updateTime();
-        setInterval(updateTime, 1000);
+        function formatTime(date, timezone) {
+            return new Intl.DateTimeFormat(undefined, {
+                hour: 'numeric',
+                minute: '2-digit',
+                timeZone: timezone,
+            }).format(date);
+        }
+
+        function formatTimezoneLabel(timezone) {
+            try {
+                const parts = new Intl.DateTimeFormat('en-US', {
+                    timeZone: timezone,
+                    timeZoneName: 'short',
+                }).formatToParts(new Date());
+                const timezonePart = parts.find(
+                    (part) => part.type === 'timeZoneName',
+                );
+
+                return timezonePart?.value ?? timezone;
+            } catch {
+                return timezone;
+            }
+        }
+
+        function updateTimezones() {
+            const now = new Date();
+            const visitorTimezone = getVisitorTimezone();
+
+            homeTimeElement.textContent = formatTime(now, homeTimezone);
+            homeTimeElement.dateTime = now.toISOString();
+            visitorTimeElement.textContent = formatTime(now, visitorTimezone);
+            visitorTimeElement.dateTime = now.toISOString();
+
+            if (homeTimezoneLabel) {
+                homeTimezoneLabel.textContent = formatTimezoneLabel(homeTimezone);
+            }
+
+            if (visitorTimezoneLabel) {
+                visitorTimezoneLabel.textContent =
+                    formatTimezoneLabel(visitorTimezone);
+            }
+        }
+
+        updateTimezones();
+        setInterval(updateTimezones, 60000);
     }
 
     // Responsive Navigation

@@ -413,6 +413,7 @@ function runMain(options = {}) {
             return intervals.length;
         },
         Date: options.DateConstructor ?? Date,
+        Intl,
         encodeURIComponent,
     };
 
@@ -475,6 +476,55 @@ function createThemeDom(initialTheme = 'dark') {
         document,
         button,
         label,
+    };
+}
+
+function createAccentDom(initialAccent = 'mint') {
+    const document = new MockDocument();
+    document.documentElement.dataset.accent = initialAccent;
+
+    const mintButton = appendElement(document, 'button', {
+        className: 'accent-swatch',
+        attributes: {
+            'aria-pressed': 'true',
+            'data-accent': 'mint',
+        },
+    });
+    mintButton.textContent = 'Mint';
+
+    const amberButton = appendElement(document, 'button', {
+        className: 'accent-swatch',
+        attributes: {
+            'aria-pressed': 'false',
+            'data-accent': 'amber',
+        },
+    });
+    amberButton.textContent = 'Amber';
+
+    const blueButton = appendElement(document, 'button', {
+        className: 'accent-swatch',
+        attributes: {
+            'aria-pressed': 'false',
+            'data-accent': 'blue',
+        },
+    });
+    blueButton.textContent = 'Blue';
+
+    const roseButton = appendElement(document, 'button', {
+        className: 'accent-swatch',
+        attributes: {
+            'aria-pressed': 'false',
+            'data-accent': 'rose',
+        },
+    });
+    roseButton.textContent = 'Rose';
+
+    return {
+        document,
+        mintButton,
+        amberButton,
+        blueButton,
+        roseButton,
     };
 }
 
@@ -621,6 +671,29 @@ function createProjectFilterDom() {
     };
 }
 
+function createTimezoneDom() {
+    const document = new MockDocument();
+    const homeTime = appendElement(document, 'time', {
+        id: 'home-time',
+        attributes: { 'data-timezone': 'Europe/Berlin' },
+    });
+    const visitorTime = appendElement(document, 'time', { id: 'visitor-time' });
+    const homeTimezoneLabel = appendElement(document, 'span', {
+        id: 'home-timezone-label',
+    });
+    const visitorTimezoneLabel = appendElement(document, 'span', {
+        id: 'visitor-timezone-label',
+    });
+
+    return {
+        document,
+        homeTime,
+        visitorTime,
+        homeTimezoneLabel,
+        visitorTimezoneLabel,
+    };
+}
+
 test('theme-init accepts saved light and dark themes', () => {
     for (const theme of ['light', 'dark']) {
         const media = createMatchMediaController({
@@ -635,15 +708,38 @@ test('theme-init accepts saved light and dark themes', () => {
     }
 });
 
+test('theme-init applies saved accent before styles render', () => {
+    for (const accent of ['mint', 'amber', 'blue', 'rose']) {
+        const document = runThemeInit({
+            media: createMatchMediaController({
+                '(prefers-color-scheme: dark)': true,
+            }),
+            storage: createStorage({
+                initial: {
+                    'portfolio-accent': accent,
+                },
+            }),
+        });
+
+        assert.equal(document.documentElement.dataset.accent, accent);
+    }
+});
+
 test('theme-init falls back safely for invalid saved values and storage failure', () => {
     const invalidThemeDocument = runThemeInit({
         media: createMatchMediaController({
             '(prefers-color-scheme: dark)': true,
         }),
-        storage: createStorage({ initial: { 'portfolio-theme': 'blue' } }),
+        storage: createStorage({
+            initial: {
+                'portfolio-theme': 'blue',
+                'portfolio-accent': 'purple',
+            },
+        }),
     });
 
     assert.equal(invalidThemeDocument.documentElement.dataset.theme, 'dark');
+    assert.equal(invalidThemeDocument.documentElement.dataset.accent, 'mint');
 
     const blockedStorageDocument = runThemeInit({
         media: createMatchMediaController({
@@ -653,6 +749,7 @@ test('theme-init falls back safely for invalid saved values and storage failure'
     });
 
     assert.equal(blockedStorageDocument.documentElement.dataset.theme, 'light');
+    assert.equal(blockedStorageDocument.documentElement.dataset.accent, 'mint');
 });
 
 test('theme button updates data-theme and describes the next action', () => {
@@ -704,6 +801,30 @@ test('system theme changes apply only before an explicit user choice', () => {
 
     media.set('(prefers-color-scheme: dark)', false);
     assert.equal(document.documentElement.dataset.theme, 'dark');
+});
+
+test('accent swatches update data-accent, pressed state, and storage', () => {
+    const { document, mintButton, blueButton, roseButton } = createAccentDom();
+    const storage = createStorage();
+
+    runMain({ document, storage });
+
+    assert.equal(document.documentElement.dataset.accent, 'mint');
+    assert.equal(mintButton.getAttribute('aria-pressed'), 'true');
+
+    blueButton.dispatchEvent(createEvent('click'));
+
+    assert.equal(document.documentElement.dataset.accent, 'blue');
+    assert.equal(storage.valueFor('portfolio-accent'), 'blue');
+    assert.equal(mintButton.getAttribute('aria-pressed'), 'false');
+    assert.equal(blueButton.getAttribute('aria-pressed'), 'true');
+
+    roseButton.dispatchEvent(createEvent('click'));
+
+    assert.equal(document.documentElement.dataset.accent, 'rose');
+    assert.equal(storage.valueFor('portfolio-accent'), 'rose');
+    assert.equal(blueButton.getAttribute('aria-pressed'), 'false');
+    assert.equal(roseButton.getAttribute('aria-pressed'), 'true');
 });
 
 test('mobile navigation toggles, closes from links, and closes with Escape', () => {
@@ -933,9 +1054,8 @@ test('missing IntersectionObserver leaves reveal content visible', () => {
     assert.equal(revealElements[0].classList.contains('is-visible'), false);
 });
 
-test('clock writes visible text and a machine-readable datetime', () => {
-    const document = new MockDocument();
-    const timeElement = appendElement(document, 'time', { id: 'local-time' });
+test('timezone clock writes visible text and machine-readable datetimes', () => {
+    const dom = createTimezoneDom();
     const fixedIso = '2026-06-25T20:30:40.000Z';
 
     class FixedDate extends Date {
@@ -953,16 +1073,21 @@ test('clock writes visible text and a machine-readable datetime', () => {
     }
 
     const { intervals } = runMain({
-        document,
+        document: dom.document,
         DateConstructor: FixedDate,
     });
 
-    assert.ok(timeElement.textContent);
-    assert.equal(timeElement.dateTime, fixedIso);
-    assert.equal(Date.parse(timeElement.dateTime), FixedDate.now());
-    assert.equal(intervals[0].delay, 1000);
+    assert.ok(dom.homeTime.textContent);
+    assert.ok(dom.visitorTime.textContent);
+    assert.ok(dom.homeTimezoneLabel.textContent);
+    assert.ok(dom.visitorTimezoneLabel.textContent);
+    assert.equal(dom.homeTime.dateTime, fixedIso);
+    assert.equal(dom.visitorTime.dateTime, fixedIso);
+    assert.equal(Date.parse(dom.homeTime.dateTime), FixedDate.now());
+    assert.equal(Date.parse(dom.visitorTime.dateTime), FixedDate.now());
+    assert.equal(intervals[0].delay, 60000);
 });
 
-test('missing optional clock markup does not throw', () => {
+test('missing optional timezone and palette markup does not throw', () => {
     assert.doesNotThrow(() => runMain({ document: new MockDocument() }));
 });
