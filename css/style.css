@@ -471,30 +471,18 @@ nav .nav-links a:hover {
   align-self: start;
 }
 
-.status-card,
-.stack-card,
-.globe-card,
-.focus-card {
+.stack-card {
   display: grid;
   min-height: 16rem;
   align-content: space-between;
   gap: 1rem;
 }
 
-.status-card h2,
-.stack-card h2,
-.globe-card h2,
-.focus-card h2 {
+.stack-card h2 {
   max-width: 12ch;
   font-size: clamp(1.7rem, 5vw, 2.8rem);
   line-height: 0.94;
   letter-spacing: -0.06em;
-}
-
-.availability-card {
-  background:
-    linear-gradient(145deg, rgb(154 219 200 / 18%), transparent 52%),
-    var(--surface-color-soft);
 }
 
 .signal-list {
@@ -519,108 +507,6 @@ nav .nav-links a:hover {
 .signal-list span {
   color: var(--muted-text-color);
   font-size: 0.9rem;
-}
-
-.inline-card-link {
-  justify-self: start;
-  color: var(--primary-color);
-  font-weight: 700;
-  text-underline-offset: 0.25rem;
-}
-
-.inline-card-link:focus-visible {
-  outline: 3px solid var(--focus-outline-color);
-  outline-offset: 3px;
-}
-
-.globe-card {
-  background:
-    radial-gradient(circle at 50% 18%, rgb(154 219 200 / 18%), transparent 12rem),
-    var(--surface-color);
-}
-
-.globe-visual {
-  position: relative;
-  width: min(13rem, 68vw);
-  aspect-ratio: 1;
-  justify-self: center;
-  border: 1px solid var(--strong-border-color);
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 32% 28%, rgb(255 255 255 / 20%), transparent 1.8rem),
-    radial-gradient(circle at center, rgb(154 219 200 / 12%), transparent 65%);
-  box-shadow:
-    inset 0 0 2.5rem rgb(154 219 200 / 10%),
-    0 1.25rem 3rem var(--shadow-color);
-}
-
-.globe-axis,
-.globe-ring,
-.globe-dot {
-  position: absolute;
-  display: block;
-}
-
-.globe-axis {
-  inset: 14%;
-  border: 1px solid rgb(154 219 200 / 20%);
-  border-radius: 50%;
-  transform: rotate(-24deg);
-}
-
-.globe-ring {
-  inset: 18%;
-  border: 1px solid rgb(154 219 200 / 35%);
-  border-radius: 50%;
-}
-
-.globe-ring-horizontal {
-  height: 18%;
-  top: 41%;
-}
-
-.globe-ring-vertical {
-  width: 22%;
-  left: 39%;
-}
-
-.globe-dot {
-  width: 0.65rem;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background-color: var(--primary-color);
-  box-shadow: 0 0 1rem rgb(154 219 200 / 80%);
-  animation: pulse-dot 2.8s ease-in-out infinite;
-}
-
-.globe-dot-one {
-  top: 24%;
-  left: 62%;
-}
-
-.globe-dot-two {
-  top: 56%;
-  left: 28%;
-  animation-delay: 0.45s;
-}
-
-.globe-dot-three {
-  right: 25%;
-  bottom: 22%;
-  animation-delay: 0.9s;
-}
-
-@keyframes pulse-dot {
-  0%,
-  100% {
-    scale: 0.82;
-    opacity: 0.68;
-  }
-
-  50% {
-    scale: 1;
-    opacity: 1;
-  }
 }
 
 .call-to-action {
@@ -1021,11 +907,8 @@ nav .nav-links a:hover {
     grid-column: span 3;
   }
 
-  .availability-card,
   .stack-card,
-  .globe-card,
-  .about-card,
-  .focus-card {
+  .about-card {
     grid-column: span 3;
   }
 
@@ -1415,18 +1298,12 @@ footer {
     grid-column: span 5;
   }
 
-  .availability-card,
-  .stack-card,
-  .globe-card {
+  .stack-card {
     grid-column: span 4;
   }
 
   .about-card {
     grid-column: span 8;
-  }
-
-  .focus-card {
-    grid-column: span 4;
   }
 
   .projects-card,
@@ -1489,8 +1366,7 @@ footer {
   .project-copy > a::after,
   .project-links a::after,
   .status-pulse::after,
-  .card-spotlight::before,
-  .globe-dot {
+  .card-spotlight::before {
     transition: none;
     animation: none;
   }
