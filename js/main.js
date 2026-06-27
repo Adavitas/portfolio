@@ -142,6 +142,82 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Project Filter
+    const projectFilterButtons = document.querySelectorAll(
+        '.project-filter-button',
+    );
+    const projectCards = document.querySelectorAll('.project-card');
+    const projectFilterStatus = document.getElementById(
+        'project-filter-status',
+    );
+
+    if (
+        projectFilterButtons.length > 0 &&
+        projectCards.length > 0 &&
+        projectFilterStatus
+    ) {
+        function projectMatchesFilter(projectCard, filter) {
+            if (filter === 'all') {
+                return true;
+            }
+
+            const categories = (
+                projectCard.dataset.projectCategories ?? ''
+            ).split(/\s+/);
+
+            return categories.includes(filter);
+        }
+
+        function getFilterLabel(filterButton) {
+            return filterButton.textContent.trim().toLowerCase();
+        }
+
+        function updateProjectFilter(activeButton) {
+            const activeFilter = activeButton.dataset.projectFilter ?? 'all';
+            let visibleProjects = 0;
+
+            projectFilterButtons.forEach((button) => {
+                const isActive = button === activeButton;
+                button.classList.toggle('is-active', isActive);
+                button.setAttribute('aria-pressed', String(isActive));
+            });
+
+            projectCards.forEach((projectCard) => {
+                const shouldShow = projectMatchesFilter(
+                    projectCard,
+                    activeFilter,
+                );
+
+                projectCard.hidden = !shouldShow;
+
+                if (shouldShow) {
+                    visibleProjects += 1;
+                }
+            });
+
+            const projectWord = visibleProjects === 1 ? 'project' : 'projects';
+            const filterLabel = getFilterLabel(activeButton);
+
+            projectFilterStatus.textContent =
+                activeFilter === 'all'
+                    ? `Showing all ${visibleProjects} ${projectWord}.`
+                    : `Showing ${visibleProjects} ${filterLabel} ${projectWord}.`;
+        }
+
+        projectFilterButtons.forEach((button) => {
+            button.addEventListener('click', () => {
+                updateProjectFilter(button);
+            });
+        });
+
+        const initialActiveButton =
+            [...projectFilterButtons].find(
+                (button) => button.getAttribute('aria-pressed') === 'true',
+            ) ?? projectFilterButtons[0];
+
+        updateProjectFilter(initialActiveButton);
+    }
+
     // Dynamic Time Display
     const timeElement = document.getElementById('local-time');
 

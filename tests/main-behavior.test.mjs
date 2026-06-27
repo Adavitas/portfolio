@@ -128,6 +128,14 @@ class MockElement {
         if (name === 'href') {
             this.href = stringValue;
         }
+
+        if (name.startsWith('data-')) {
+            const datasetKey = name
+                .slice(5)
+                .replace(/-([a-z])/g, (_, letter) => letter.toUpperCase());
+
+            this.dataset[datasetKey] = stringValue;
+        }
     }
 
     getAttribute(name) {
@@ -559,6 +567,60 @@ function createRevealDom(count) {
     };
 }
 
+function createProjectFilterDom() {
+    const document = new MockDocument();
+    const status = appendElement(document, 'p', { id: 'project-filter-status' });
+    const allButton = appendElement(document, 'button', {
+        className: 'project-filter-button is-active',
+        attributes: {
+            'aria-pressed': 'true',
+            'data-project-filter': 'all',
+        },
+    });
+    allButton.textContent = 'All';
+
+    const frontendButton = appendElement(document, 'button', {
+        className: 'project-filter-button',
+        attributes: {
+            'aria-pressed': 'false',
+            'data-project-filter': 'frontend',
+        },
+    });
+    frontendButton.textContent = 'Frontend';
+
+    const systemsButton = appendElement(document, 'button', {
+        className: 'project-filter-button',
+        attributes: {
+            'aria-pressed': 'false',
+            'data-project-filter': 'systems',
+        },
+    });
+    systemsButton.textContent = 'Systems';
+
+    const frontendProject = appendElement(document, 'article', {
+        className: 'project-card',
+        attributes: {
+            'data-project-categories': 'frontend accessibility javascript',
+        },
+    });
+    const systemsProject = appendElement(document, 'article', {
+        className: 'project-card',
+        attributes: {
+            'data-project-categories': 'systems c unix parsing',
+        },
+    });
+
+    return {
+        document,
+        status,
+        allButton,
+        frontendButton,
+        systemsButton,
+        frontendProject,
+        systemsProject,
+    };
+}
+
 test('theme-init accepts saved light and dark themes', () => {
     for (const theme of ['light', 'dark']) {
         const media = createMatchMediaController({
@@ -684,6 +746,34 @@ test('desktop breakpoint resets mobile navigation state', () => {
 
     assert.equal(navigation.classList.contains('is-open'), false);
     assert.equal(button.getAttribute('aria-expanded'), 'false');
+});
+
+test('project filter toggles cards, button state, and live status', () => {
+    const dom = createProjectFilterDom();
+
+    runMain({ document: dom.document });
+    dom.frontendButton.dispatchEvent(createEvent('click'));
+
+    assert.equal(dom.frontendProject.hidden, false);
+    assert.equal(dom.systemsProject.hidden, true);
+    assert.equal(dom.allButton.getAttribute('aria-pressed'), 'false');
+    assert.equal(dom.frontendButton.getAttribute('aria-pressed'), 'true');
+    assert.equal(dom.status.textContent, 'Showing 1 frontend project.');
+
+    dom.systemsButton.dispatchEvent(createEvent('click'));
+
+    assert.equal(dom.frontendProject.hidden, true);
+    assert.equal(dom.systemsProject.hidden, false);
+    assert.equal(dom.frontendButton.getAttribute('aria-pressed'), 'false');
+    assert.equal(dom.systemsButton.getAttribute('aria-pressed'), 'true');
+    assert.equal(dom.status.textContent, 'Showing 1 systems project.');
+
+    dom.allButton.dispatchEvent(createEvent('click'));
+
+    assert.equal(dom.frontendProject.hidden, false);
+    assert.equal(dom.systemsProject.hidden, false);
+    assert.equal(dom.allButton.getAttribute('aria-pressed'), 'true');
+    assert.equal(dom.status.textContent, 'Showing all 2 projects.');
 });
 
 test('empty contact form submission exposes required errors and focuses first field', () => {

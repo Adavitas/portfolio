@@ -237,9 +237,58 @@
           process management, parsing, algorithms, and data structures.
         </p>
 
+        <div class="project-filter" aria-label="Filter selected projects">
+          <div
+            class="project-filter-buttons"
+            role="group"
+            aria-label="Project filters"
+          >
+            <button
+              class="project-filter-button is-active"
+              type="button"
+              data-project-filter="all"
+              aria-pressed="true"
+            >
+              All
+            </button>
+            <button
+              class="project-filter-button"
+              type="button"
+              data-project-filter="frontend"
+              aria-pressed="false"
+            >
+              Frontend
+            </button>
+            <button
+              class="project-filter-button"
+              type="button"
+              data-project-filter="systems"
+              aria-pressed="false"
+            >
+              Systems
+            </button>
+            <button
+              class="project-filter-button"
+              type="button"
+              data-project-filter="algorithms"
+              aria-pressed="false"
+            >
+              Algorithms
+            </button>
+          </div>
+          <p
+            class="project-filter-status"
+            id="project-filter-status"
+            aria-live="polite"
+          >
+            Showing all 3 projects.
+          </p>
+        </div>
+
         <div class="grid-gallery">
           <article
             class="card project-card featured-project card-spotlight"
+            data-project-categories="frontend accessibility javascript"
             data-reveal
           >
             <img
@@ -277,7 +326,11 @@
             </div>
           </article>
 
-          <article class="card project-card card-spotlight" data-reveal>
+          <article
+            class="card project-card card-spotlight"
+            data-project-categories="systems c unix parsing"
+            data-reveal
+          >
             <img
               src="assets/images/minishell-preview.svg"
               alt="Terminal illustration representing the Minishell project"
@@ -312,6 +365,7 @@
 
           <article
             class="card project-card card-spotlight"
+            data-project-categories="algorithms c data-structures"
             data-reveal
             data-reveal-delay="short"
           >

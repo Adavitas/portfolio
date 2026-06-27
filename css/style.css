@@ -615,6 +615,70 @@ nav .nav-links a:hover {
   margin-top: 1.5rem;
 }
 
+.project-filter {
+  display: none;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  padding: 0.85rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-inner);
+  background-color: rgb(255 255 255 / 4%);
+}
+
+.js-enabled .project-filter {
+  display: grid;
+}
+
+.project-filter-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.project-filter-button {
+  min-height: 2.5rem;
+  padding: 0.55rem 0.9rem;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background-color: transparent;
+  color: var(--muted-text-color);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.project-filter-button:hover,
+.project-filter-button:focus-visible {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.project-filter-button:active {
+  transform: translateY(1px);
+}
+
+.project-filter-button[aria-pressed="true"] {
+  border-color: var(--primary-color);
+  background-color: var(--primary-color);
+  color: var(--accent-text-color);
+}
+
+.project-filter-button:focus-visible {
+  outline: 3px solid var(--focus-outline-color);
+  outline-offset: 3px;
+}
+
+.project-filter-status {
+  margin: 0;
+  color: var(--muted-text-color);
+  font-size: 0.9rem;
+}
+
 .project-card {
   display: grid;
   grid-template-rows: auto 1fr;
@@ -624,6 +688,10 @@ nav .nav-links a:hover {
     border-color 0.25s ease,
     transform 0.25s ease,
     box-shadow 0.25s ease;
+}
+
+.project-card[hidden] {
+  display: none;
 }
 
 .project-card:hover,
@@ -1175,6 +1243,7 @@ footer {
   .skip-link,
   .menu-button,
   .theme-button,
+  .project-filter-button,
   #contact-form button,
   .project-card,
   .case-study-navigation a,
@@ -1187,6 +1256,7 @@ footer {
   .call-to-action:hover,
   .menu-button:active,
   .theme-button:active,
+  .project-filter-button:active,
   #contact-form button:active,
   .project-card:hover,
   .project-card:focus-within {
