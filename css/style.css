@@ -276,13 +276,16 @@ nav .nav-links a:hover {
 .portfolio-shell {
   display: grid;
   gap: var(--grid-gap);
-  width: min(100% - 2rem, calc(var(--content-width) + 9rem));
+  width: min(100% - 2rem, calc(var(--content-width) + 14rem));
   margin-inline: auto;
 }
 
 .section-rail {
+  display: grid;
+  gap: var(--grid-gap);
   position: relative;
   z-index: 3;
+  align-content: start;
 }
 
 .section-switcher {
@@ -293,6 +296,38 @@ nav .nav-links a:hover {
   border-radius: var(--radius-card);
   background-color: var(--surface-color);
   box-shadow: 0 1rem 3rem var(--shadow-color);
+}
+
+.rail-appearance-card {
+  width: 100%;
+  padding: 0.85rem;
+}
+
+.rail-appearance-card h2 {
+  font-size: 1.15rem;
+}
+
+.rail-appearance-card p {
+  font-size: 0.9rem;
+}
+
+.rail-appearance-card .appearance-controls {
+  gap: 0.75rem;
+}
+
+.rail-appearance-card .appearance-control-group {
+  gap: 0.5rem;
+  padding-top: 0.7rem;
+}
+
+.rail-appearance-card .theme-button,
+.rail-appearance-card .accent-swatch {
+  width: 100%;
+  justify-content: center;
+}
+
+.rail-appearance-card .accent-swatches {
+  gap: 0.45rem;
 }
 
 .section-switcher .eyebrow {
@@ -1382,7 +1417,7 @@ footer {
 
 @media (min-width: 900px) {
   .portfolio-shell {
-    grid-template-columns: minmax(6.5rem, 8rem) minmax(0, var(--content-width));
+    grid-template-columns: minmax(11rem, 13rem) minmax(0, var(--content-width));
     align-items: start;
   }
 

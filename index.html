@@ -20,10 +20,7 @@
     />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="en_US" />
-    <meta
-      property="og:site_name"
-      content="Aleksandre Davitashvili Portfolio"
-    />
+    <meta property="og:site_name" content="Aleksandre Davitashvili Portfolio" />
     <meta name="twitter:card" content="summary" />
     <meta
       name="twitter:title"
@@ -60,357 +57,20 @@
             </li>
           </ul>
         </nav>
-      </aside>
-
-      <main id="main-content" class="portfolio-grid" tabindex="-1">
-      <section
-        id="hero"
-        class="card intro-card card-spotlight"
-        aria-labelledby="hero-heading"
-        data-section-panel="about"
-      >
-        <div class="intro-layout">
-          <div class="intro-copy">
-            <p class="eyebrow">Portfolio / 2026</p>
-            <h1 id="hero-heading">
-              Hi, I'm Aleksandre, a software developer learning by building.
-            </h1>
-            <p>
-              I build accessible web interfaces with HTML, CSS, and JavaScript,
-              alongside systems projects in C and Unix.
-            </p>
-            <p>
-              I study at 42 Wolfsburg and use each project to practice clear
-              structure, careful testing, and maintainable code.
-            </p>
-
-            <div class="hero-actions">
-              <a
-                class="call-to-action"
-                href="mailto:leqso.davitashvili.st@gmail.com?subject=Portfolio%20enquiry"
-              >
-                Let's work together
-              </a>
-              <a
-                class="call-to-action"
-                href="https://github.com/Adavitas"
-                target="_blank"
-                rel="noopener noreferrer"
-                >GitHub</a
-              >
-              <a
-                class="call-to-action"
-                href="https://www.linkedin.com/in/aleksandre-davitashvili-01b339362/"
-                target="_blank"
-                rel="noopener noreferrer"
-                >LinkedIn</a
-              >
-            </div>
-          </div>
-
-          <aside class="intro-portrait" aria-label="Portrait and current role">
-            <img
-              src="assets/images/portrait.jpeg"
-              alt="Aleksandre Davitashvili standing in front of a geometric wall decoration"
-              width="560"
-              height="560"
-              fetchpriority="high"
-            />
-            <div class="intro-portrait-copy">
-              <p class="eyebrow">42 Wolfsburg</p>
-              <p>Software developer focused on frontend craft and Unix systems.</p>
-            </div>
-          </aside>
-
-          <section
-            id="about"
-            class="intro-about"
-            aria-labelledby="about-heading"
-          >
-            <h2 id="about-heading">About me</h2>
-            <p>
-              I am a software developer and 42 Wolfsburg student focused on
-              understanding how software works from browser interfaces down to
-              Unix processes and memory.
-            </p>
-
-            <h3>Skills and tools</h3>
-            <ul class="tag-list">
-              <li>HTML</li>
-              <li>CSS</li>
-              <li>JavaScript</li>
-              <li>C</li>
-              <li>Unix</li>
-              <li>Git</li>
-              <li>Responsive design</li>
-              <li>Accessibility</li>
-            </ul>
-
-            <p>
-              I enjoy breaking complex problems into smaller steps, testing edge
-              cases, and writing code that another developer can follow.
-            </p>
-          </section>
-        </div>
-      </section>
-
-      <section
-        id="projects"
-        class="card projects-card card-spotlight"
-        data-section-panel="projects"
-      >
-        <h2>Selected projects</h2>
-        <p>
-          These projects show my current work across frontend development,
-          process management, parsing, algorithms, and data structures.
-        </p>
-
-        <div class="project-filter" aria-label="Filter selected projects">
-          <div
-            class="project-filter-buttons"
-            role="group"
-            aria-label="Project filters"
-          >
-            <button
-              class="project-filter-button is-active"
-              type="button"
-              data-project-filter="all"
-              aria-pressed="true"
-            >
-              All
-            </button>
-            <button
-              class="project-filter-button"
-              type="button"
-              data-project-filter="frontend"
-              aria-pressed="false"
-            >
-              Frontend
-            </button>
-            <button
-              class="project-filter-button"
-              type="button"
-              data-project-filter="systems"
-              aria-pressed="false"
-            >
-              Systems
-            </button>
-            <button
-              class="project-filter-button"
-              type="button"
-              data-project-filter="algorithms"
-              aria-pressed="false"
-            >
-              Algorithms
-            </button>
-          </div>
-          <p
-            class="project-filter-status"
-            id="project-filter-status"
-            aria-live="polite"
-          >
-            Showing all 3 projects.
-          </p>
-        </div>
-
-        <div class="grid-gallery">
-          <article
-            class="card project-card featured-project card-spotlight"
-            data-project-categories="frontend accessibility javascript"
-            data-reveal
-          >
-            <img
-              src="assets/images/portfolio-preview.svg"
-              alt="Abstract preview of this portfolio's bento card layout"
-              width="800"
-              height="500"
-              loading="lazy"
-              decoding="async"
-            />
-            <div class="project-copy">
-              <h3>Personal portfolio</h3>
-              <p>
-                A responsive vanilla website with semantic HTML, an accessible
-                menu and contact workflow, persistent themes, and motion-aware
-                card reveals.
-              </p>
-              <ul class="tag-list">
-                <li>HTML</li>
-                <li>CSS</li>
-                <li>JavaScript</li>
-                <li>Accessibility</li>
-              </ul>
-              <div class="project-links">
-                <a href="projects/portfolio.html"
-                  >Read portfolio case study</a
-                >
-                <a
-                  href="https://github.com/Adavitas/portfolio"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  >View portfolio source</a
-                >
-              </div>
-            </div>
-          </article>
-
-          <article
-            class="card project-card card-spotlight"
-            data-project-categories="systems c unix parsing"
-            data-reveal
-          >
-            <img
-              src="assets/images/minishell-preview.svg"
-              alt="Terminal illustration representing the Minishell project"
-              width="800"
-              height="500"
-              loading="lazy"
-              decoding="async"
-            />
-            <div class="project-copy">
-              <h3>Minishell</h3>
-              <p>
-                A Unix shell in C with pipelines, redirections, environment
-                variables, built-in commands, signal handling, and an abstract
-                syntax tree.
-              </p>
-              <ul class="tag-list">
-                <li>C</li>
-                <li>Unix</li>
-                <li>Parsing</li>
-              </ul>
-              <div class="project-links">
-                <a href="projects/minishell.html">Read Minishell case study</a>
-                <a
-                  href="https://github.com/Adavitas/minishell"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  >View Minishell source</a
-                >
-              </div>
-            </div>
-          </article>
-
-          <article
-            class="card project-card card-spotlight"
-            data-project-categories="algorithms c data-structures"
-            data-reveal
-            data-reveal-delay="short"
-          >
-            <img
-              src="assets/images/push-swap-preview.svg"
-              alt="Two numbered stacks representing the Push Swap sorting project"
-              width="800"
-              height="500"
-              loading="lazy"
-              decoding="async"
-            />
-            <div class="project-copy">
-              <h3>Push Swap</h3>
-              <p>
-                A constrained sorting project that ranks integers, moves them
-                between two stacks, validates input, and reduces the number of
-                operations.
-              </p>
-              <ul class="tag-list">
-                <li>C</li>
-                <li>Algorithms</li>
-                <li>Data structures</li>
-              </ul>
-              <div class="project-links">
-                <a href="projects/push-swap.html">Read Push Swap case study</a>
-                <a
-                  href="https://github.com/Adavitas/push_swap"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  >View Push Swap source</a
-                >
-              </div>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <div class="info-grid">
-        <section
-          id="now"
-          class="card now-card card-spotlight"
-          data-section-panel="about"
-          data-reveal
-        >
-          <div class="now-card-header">
-            <h2>Now</h2>
-            <span class="status-pulse" aria-hidden="true"></span>
-          </div>
-          <time datetime="2026-06-25">June 25, 2026</time>
-          <p>
-            Completing the final portfolio quality audit and setting up a
-            maintenance routine for future content updates.
-          </p>
-        </section>
 
         <section
-          class="card time-card card-spotlight"
-          aria-labelledby="time-heading"
-          data-section-panel="about"
-          data-reveal
-          data-reveal-delay="short"
-        >
-          <h2 id="time-heading">Time zones</h2>
-          <div class="timezone-list">
-            <div class="timezone-row">
-              <span class="timezone-label">Wolfsburg time</span>
-              <div class="timezone-value">
-                <time
-                  id="home-time"
-                  data-timezone="Europe/Berlin"
-                  aria-label="Current time in Wolfsburg"
-                ></time>
-                <span id="home-timezone-label" class="timezone-code"
-                  >Europe/Berlin</span
-                >
-              </div>
-            </div>
-            <div class="timezone-row">
-              <span class="timezone-label">Your time</span>
-              <div class="timezone-value">
-                <time
-                  id="visitor-time"
-                  aria-label="Current time in your timezone"
-                ></time>
-                <span id="visitor-timezone-label" class="timezone-code"
-                  >Local</span
-                >
-              </div>
-            </div>
-          </div>
-          <noscript>
-            <p>JavaScript is required to display the live timezone comparison.</p>
-          </noscript>
-        </section>
-
-        <section
-          class="card appearance-card accent-card card-spotlight"
+          class="card appearance-card accent-card rail-appearance-card card-spotlight"
           aria-labelledby="appearance-heading"
-          data-section-panel="about"
-          data-reveal
         >
-          <div>
-            <p class="eyebrow">Palette</p>
-            <h2 id="appearance-heading">Accent color</h2>
-            <p>Keep dark or light mode, then tune the color signal.</p>
-          </div>
           <div class="appearance-controls">
-            <div class="appearance-control-group">
-              <p class="appearance-control-label">Mode</p>
-              <button
-                class="theme-button"
-                type="button"
-                aria-label="Switch theme"
-              >
-                <span class="theme-button-label" aria-hidden="true">Theme</span>
-              </button>
-            </div>
+            <p class="appearance-control-label">Mode</p>
+            <button
+              class="theme-button"
+              type="button"
+              aria-label="Switch theme"
+            >
+              <span class="theme-button-label" aria-hidden="true">Theme</span>
+            </button>
             <div class="appearance-control-group">
               <p class="appearance-control-label">Accent</p>
               <div
@@ -457,96 +117,435 @@
             <p>JavaScript is required to change the theme or accent color.</p>
           </noscript>
         </section>
+      </aside>
+
+      <main id="main-content" class="portfolio-grid" tabindex="-1">
+        <section
+          id="hero"
+          class="card intro-card card-spotlight"
+          aria-labelledby="hero-heading"
+          data-section-panel="about"
+        >
+          <div class="intro-layout">
+            <div class="intro-copy">
+              <p class="eyebrow">Portfolio / 2026</p>
+              <h1 id="hero-heading">
+                Hi, I'm Aleksandre, a software developer learning by building.
+              </h1>
+              <p>
+                I build accessible web interfaces with HTML, CSS, and
+                JavaScript, alongside systems projects in C and Unix.
+              </p>
+              <p>
+                I study at 42 Wolfsburg and use each project to practice clear
+                structure, careful testing, and maintainable code.
+              </p>
+
+              <div class="hero-actions">
+                <a
+                  class="call-to-action"
+                  href="mailto:leqso.davitashvili.st@gmail.com?subject=Portfolio%20enquiry"
+                >
+                  Let's work together
+                </a>
+                <a
+                  class="call-to-action"
+                  href="https://github.com/Adavitas"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >GitHub</a
+                >
+                <a
+                  class="call-to-action"
+                  href="https://www.linkedin.com/in/aleksandre-davitashvili-01b339362/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >LinkedIn</a
+                >
+              </div>
+            </div>
+
+            <aside
+              class="intro-portrait"
+              aria-label="Portrait and current role"
+            >
+              <img
+                src="assets/images/portrait.jpeg"
+                alt="Aleksandre Davitashvili standing in front of a geometric wall decoration"
+                width="560"
+                height="560"
+                fetchpriority="high"
+              />
+              <div class="intro-portrait-copy">
+                <p class="eyebrow">42 Wolfsburg</p>
+                <p>
+                  Software developer focused on frontend craft and Unix systems.
+                </p>
+              </div>
+            </aside>
+
+            <section
+              id="about"
+              class="intro-about"
+              aria-labelledby="about-heading"
+            >
+              <h2 id="about-heading">About me</h2>
+              <p>
+                I am a software developer and 42 Wolfsburg student focused on
+                understanding how software works from browser interfaces down to
+                Unix processes and memory.
+              </p>
+
+              <h3>Skills and tools</h3>
+              <ul class="tag-list">
+                <li>HTML</li>
+                <li>CSS</li>
+                <li>JavaScript</li>
+                <li>C</li>
+                <li>Unix</li>
+                <li>Git</li>
+                <li>Responsive design</li>
+                <li>Accessibility</li>
+              </ul>
+
+              <p>
+                I enjoy breaking complex problems into smaller steps, testing
+                edge cases, and writing code that another developer can follow.
+              </p>
+            </section>
+          </div>
+        </section>
 
         <section
-          id="contact"
-          class="card contact-card card-spotlight"
-          data-section-panel="contact"
-          data-reveal
+          id="projects"
+          class="card projects-card card-spotlight"
+          data-section-panel="projects"
         >
-          <h2>Let's work together</h2>
+          <h2>Selected projects</h2>
           <p>
-            Have a project, learning suggestion, or opportunity? Send me a
-            message or contact me directly by email.
+            These projects show my current work across frontend development,
+            process management, parsing, algorithms, and data structures.
           </p>
 
-          <address>
-            <a href="mailto:leqso.davitashvili.st@gmail.com"
-              >leqso.davitashvili.st@gmail.com</a
+          <div class="project-filter" aria-label="Filter selected projects">
+            <div
+              class="project-filter-buttons"
+              role="group"
+              aria-label="Project filters"
             >
-          </address>
-
-          <p class="form-note" id="form-note">
-            This form prepares an email draft. You will review and send it from
-            your email application.
-          </p>
-
-          <form id="contact-form" aria-describedby="form-note">
-            <div class="form-field">
-              <label for="name">Name</label>
-              <input
-                id="name"
-                name="name"
-                type="text"
-                autocomplete="name"
-                minlength="2"
-                maxlength="80"
-                aria-describedby="name-help name-error"
-                required
-              />
-              <p class="form-help" id="name-help">
-                Enter at least two characters.
-              </p>
-              <p class="form-error" id="name-error"></p>
+              <button
+                class="project-filter-button is-active"
+                type="button"
+                data-project-filter="all"
+                aria-pressed="true"
+              >
+                All
+              </button>
+              <button
+                class="project-filter-button"
+                type="button"
+                data-project-filter="frontend"
+                aria-pressed="false"
+              >
+                Frontend
+              </button>
+              <button
+                class="project-filter-button"
+                type="button"
+                data-project-filter="systems"
+                aria-pressed="false"
+              >
+                Systems
+              </button>
+              <button
+                class="project-filter-button"
+                type="button"
+                data-project-filter="algorithms"
+                aria-pressed="false"
+              >
+                Algorithms
+              </button>
             </div>
-
-            <div class="form-field">
-              <label for="email">Email</label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                autocomplete="email"
-                maxlength="254"
-                aria-describedby="email-help email-error"
-                required
-              />
-              <p class="form-help" id="email-help">
-                Use an address such as name@example.com.
-              </p>
-              <p class="form-error" id="email-error"></p>
-            </div>
-
-            <div class="form-field">
-              <label for="message">Message</label>
-              <textarea
-                id="message"
-                name="message"
-                rows="6"
-                minlength="20"
-                maxlength="2000"
-                aria-describedby="message-help message-error"
-                required
-              ></textarea>
-              <p class="form-help" id="message-help">
-                Explain your idea in at least 20 characters.
-              </p>
-              <p class="form-error" id="message-error"></p>
-            </div>
-
-            <button type="submit">Prepare email</button>
             <p
-              class="form-status"
-              id="form-status"
+              class="project-filter-status"
+              id="project-filter-status"
               aria-live="polite"
-              aria-atomic="true"
-            ></p>
-            <a class="email-draft-link" id="email-draft-link" hidden
-              >Open email draft</a
             >
-          </form>
+              Showing all 3 projects.
+            </p>
+          </div>
+
+          <div class="grid-gallery">
+            <article
+              class="card project-card featured-project card-spotlight"
+              data-project-categories="frontend accessibility javascript"
+              data-reveal
+            >
+              <img
+                src="assets/images/portfolio-preview.svg"
+                alt="Abstract preview of this portfolio's bento card layout"
+                width="800"
+                height="500"
+                loading="lazy"
+                decoding="async"
+              />
+              <div class="project-copy">
+                <h3>Personal portfolio</h3>
+                <p>
+                  A responsive vanilla website with semantic HTML, an accessible
+                  menu and contact workflow, persistent themes, and motion-aware
+                  card reveals.
+                </p>
+                <ul class="tag-list">
+                  <li>HTML</li>
+                  <li>CSS</li>
+                  <li>JavaScript</li>
+                  <li>Accessibility</li>
+                </ul>
+                <div class="project-links">
+                  <a href="projects/portfolio.html"
+                    >Read portfolio case study</a
+                  >
+                  <a
+                    href="https://github.com/Adavitas/portfolio"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >View portfolio source</a
+                  >
+                </div>
+              </div>
+            </article>
+
+            <article
+              class="card project-card card-spotlight"
+              data-project-categories="systems c unix parsing"
+              data-reveal
+            >
+              <img
+                src="assets/images/minishell-preview.svg"
+                alt="Terminal illustration representing the Minishell project"
+                width="800"
+                height="500"
+                loading="lazy"
+                decoding="async"
+              />
+              <div class="project-copy">
+                <h3>Minishell</h3>
+                <p>
+                  A Unix shell in C with pipelines, redirections, environment
+                  variables, built-in commands, signal handling, and an abstract
+                  syntax tree.
+                </p>
+                <ul class="tag-list">
+                  <li>C</li>
+                  <li>Unix</li>
+                  <li>Parsing</li>
+                </ul>
+                <div class="project-links">
+                  <a href="projects/minishell.html"
+                    >Read Minishell case study</a
+                  >
+                  <a
+                    href="https://github.com/Adavitas/minishell"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >View Minishell source</a
+                  >
+                </div>
+              </div>
+            </article>
+
+            <article
+              class="card project-card card-spotlight"
+              data-project-categories="algorithms c data-structures"
+              data-reveal
+              data-reveal-delay="short"
+            >
+              <img
+                src="assets/images/push-swap-preview.svg"
+                alt="Two numbered stacks representing the Push Swap sorting project"
+                width="800"
+                height="500"
+                loading="lazy"
+                decoding="async"
+              />
+              <div class="project-copy">
+                <h3>Push Swap</h3>
+                <p>
+                  A constrained sorting project that ranks integers, moves them
+                  between two stacks, validates input, and reduces the number of
+                  operations.
+                </p>
+                <ul class="tag-list">
+                  <li>C</li>
+                  <li>Algorithms</li>
+                  <li>Data structures</li>
+                </ul>
+                <div class="project-links">
+                  <a href="projects/push-swap.html"
+                    >Read Push Swap case study</a
+                  >
+                  <a
+                    href="https://github.com/Adavitas/push_swap"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >View Push Swap source</a
+                  >
+                </div>
+              </div>
+            </article>
+          </div>
         </section>
-      </div>
+
+        <div class="info-grid">
+          <section
+            id="now"
+            class="card now-card card-spotlight"
+            data-section-panel="about"
+            data-reveal
+          >
+            <div class="now-card-header">
+              <h2>Now</h2>
+              <span class="status-pulse" aria-hidden="true"></span>
+            </div>
+            <time datetime="2026-06-25">June 25, 2026</time>
+            <p>
+              Completing the final portfolio quality audit and setting up a
+              maintenance routine for future content updates.
+            </p>
+          </section>
+
+          <section
+            class="card time-card card-spotlight"
+            aria-labelledby="time-heading"
+            data-section-panel="about"
+            data-reveal
+            data-reveal-delay="short"
+          >
+            <h2 id="time-heading">Time zones</h2>
+            <div class="timezone-list">
+              <div class="timezone-row">
+                <span class="timezone-label">Wolfsburg time</span>
+                <div class="timezone-value">
+                  <time
+                    id="home-time"
+                    data-timezone="Europe/Berlin"
+                    aria-label="Current time in Wolfsburg"
+                  ></time>
+                  <span id="home-timezone-label" class="timezone-code"
+                    >Europe/Berlin</span
+                  >
+                </div>
+              </div>
+              <div class="timezone-row">
+                <span class="timezone-label">Your time</span>
+                <div class="timezone-value">
+                  <time
+                    id="visitor-time"
+                    aria-label="Current time in your timezone"
+                  ></time>
+                  <span id="visitor-timezone-label" class="timezone-code"
+                    >Local</span
+                  >
+                </div>
+              </div>
+            </div>
+            <noscript>
+              <p>
+                JavaScript is required to display the live timezone comparison.
+              </p>
+            </noscript>
+          </section>
+
+          <section
+            id="contact"
+            class="card contact-card card-spotlight"
+            data-section-panel="contact"
+            data-reveal
+          >
+            <h2>Let's work together</h2>
+            <p>
+              Have a project, learning suggestion, or opportunity? Send me a
+              message or contact me directly by email.
+            </p>
+
+            <address>
+              <a href="mailto:leqso.davitashvili.st@gmail.com"
+                >leqso.davitashvili.st@gmail.com</a
+              >
+            </address>
+
+            <p class="form-note" id="form-note">
+              This form prepares an email draft. You will review and send it
+              from your email application.
+            </p>
+
+            <form id="contact-form" aria-describedby="form-note">
+              <div class="form-field">
+                <label for="name">Name</label>
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  autocomplete="name"
+                  minlength="2"
+                  maxlength="80"
+                  aria-describedby="name-help name-error"
+                  required
+                />
+                <p class="form-help" id="name-help">
+                  Enter at least two characters.
+                </p>
+                <p class="form-error" id="name-error"></p>
+              </div>
+
+              <div class="form-field">
+                <label for="email">Email</label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  autocomplete="email"
+                  maxlength="254"
+                  aria-describedby="email-help email-error"
+                  required
+                />
+                <p class="form-help" id="email-help">
+                  Use an address such as name@example.com.
+                </p>
+                <p class="form-error" id="email-error"></p>
+              </div>
+
+              <div class="form-field">
+                <label for="message">Message</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows="6"
+                  minlength="20"
+                  maxlength="2000"
+                  aria-describedby="message-help message-error"
+                  required
+                ></textarea>
+                <p class="form-help" id="message-help">
+                  Explain your idea in at least 20 characters.
+                </p>
+                <p class="form-error" id="message-error"></p>
+              </div>
+
+              <button type="submit">Prepare email</button>
+              <p
+                class="form-status"
+                id="form-status"
+                aria-live="polite"
+                aria-atomic="true"
+              ></p>
+              <a class="email-draft-link" id="email-draft-link" hidden
+                >Open email draft</a
+              >
+            </form>
+          </section>
+        </div>
       </main>
     </div>
 
