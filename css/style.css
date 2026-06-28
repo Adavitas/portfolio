@@ -365,27 +365,6 @@ nav .nav-links a:hover {
   }
 }
 
-.about-card {
-  background-color: var(--surface-color-soft);
-  padding: clamp(1.4rem, 3vw, 2rem);
-  border-color: var(--strong-border-color);
-}
-
-.about-card h2 {
-  color: var(--primary-color);
-  margin-bottom: 1rem;
-}
-
-.about-card p {
-  color: var(--about-text-color);
-  line-height: 1.7;
-}
-
-.about-card > p {
-  max-width: 62ch;
-  margin-inline: auto;
-}
-
 #hero {
   margin-bottom: 0;
 }
@@ -400,23 +379,33 @@ nav .nav-links a:hover {
   text-wrap: balance;
 }
 
-.hero-card {
+.intro-card {
+  grid-column: 1 / -1;
   display: grid;
-  min-height: clamp(24rem, 42vw, 32rem);
-  align-content: space-between;
-  gap: 2rem;
   background:
     radial-gradient(circle at 80% 18%, rgb(154 219 200 / 20%), transparent 20rem),
     var(--surface-color);
 }
 
-.hero-copy {
+.intro-layout {
   display: grid;
-  min-width: 0;
-  gap: 1rem;
+  gap: clamp(1.4rem, 3vw, 2rem);
 }
 
-.hero-copy > p {
+.intro-copy,
+.intro-portrait,
+.intro-stack,
+.intro-about {
+  min-width: 0;
+}
+
+.intro-copy {
+  display: grid;
+  gap: 1rem;
+  align-content: start;
+}
+
+.intro-copy > p {
   max-width: 65ch;
 }
 
@@ -439,28 +428,33 @@ nav .nav-links a:hover {
   max-width: 100%;
 }
 
-.portrait-card {
+.intro-portrait,
+.intro-stack,
+.intro-about {
   display: grid;
-  align-content: space-between;
-  min-height: clamp(22rem, 38vw, 32rem);
   gap: 1rem;
-  background-color: var(--surface-color-soft);
+  padding-top: clamp(1rem, 2.5vw, 1.5rem);
+  border-top: 1px solid var(--border-color);
 }
 
-.portrait-card img,
+.intro-portrait {
+  align-content: start;
+}
+
+.intro-portrait img,
 .project-card img {
   width: 100%;
   border-radius: var(--radius-inner);
   object-fit: cover;
 }
 
-.portrait-card img {
+.intro-portrait img {
   aspect-ratio: 1;
   max-height: 24rem;
   filter: saturate(0.9) contrast(1.04);
 }
 
-.portrait-card-copy {
+.intro-portrait-copy {
   display: grid;
   gap: 0.4rem;
 }
@@ -471,18 +465,21 @@ nav .nav-links a:hover {
   align-self: start;
 }
 
-.stack-card {
-  display: grid;
-  min-height: 16rem;
-  align-content: space-between;
-  gap: 1rem;
-}
-
-.stack-card h2 {
+.intro-stack h2 {
   max-width: 12ch;
   font-size: clamp(1.7rem, 5vw, 2.8rem);
   line-height: 0.94;
   letter-spacing: -0.06em;
+}
+
+.intro-about h2 {
+  color: var(--primary-color);
+}
+
+.intro-about p {
+  max-width: 62ch;
+  color: var(--about-text-color);
+  line-height: 1.7;
 }
 
 .signal-list {
@@ -690,7 +687,7 @@ nav .nav-links a:hover {
   list-style: none;
 }
 
-.about-card .tag-list {
+.intro-about .tag-list {
   justify-content: center;
 }
 
@@ -924,17 +921,28 @@ nav .nav-links a:hover {
     align-items: stretch;
   }
 
-  .hero-card {
+  .intro-layout {
+    grid-template-columns: minmax(0, 1.1fr) minmax(16rem, 0.9fr);
+    align-items: start;
+  }
+
+  .intro-copy {
+    grid-column: 1;
+  }
+
+  .intro-portrait {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  .intro-stack {
+    grid-column: 1;
+  }
+
+  .intro-about {
     grid-column: 1 / -1;
-  }
-
-  .portrait-card {
-    grid-column: span 3;
-  }
-
-  .stack-card,
-  .about-card {
-    grid-column: span 3;
   }
 
   .projects-card,
@@ -1315,20 +1323,30 @@ footer {
     grid-auto-flow: dense;
   }
 
-  .hero-card {
-    grid-column: span 7;
+  .intro-layout {
+    grid-template-columns: minmax(0, 1.15fr) minmax(18rem, 0.85fr);
   }
 
-  .portrait-card {
-    grid-column: span 5;
+  .intro-about {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(16rem, 1.05fr);
+    gap: 1rem 2rem;
+    align-items: start;
   }
 
-  .stack-card {
-    grid-column: span 4;
+  .intro-about h2,
+  .intro-about h3,
+  .intro-about .tag-list {
+    grid-column: 2;
   }
 
-  .about-card {
-    grid-column: span 8;
+  .intro-about p {
+    grid-column: 1;
+  }
+
+  .intro-about .tag-list {
+    justify-content: flex-start;
+    margin-block: 0;
   }
 
   .projects-card,

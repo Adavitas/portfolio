@@ -65,111 +65,113 @@
     </header>
 
     <main id="main-content" class="portfolio-grid" tabindex="-1">
-      <section id="hero" class="card hero-card card-spotlight">
-        <div class="hero-copy">
-          <p class="eyebrow">Portfolio / 2026</p>
-          <h1>Hi, I'm Aleksandre, a software developer learning by building.</h1>
-          <p>
-            I build accessible web interfaces with HTML, CSS, and JavaScript,
-            alongside systems projects in C and Unix.
-          </p>
-          <p>
-            I study at 42 Wolfsburg and use each project to practice clear
-            structure, careful testing, and maintainable code.
-          </p>
-
-          <div class="hero-actions">
-            <a
-              class="call-to-action"
-              href="mailto:leqso.davitashvili.st@gmail.com?subject=Portfolio%20enquiry"
-            >
-              Let's work together
-            </a>
-            <a
-              class="call-to-action"
-              href="https://github.com/Adavitas"
-              target="_blank"
-              rel="noopener noreferrer"
-              >GitHub</a
-            >
-            <a
-              class="call-to-action"
-              href="https://www.linkedin.com/in/aleksandre-davitashvili-01b339362/"
-              target="_blank"
-              rel="noopener noreferrer"
-              >LinkedIn</a
-            >
-          </div>
-        </div>
-
-      </section>
-
-      <aside
-        class="card portrait-card card-spotlight"
-        aria-label="Portrait and current role"
-        data-reveal
-      >
-        <img
-          src="assets/images/portrait.jpeg"
-          alt="Aleksandre Davitashvili standing in front of a geometric wall decoration"
-          width="560"
-          height="560"
-          fetchpriority="high"
-        />
-        <div class="portrait-card-copy">
-          <p class="eyebrow">42 Wolfsburg</p>
-          <p>Software developer focused on frontend craft and Unix systems.</p>
-        </div>
-      </aside>
-
       <section
-        class="card stack-card card-spotlight"
-        aria-labelledby="stack-heading"
-        data-reveal
-        data-reveal-delay="short"
+        id="hero"
+        class="card intro-card card-spotlight"
+        aria-labelledby="hero-heading"
       >
-        <p class="eyebrow">Core stack</p>
-        <h2 id="stack-heading">Browser-native first</h2>
-        <ul class="signal-list">
-          <li>
-            <strong>HTML</strong>
-            <span>Structure and semantics</span>
-          </li>
-          <li>
-            <strong>CSS</strong>
-            <span>Grid, tokens, responsive systems</span>
-          </li>
-          <li>
-            <strong>JavaScript</strong>
-            <span>Small progressive enhancements</span>
-          </li>
-        </ul>
-      </section>
+        <div class="intro-layout">
+          <div class="intro-copy">
+            <p class="eyebrow">Portfolio / 2026</p>
+            <h1 id="hero-heading">
+              Hi, I'm Aleksandre, a software developer learning by building.
+            </h1>
+            <p>
+              I build accessible web interfaces with HTML, CSS, and JavaScript,
+              alongside systems projects in C and Unix.
+            </p>
+            <p>
+              I study at 42 Wolfsburg and use each project to practice clear
+              structure, careful testing, and maintainable code.
+            </p>
 
-      <section id="about" class="card about-card card-spotlight" data-reveal>
-        <h2>About me</h2>
-        <p>
-          I am a software developer and 42 Wolfsburg student focused on
-          understanding how software works from browser interfaces down to Unix
-          processes and memory.
-        </p>
+            <div class="hero-actions">
+              <a
+                class="call-to-action"
+                href="mailto:leqso.davitashvili.st@gmail.com?subject=Portfolio%20enquiry"
+              >
+                Let's work together
+              </a>
+              <a
+                class="call-to-action"
+                href="https://github.com/Adavitas"
+                target="_blank"
+                rel="noopener noreferrer"
+                >GitHub</a
+              >
+              <a
+                class="call-to-action"
+                href="https://www.linkedin.com/in/aleksandre-davitashvili-01b339362/"
+                target="_blank"
+                rel="noopener noreferrer"
+                >LinkedIn</a
+              >
+            </div>
+          </div>
 
-        <h3>Skills and tools</h3>
-        <ul class="tag-list">
-          <li>HTML</li>
-          <li>CSS</li>
-          <li>JavaScript</li>
-          <li>C</li>
-          <li>Unix</li>
-          <li>Git</li>
-          <li>Responsive design</li>
-          <li>Accessibility</li>
-        </ul>
+          <aside class="intro-portrait" aria-label="Portrait and current role">
+            <img
+              src="assets/images/portrait.jpeg"
+              alt="Aleksandre Davitashvili standing in front of a geometric wall decoration"
+              width="560"
+              height="560"
+              fetchpriority="high"
+            />
+            <div class="intro-portrait-copy">
+              <p class="eyebrow">42 Wolfsburg</p>
+              <p>Software developer focused on frontend craft and Unix systems.</p>
+            </div>
+          </aside>
 
-        <p>
-          I enjoy breaking complex problems into smaller steps, testing edge
-          cases, and writing code that another developer can follow.
-        </p>
+          <section class="intro-stack" aria-labelledby="stack-heading">
+            <p class="eyebrow">Core stack</p>
+            <h2 id="stack-heading">Browser-native first</h2>
+            <ul class="signal-list">
+              <li>
+                <strong>HTML</strong>
+                <span>Structure and semantics</span>
+              </li>
+              <li>
+                <strong>CSS</strong>
+                <span>Grid, tokens, responsive systems</span>
+              </li>
+              <li>
+                <strong>JavaScript</strong>
+                <span>Small progressive enhancements</span>
+              </li>
+            </ul>
+          </section>
+
+          <section
+            id="about"
+            class="intro-about"
+            aria-labelledby="about-heading"
+          >
+            <h2 id="about-heading">About me</h2>
+            <p>
+              I am a software developer and 42 Wolfsburg student focused on
+              understanding how software works from browser interfaces down to
+              Unix processes and memory.
+            </p>
+
+            <h3>Skills and tools</h3>
+            <ul class="tag-list">
+              <li>HTML</li>
+              <li>CSS</li>
+              <li>JavaScript</li>
+              <li>C</li>
+              <li>Unix</li>
+              <li>Git</li>
+              <li>Responsive design</li>
+              <li>Accessibility</li>
+            </ul>
+
+            <p>
+              I enjoy breaking complex problems into smaller steps, testing edge
+              cases, and writing code that another developer can follow.
+            </p>
+          </section>
+        </div>
       </section>
 
       <section id="projects" class="card projects-card card-spotlight">
