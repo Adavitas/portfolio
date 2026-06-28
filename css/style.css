@@ -102,6 +102,10 @@
   --primary-focus-color: rgb(168 61 92 / 22%);
 }
 
+[hidden] {
+  display: none !important;
+}
+
 body {
   background-color: var(--bg-color);
   color: var(--text-color);
