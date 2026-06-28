@@ -46,9 +46,6 @@
       <nav aria-label="Main navigation">
         <a class="logo" href="#hero">Aleksandre Davitashvili</a>
         <div class="nav-actions">
-          <button class="theme-button" type="button" aria-label="Switch theme">
-            <span class="theme-button-label" aria-hidden="true">Theme</span>
-          </button>
           <button
             class="menu-button"
             type="button"
@@ -401,51 +398,70 @@
         </section>
 
         <section
-          class="card accent-card card-spotlight"
-          aria-labelledby="accent-heading"
+          class="card appearance-card accent-card card-spotlight"
+          aria-labelledby="appearance-heading"
           data-reveal
         >
           <div>
             <p class="eyebrow">Palette</p>
-            <h2 id="accent-heading">Accent color</h2>
+            <h2 id="appearance-heading">Accent color</h2>
             <p>Keep dark or light mode, then tune the color signal.</p>
           </div>
-          <div class="accent-swatches" role="group" aria-label="Accent colors">
-            <button
-              class="accent-swatch"
-              type="button"
-              data-accent="mint"
-              aria-pressed="true"
-            >
-              Mint
-            </button>
-            <button
-              class="accent-swatch"
-              type="button"
-              data-accent="amber"
-              aria-pressed="false"
-            >
-              Amber
-            </button>
-            <button
-              class="accent-swatch"
-              type="button"
-              data-accent="blue"
-              aria-pressed="false"
-            >
-              Blue
-            </button>
-            <button
-              class="accent-swatch"
-              type="button"
-              data-accent="rose"
-              aria-pressed="false"
-            >
-              Rose
-            </button>
+          <div class="appearance-controls">
+            <div class="appearance-control-group">
+              <p class="appearance-control-label">Mode</p>
+              <button
+                class="theme-button"
+                type="button"
+                aria-label="Switch theme"
+              >
+                <span class="theme-button-label" aria-hidden="true">Theme</span>
+              </button>
+            </div>
+            <div class="appearance-control-group">
+              <p class="appearance-control-label">Accent</p>
+              <div
+                class="accent-swatches"
+                role="group"
+                aria-label="Accent colors"
+              >
+                <button
+                  class="accent-swatch"
+                  type="button"
+                  data-accent="mint"
+                  aria-pressed="true"
+                >
+                  Mint
+                </button>
+                <button
+                  class="accent-swatch"
+                  type="button"
+                  data-accent="amber"
+                  aria-pressed="false"
+                >
+                  Amber
+                </button>
+                <button
+                  class="accent-swatch"
+                  type="button"
+                  data-accent="blue"
+                  aria-pressed="false"
+                >
+                  Blue
+                </button>
+                <button
+                  class="accent-swatch"
+                  type="button"
+                  data-accent="rose"
+                  aria-pressed="false"
+                >
+                  Rose
+                </button>
+              </div>
+            </div>
           </div>
           <noscript>
-            <p>JavaScript is required to change the accent color.</p>
+            <p>JavaScript is required to change the theme or accent color.</p>
           </noscript>
         </section>
 

@@ -753,7 +753,7 @@ nav .nav-links a:hover {
 }
 
 .timezone-list,
-.accent-card {
+.appearance-card {
   display: grid;
   gap: 1rem;
 }
@@ -786,6 +786,31 @@ nav .nav-links a:hover {
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.06em;
   line-height: 1;
+}
+
+.appearance-controls {
+  display: grid;
+  gap: 1rem;
+}
+
+.appearance-control-group {
+  display: grid;
+  gap: 0.65rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.appearance-control-label {
+  margin: 0;
+  color: var(--muted-text-color);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.appearance-control-group .theme-button {
+  justify-self: start;
 }
 
 .accent-swatches {
