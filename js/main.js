@@ -129,6 +129,83 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Home Section Switcher
+    const sectionLinks = document.querySelectorAll('[data-section-link]');
+    const sectionPanels = document.querySelectorAll('[data-section-panel]');
+
+    if (sectionLinks.length > 0 && sectionPanels.length > 0) {
+        const defaultSection = 'about';
+        const sections = new Set(
+            [...sectionPanels]
+                .map((panel) => panel.dataset.sectionPanel)
+                .filter(Boolean),
+        );
+
+        function getSectionFromHash() {
+            const hash = window.location?.hash?.replace('#', '') ?? '';
+
+            if (hash === 'hero' || hash === 'about') {
+                return 'about';
+            }
+
+            return sections.has(hash) ? hash : defaultSection;
+        }
+
+        function setActiveSection(section) {
+            const activeSection = sections.has(section) ? section : defaultSection;
+
+            sectionPanels.forEach((panel) => {
+                panel.hidden = panel.dataset.sectionPanel !== activeSection;
+            });
+
+            sectionLinks.forEach((link) => {
+                const isActive = link.dataset.sectionLink === activeSection;
+
+                link.classList.toggle('is-active', isActive);
+
+                if (isActive) {
+                    link.setAttribute('aria-current', 'page');
+                } else {
+                    link.removeAttribute('aria-current');
+                }
+            });
+
+            document.documentElement.dataset.activeSection = activeSection;
+        }
+
+        sectionLinks.forEach((link) => {
+            link.addEventListener('click', (event) => {
+                const section = link.dataset.sectionLink;
+
+                if (!sections.has(section)) {
+                    return;
+                }
+
+                event.preventDefault();
+
+                if (window.history?.pushState) {
+                    window.history.pushState(null, '', `#${section}`);
+                } else if (window.location) {
+                    window.location.hash = section;
+                }
+
+                setActiveSection(section);
+            });
+        });
+
+        if (window.addEventListener) {
+            window.addEventListener('hashchange', () => {
+                setActiveSection(getSectionFromHash());
+            });
+
+            window.addEventListener('popstate', () => {
+                setActiveSection(getSectionFromHash());
+            });
+        }
+
+        setActiveSection(getSectionFromHash());
+    }
+
     // One-time Card Reveals
     const revealElements = document.querySelectorAll('[data-reveal]');
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');

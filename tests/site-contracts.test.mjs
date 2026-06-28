@@ -95,8 +95,11 @@ function isExternalUrl(value) {
 
 function resolveLocalReference(fromFile, value) {
     const [rawPath, fragment = ''] = value.split('#');
-    const targetFile = rawPath
-        ? path.posix.normalize(path.posix.join(path.posix.dirname(fromFile), rawPath))
+    const [pathWithoutQuery] = rawPath.split('?');
+    const targetFile = pathWithoutQuery
+        ? path.posix.normalize(
+              path.posix.join(path.posix.dirname(fromFile), pathWithoutQuery),
+          )
         : fromFile;
 
     return {
@@ -288,7 +291,7 @@ test('document structure is consistent on every page', () => {
             new RegExp(
                 `<script\\b(?=[^>]*src=["']${escapeRegex(
                     `${scriptPrefix}js/main.js`,
-                )}["'])(?=[^>]*\\bdefer\\b)`,
+                )}(?:\\?[^"']*)?["'])(?=[^>]*\\bdefer\\b)`,
                 'i',
             ),
         );
@@ -378,11 +381,29 @@ test('accessibility references point to existing IDs', () => {
             }
         }
 
-        assert.match(
-            source,
-            /<button\b(?=[^>]*class=["'][^"']*\bmenu-button\b)(?=[^>]*aria-expanded=["']false["'])(?=[^>]*aria-controls=["']nav-links["'])/i,
-        );
-        assert.ok(idSet.has('nav-links'), `${file} needs #nav-links`);
+        if (file === 'index.html') {
+            for (const section of ['about', 'projects', 'contact']) {
+                assert.match(
+                    source,
+                    new RegExp(
+                        `<a\\b(?=[^>]*href=["']#${section}["'])(?=[^>]*data-section-link=["']${section}["'])`,
+                        'i',
+                    ),
+                    `home page needs a ${section} side-switcher link`,
+                );
+                assert.match(
+                    source,
+                    new RegExp(`data-section-panel=["']${section}["']`, 'i'),
+                    `home page needs a ${section} section panel`,
+                );
+            }
+        } else {
+            assert.match(
+                source,
+                /<button\b(?=[^>]*class=["'][^"']*\bmenu-button\b)(?=[^>]*aria-expanded=["']false["'])(?=[^>]*aria-controls=["']nav-links["'])/i,
+            );
+            assert.ok(idSet.has('nav-links'), `${file} needs #nav-links`);
+        }
     }
 });
 

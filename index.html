@@ -42,33 +42,32 @@
   <body>
     <a class="skip-link" href="#main-content">Skip to main content</a>
 
-    <header>
-      <nav aria-label="Main navigation">
-        <a class="logo" href="#hero">Aleksandre Davitashvili</a>
-        <div class="nav-actions">
-          <button
-            class="menu-button"
-            type="button"
-            aria-expanded="false"
-            aria-controls="nav-links"
-          >
-            <span class="menu-button-label">Menu</span>
-          </button>
-        </div>
-        <ul class="nav-links" id="nav-links">
-          <li><a href="#about">About</a></li>
-          <li><a href="#projects">Projects</a></li>
-          <li><a href="#now">Now</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-      </nav>
-    </header>
+    <div class="portfolio-shell">
+      <aside class="section-rail" aria-label="Portfolio section navigation">
+        <nav class="section-switcher" aria-label="Portfolio sections">
+          <p class="eyebrow">Sections</p>
+          <ul>
+            <li>
+              <a href="#about" data-section-link="about" aria-current="page"
+                >About</a
+              >
+            </li>
+            <li>
+              <a href="#projects" data-section-link="projects">Projects</a>
+            </li>
+            <li>
+              <a href="#contact" data-section-link="contact">Contact</a>
+            </li>
+          </ul>
+        </nav>
+      </aside>
 
-    <main id="main-content" class="portfolio-grid" tabindex="-1">
+      <main id="main-content" class="portfolio-grid" tabindex="-1">
       <section
         id="hero"
         class="card intro-card card-spotlight"
         aria-labelledby="hero-heading"
+        data-section-panel="about"
       >
         <div class="intro-layout">
           <div class="intro-copy">
@@ -155,7 +154,11 @@
         </div>
       </section>
 
-      <section id="projects" class="card projects-card card-spotlight">
+      <section
+        id="projects"
+        class="card projects-card card-spotlight"
+        data-section-panel="projects"
+      >
         <h2>Selected projects</h2>
         <p>
           These projects show my current work across frontend development,
@@ -329,7 +332,12 @@
       </section>
 
       <div class="info-grid">
-        <section id="now" class="card now-card card-spotlight" data-reveal>
+        <section
+          id="now"
+          class="card now-card card-spotlight"
+          data-section-panel="about"
+          data-reveal
+        >
           <div class="now-card-header">
             <h2>Now</h2>
             <span class="status-pulse" aria-hidden="true"></span>
@@ -344,6 +352,7 @@
         <section
           class="card time-card card-spotlight"
           aria-labelledby="time-heading"
+          data-section-panel="about"
           data-reveal
           data-reveal-delay="short"
         >
@@ -383,6 +392,7 @@
         <section
           class="card appearance-card accent-card card-spotlight"
           aria-labelledby="appearance-heading"
+          data-section-panel="about"
           data-reveal
         >
           <div>
@@ -448,7 +458,12 @@
           </noscript>
         </section>
 
-        <section id="contact" class="card contact-card card-spotlight" data-reveal>
+        <section
+          id="contact"
+          class="card contact-card card-spotlight"
+          data-section-panel="contact"
+          data-reveal
+        >
           <h2>Let's work together</h2>
           <p>
             Have a project, learning suggestion, or opportunity? Send me a
@@ -532,7 +547,8 @@
           </form>
         </section>
       </div>
-    </main>
+      </main>
+    </div>
 
     <footer>
       <p>&copy; 2026 Aleksandre Davitashvili.</p>
@@ -540,6 +556,6 @@
       <p><a href="#hero">Back to top</a></p>
     </footer>
 
-    <script src="js/main.js" defer></script>
+    <script src="js/main.js?v=phase17" defer></script>
   </body>
 </html>

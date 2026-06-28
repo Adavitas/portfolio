@@ -269,9 +269,85 @@ nav .nav-links a:hover {
   color: var(--primary-color);
 }
 
+.portfolio-shell {
+  display: grid;
+  gap: var(--grid-gap);
+  width: min(100% - 2rem, calc(var(--content-width) + 9rem));
+  margin-inline: auto;
+}
+
+.section-rail {
+  position: relative;
+  z-index: 3;
+}
+
+.section-switcher {
+  display: grid;
+  gap: 0.7rem;
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-card);
+  background-color: var(--surface-color);
+  box-shadow: 0 1rem 3rem var(--shadow-color);
+}
+
+.section-switcher .eyebrow {
+  margin: 0;
+}
+
+.section-switcher ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.section-switcher a {
+  display: inline-flex;
+  width: 100%;
+  min-height: 2.4rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  color: var(--muted-text-color);
+  font-weight: 700;
+  text-decoration: none;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.section-switcher a:hover,
+.section-switcher a:focus-visible {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.section-switcher a[aria-current="page"] {
+  border-color: var(--primary-color);
+  background-color: var(--primary-color);
+  color: var(--accent-text-color);
+}
+
+.section-switcher a:active {
+  transform: translateY(1px);
+}
+
+.section-switcher a:focus-visible {
+  outline: 3px solid var(--focus-outline-color);
+  outline-offset: 3px;
+}
+
 .portfolio-grid {
   display: grid;
   gap: var(--grid-gap);
+  width: 100%;
   max-width: var(--content-width);
   margin-inline: auto;
 }
@@ -1301,6 +1377,29 @@ footer {
 }
 
 @media (min-width: 900px) {
+  .portfolio-shell {
+    grid-template-columns: minmax(6.5rem, 8rem) minmax(0, var(--content-width));
+    align-items: start;
+  }
+
+  .portfolio-shell .portfolio-grid {
+    max-width: none;
+    margin-inline: 0;
+  }
+
+  .section-rail {
+    position: sticky;
+    top: 1.5rem;
+  }
+
+  .section-switcher ul {
+    display: grid;
+  }
+
+  .section-switcher a {
+    justify-content: flex-start;
+  }
+
   .portfolio-grid {
     grid-template-columns: repeat(12, minmax(0, 1fr));
     grid-auto-flow: dense;

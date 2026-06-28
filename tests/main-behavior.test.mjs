@@ -203,6 +203,12 @@ class MockElement {
             return this.attributes.has('data-reveal');
         }
 
+        const attributeSelector = selector.match(/^\[([a-z0-9-]+)\]$/i);
+
+        if (attributeSelector) {
+            return this.attributes.has(attributeSelector[1]);
+        }
+
         return false;
     }
 
@@ -399,8 +405,30 @@ function runMain(options = {}) {
     const media = options.media ?? createMatchMediaController();
     const storage = options.storage ?? createStorage();
     const intervals = [];
+    const windowListeners = new Map();
     const window = {
         matchMedia: media.matchMedia,
+        location: {
+            hash: options.locationHash ?? '',
+        },
+        history: {
+            pushState(_state, _title, url) {
+                const hashIndex = String(url).indexOf('#');
+
+                window.location.hash =
+                    hashIndex >= 0 ? String(url).slice(hashIndex) : '';
+            },
+        },
+        addEventListener(type, callback) {
+            const listeners = windowListeners.get(type) ?? [];
+            listeners.push(callback);
+            windowListeners.set(type, listeners);
+        },
+        dispatchEvent(event) {
+            for (const callback of windowListeners.get(event.type) ?? []) {
+                callback(event);
+            }
+        },
     };
 
     const context = {
@@ -671,6 +699,66 @@ function createProjectFilterDom() {
     };
 }
 
+function createSectionSwitcherDom() {
+    const document = new MockDocument();
+    const aboutLink = appendElement(document, 'a', {
+        attributes: {
+            href: '#about',
+            'aria-current': 'page',
+            'data-section-link': 'about',
+        },
+    });
+    aboutLink.textContent = 'About';
+
+    const projectsLink = appendElement(document, 'a', {
+        attributes: {
+            href: '#projects',
+            'data-section-link': 'projects',
+        },
+    });
+    projectsLink.textContent = 'Projects';
+
+    const contactLink = appendElement(document, 'a', {
+        attributes: {
+            href: '#contact',
+            'data-section-link': 'contact',
+        },
+    });
+    contactLink.textContent = 'Contact';
+
+    const aboutPanel = appendElement(document, 'section', {
+        id: 'hero',
+        attributes: {
+            'data-section-panel': 'about',
+        },
+    });
+    appendElement(document, 'section', { id: 'about' }, aboutPanel);
+
+    const projectsPanel = appendElement(document, 'section', {
+        id: 'projects',
+        attributes: {
+            'data-section-panel': 'projects',
+        },
+    });
+
+    const contactPanel = appendElement(document, 'div', {
+        attributes: {
+            'data-section-panel': 'contact',
+        },
+    });
+    appendElement(document, 'section', { id: 'contact' }, contactPanel);
+
+    return {
+        document,
+        aboutLink,
+        projectsLink,
+        contactLink,
+        aboutPanel,
+        projectsPanel,
+        contactPanel,
+    };
+}
+
 function createTimezoneDom() {
     const document = new MockDocument();
     const homeTime = appendElement(document, 'time', {
@@ -867,6 +955,30 @@ test('desktop breakpoint resets mobile navigation state', () => {
 
     assert.equal(navigation.classList.contains('is-open'), false);
     assert.equal(button.getAttribute('aria-expanded'), 'false');
+});
+
+test('home section switcher shows only the selected main panel', () => {
+    const dom = createSectionSwitcherDom();
+
+    runMain({ document: dom.document, locationHash: '#projects' });
+
+    assert.equal(dom.aboutPanel.hidden, true);
+    assert.equal(dom.projectsPanel.hidden, false);
+    assert.equal(dom.contactPanel.hidden, true);
+    assert.equal(dom.aboutLink.getAttribute('aria-current'), null);
+    assert.equal(dom.projectsLink.getAttribute('aria-current'), 'page');
+    assert.equal(dom.document.documentElement.dataset.activeSection, 'projects');
+
+    const clickEvent = createEvent('click');
+    dom.contactLink.dispatchEvent(clickEvent);
+
+    assert.equal(clickEvent.defaultPrevented, true);
+    assert.equal(dom.aboutPanel.hidden, true);
+    assert.equal(dom.projectsPanel.hidden, true);
+    assert.equal(dom.contactPanel.hidden, false);
+    assert.equal(dom.projectsLink.getAttribute('aria-current'), null);
+    assert.equal(dom.contactLink.getAttribute('aria-current'), 'page');
+    assert.equal(dom.document.documentElement.dataset.activeSection, 'contact');
 });
 
 test('project filter toggles cards, button state, and live status', () => {
