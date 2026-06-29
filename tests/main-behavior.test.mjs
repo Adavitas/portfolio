@@ -88,6 +88,7 @@ class MockElement {
         this.dateTime = '';
         this.validity = { valid: true };
         this.focusCount = 0;
+        this.scrollIntoViewCalls = [];
         this._className = '';
         this.classList = new MockClassList(this);
 
@@ -184,6 +185,10 @@ class MockElement {
         if (this.ownerDocument) {
             this.ownerDocument.activeElement = this;
         }
+    }
+
+    scrollIntoView(options) {
+        this.scrollIntoViewCalls.push(options);
     }
 
     matches(selector) {
@@ -968,6 +973,7 @@ test('home section switcher shows only the selected main panel', () => {
     assert.equal(dom.aboutLink.getAttribute('aria-current'), null);
     assert.equal(dom.projectsLink.getAttribute('aria-current'), 'page');
     assert.equal(dom.document.documentElement.dataset.activeSection, 'projects');
+    assert.equal(dom.projectsPanel.scrollIntoViewCalls.length, 0);
 
     const clickEvent = createEvent('click');
     dom.contactLink.dispatchEvent(clickEvent);
@@ -979,6 +985,23 @@ test('home section switcher shows only the selected main panel', () => {
     assert.equal(dom.projectsLink.getAttribute('aria-current'), null);
     assert.equal(dom.contactLink.getAttribute('aria-current'), 'page');
     assert.equal(dom.document.documentElement.dataset.activeSection, 'contact');
+    assert.equal(dom.contactPanel.scrollIntoViewCalls.length, 1);
+    assert.equal(dom.contactPanel.scrollIntoViewCalls[0].block, 'start');
+    assert.equal(dom.contactPanel.scrollIntoViewCalls[0].behavior, 'smooth');
+});
+
+test('home section switcher respects reduced motion when scrolling clicked panel', () => {
+    const dom = createSectionSwitcherDom();
+    const media = createMatchMediaController({
+        '(prefers-reduced-motion: reduce)': true,
+    });
+
+    runMain({ document: dom.document, media });
+    dom.projectsLink.dispatchEvent(createEvent('click'));
+
+    assert.equal(dom.projectsPanel.scrollIntoViewCalls.length, 1);
+    assert.equal(dom.projectsPanel.scrollIntoViewCalls[0].block, 'start');
+    assert.equal(dom.projectsPanel.scrollIntoViewCalls[0].behavior, 'auto');
 });
 
 test('project filter toggles cards, button state, and live status', () => {

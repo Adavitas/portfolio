@@ -397,6 +397,26 @@ test('accessibility references point to existing IDs', () => {
                     `home page needs a ${section} section panel`,
                 );
             }
+
+            const contactIndex = source.indexOf('id="contact"');
+            const sectionRailIndex = source.indexOf('class="section-rail"');
+            const infoGridIndex = source.indexOf('class="info-grid"');
+            assert.ok(
+                contactIndex < sectionRailIndex && sectionRailIndex < infoGridIndex,
+                'home page order should be selected content, controls rail, then persistent info cards',
+            );
+
+            const nowTag = source.match(
+                /<section\b(?=[^>]*id=["']now["'])[^>]*>/i,
+            )?.[0];
+            const timeTag = source.match(
+                /<section\b(?=[^>]*class=["'][^"']*\btime-card\b)[^>]*>/i,
+            )?.[0];
+
+            assert.ok(nowTag, 'home page needs a persistent Now card');
+            assert.ok(timeTag, 'home page needs a persistent Time zones card');
+            assert.doesNotMatch(nowTag, /\bdata-section-panel\b/i);
+            assert.doesNotMatch(timeTag, /\bdata-section-panel\b/i);
         } else {
             assert.match(
                 source,

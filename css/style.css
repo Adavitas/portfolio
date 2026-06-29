@@ -283,6 +283,9 @@ nav .nav-links a:hover {
 .section-rail {
   display: grid;
   gap: var(--grid-gap);
+  grid-column: 1 / -1;
+  grid-row: 2;
+  order: 2;
   position: relative;
   z-index: 3;
   align-content: start;
@@ -386,6 +389,7 @@ nav .nav-links a:hover {
 .portfolio-grid {
   display: grid;
   gap: var(--grid-gap);
+  grid-row: 1;
   width: 100%;
   max-width: var(--content-width);
   margin-inline: auto;
@@ -496,11 +500,17 @@ nav .nav-links a:hover {
 
 .intro-card {
   grid-column: 1 / -1;
+  order: 1;
   display: grid;
   padding: clamp(1rem, 2vw, 1.35rem);
   background:
     radial-gradient(circle at 80% 18%, rgb(154 219 200 / 20%), transparent 20rem),
     var(--surface-color);
+}
+
+.projects-card,
+.contact-card {
+  order: 1;
 }
 
 .intro-layout {
@@ -805,6 +815,7 @@ nav .nav-links a:hover {
 .info-grid {
   display: grid;
   gap: var(--grid-gap);
+  order: 3;
 }
 
 .now-card-header {
@@ -1417,7 +1428,7 @@ footer {
 
 @media (min-width: 900px) {
   .portfolio-shell {
-    grid-template-columns: minmax(0, var(--content-width)) minmax(11rem, 13rem);
+    grid-template-columns: 1fr;
     align-items: start;
   }
 
@@ -1429,7 +1440,7 @@ footer {
   }
 
   .section-rail {
-    grid-column: 2;
+    grid-column: 13;
     grid-row: 1;
     position: sticky;
     top: 1.5rem;
@@ -1444,7 +1455,7 @@ footer {
   }
 
   .portfolio-grid {
-    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-columns: repeat(12, minmax(0, 1fr)) minmax(11rem, 13rem);
     grid-auto-flow: dense;
   }
 
@@ -1492,9 +1503,11 @@ footer {
     font-size: 0.84rem;
   }
 
+  .intro-card,
   .projects-card,
+  .contact-card,
   .info-grid {
-    grid-column: 1 / -1;
+    grid-column: 1 / 13;
   }
 
   .projects-card {

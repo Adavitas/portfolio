@@ -40,85 +40,6 @@
     <a class="skip-link" href="#main-content">Skip to main content</a>
 
     <div class="portfolio-shell">
-      <aside class="section-rail" aria-label="Portfolio section navigation">
-        <nav class="section-switcher" aria-label="Portfolio sections">
-          <p class="eyebrow">Sections</p>
-          <ul>
-            <li>
-              <a href="#about" data-section-link="about" aria-current="page"
-                >About</a
-              >
-            </li>
-            <li>
-              <a href="#projects" data-section-link="projects">Projects</a>
-            </li>
-            <li>
-              <a href="#contact" data-section-link="contact">Contact</a>
-            </li>
-          </ul>
-        </nav>
-
-        <section
-          class="card appearance-card accent-card rail-appearance-card card-spotlight"
-          aria-label="Appearance controls"
-        >
-          <div class="appearance-controls">
-            <p class="appearance-control-label">Mode</p>
-            <button
-              class="theme-button"
-              type="button"
-              aria-label="Switch theme"
-            >
-              <span class="theme-button-label" aria-hidden="true">Theme</span>
-            </button>
-            <div class="appearance-control-group">
-              <p class="appearance-control-label">Accent</p>
-              <div
-                class="accent-swatches"
-                role="group"
-                aria-label="Accent colors"
-              >
-                <button
-                  class="accent-swatch"
-                  type="button"
-                  data-accent="mint"
-                  aria-pressed="true"
-                >
-                  Mint
-                </button>
-                <button
-                  class="accent-swatch"
-                  type="button"
-                  data-accent="amber"
-                  aria-pressed="false"
-                >
-                  Amber
-                </button>
-                <button
-                  class="accent-swatch"
-                  type="button"
-                  data-accent="blue"
-                  aria-pressed="false"
-                >
-                  Blue
-                </button>
-                <button
-                  class="accent-swatch"
-                  type="button"
-                  data-accent="rose"
-                  aria-pressed="false"
-                >
-                  Rose
-                </button>
-              </div>
-            </div>
-          </div>
-          <noscript>
-            <p>JavaScript is required to change the theme or accent color.</p>
-          </noscript>
-        </section>
-      </aside>
-
       <main id="main-content" class="portfolio-grid" tabindex="-1">
         <section
           id="hero"
@@ -391,11 +312,178 @@
           </div>
         </section>
 
+        <section
+          id="contact"
+          class="card contact-card card-spotlight"
+          data-section-panel="contact"
+          data-reveal
+        >
+          <h2>Let's work together</h2>
+          <p>
+            Have a project, learning suggestion, or opportunity? Send me a
+            message or contact me directly by email.
+          </p>
+
+          <address>
+            <a href="mailto:leqso.davitashvili.st@gmail.com"
+              >leqso.davitashvili.st@gmail.com</a
+            >
+          </address>
+
+          <p class="form-note" id="form-note">
+            This form prepares an email draft. You will review and send it from
+            your email application.
+          </p>
+
+          <form id="contact-form" aria-describedby="form-note">
+            <div class="form-field">
+              <label for="name">Name</label>
+              <input
+                id="name"
+                name="name"
+                type="text"
+                autocomplete="name"
+                minlength="2"
+                maxlength="80"
+                aria-describedby="name-help name-error"
+                required
+              />
+              <p class="form-help" id="name-help">
+                Enter at least two characters.
+              </p>
+              <p class="form-error" id="name-error"></p>
+            </div>
+
+            <div class="form-field">
+              <label for="email">Email</label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                autocomplete="email"
+                maxlength="254"
+                aria-describedby="email-help email-error"
+                required
+              />
+              <p class="form-help" id="email-help">
+                Use an address such as name@example.com.
+              </p>
+              <p class="form-error" id="email-error"></p>
+            </div>
+
+            <div class="form-field">
+              <label for="message">Message</label>
+              <textarea
+                id="message"
+                name="message"
+                rows="6"
+                minlength="20"
+                maxlength="2000"
+                aria-describedby="message-help message-error"
+                required
+              ></textarea>
+              <p class="form-help" id="message-help">
+                Explain your idea in at least 20 characters.
+              </p>
+              <p class="form-error" id="message-error"></p>
+            </div>
+
+            <button type="submit">Prepare email</button>
+            <p
+              class="form-status"
+              id="form-status"
+              aria-live="polite"
+              aria-atomic="true"
+            ></p>
+            <a class="email-draft-link" id="email-draft-link" hidden
+              >Open email draft</a
+            >
+          </form>
+        </section>
+
+        <aside class="section-rail" aria-label="Portfolio section navigation">
+          <nav class="section-switcher" aria-label="Portfolio sections">
+            <p class="eyebrow">Sections</p>
+            <ul>
+              <li>
+                <a href="#about" data-section-link="about" aria-current="page"
+                  >About</a
+                >
+              </li>
+              <li>
+                <a href="#projects" data-section-link="projects">Projects</a>
+              </li>
+              <li>
+                <a href="#contact" data-section-link="contact">Contact</a>
+              </li>
+            </ul>
+          </nav>
+
+          <section
+            class="card appearance-card accent-card rail-appearance-card card-spotlight"
+            aria-label="Appearance controls"
+          >
+            <div class="appearance-controls">
+              <p class="appearance-control-label">Mode</p>
+              <button
+                class="theme-button"
+                type="button"
+                aria-label="Switch theme"
+              >
+                <span class="theme-button-label" aria-hidden="true">Theme</span>
+              </button>
+              <div class="appearance-control-group">
+                <p class="appearance-control-label">Accent</p>
+                <div
+                  class="accent-swatches"
+                  role="group"
+                  aria-label="Accent colors"
+                >
+                  <button
+                    class="accent-swatch"
+                    type="button"
+                    data-accent="mint"
+                    aria-pressed="true"
+                  >
+                    Mint
+                  </button>
+                  <button
+                    class="accent-swatch"
+                    type="button"
+                    data-accent="amber"
+                    aria-pressed="false"
+                  >
+                    Amber
+                  </button>
+                  <button
+                    class="accent-swatch"
+                    type="button"
+                    data-accent="blue"
+                    aria-pressed="false"
+                  >
+                    Blue
+                  </button>
+                  <button
+                    class="accent-swatch"
+                    type="button"
+                    data-accent="rose"
+                    aria-pressed="false"
+                  >
+                    Rose
+                  </button>
+                </div>
+              </div>
+            </div>
+            <noscript>
+              <p>JavaScript is required to change the theme or accent color.</p>
+            </noscript>
+          </section>
+        </aside>
+
         <div class="info-grid">
           <section
             id="now"
             class="card now-card card-spotlight"
-            data-section-panel="about"
             data-reveal
           >
             <div class="now-card-header">
@@ -412,7 +500,6 @@
           <section
             class="card time-card card-spotlight"
             aria-labelledby="time-heading"
-            data-section-panel="about"
             data-reveal
             data-reveal-delay="short"
           >
@@ -451,94 +538,6 @@
             </noscript>
           </section>
 
-          <section
-            id="contact"
-            class="card contact-card card-spotlight"
-            data-section-panel="contact"
-            data-reveal
-          >
-            <h2>Let's work together</h2>
-            <p>
-              Have a project, learning suggestion, or opportunity? Send me a
-              message or contact me directly by email.
-            </p>
-
-            <address>
-              <a href="mailto:leqso.davitashvili.st@gmail.com"
-                >leqso.davitashvili.st@gmail.com</a
-              >
-            </address>
-
-            <p class="form-note" id="form-note">
-              This form prepares an email draft. You will review and send it
-              from your email application.
-            </p>
-
-            <form id="contact-form" aria-describedby="form-note">
-              <div class="form-field">
-                <label for="name">Name</label>
-                <input
-                  id="name"
-                  name="name"
-                  type="text"
-                  autocomplete="name"
-                  minlength="2"
-                  maxlength="80"
-                  aria-describedby="name-help name-error"
-                  required
-                />
-                <p class="form-help" id="name-help">
-                  Enter at least two characters.
-                </p>
-                <p class="form-error" id="name-error"></p>
-              </div>
-
-              <div class="form-field">
-                <label for="email">Email</label>
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autocomplete="email"
-                  maxlength="254"
-                  aria-describedby="email-help email-error"
-                  required
-                />
-                <p class="form-help" id="email-help">
-                  Use an address such as name@example.com.
-                </p>
-                <p class="form-error" id="email-error"></p>
-              </div>
-
-              <div class="form-field">
-                <label for="message">Message</label>
-                <textarea
-                  id="message"
-                  name="message"
-                  rows="6"
-                  minlength="20"
-                  maxlength="2000"
-                  aria-describedby="message-help message-error"
-                  required
-                ></textarea>
-                <p class="form-help" id="message-help">
-                  Explain your idea in at least 20 characters.
-                </p>
-                <p class="form-error" id="message-error"></p>
-              </div>
-
-              <button type="submit">Prepare email</button>
-              <p
-                class="form-status"
-                id="form-status"
-                aria-live="polite"
-                aria-atomic="true"
-              ></p>
-              <a class="email-draft-link" id="email-draft-link" hidden
-                >Open email draft</a
-              >
-            </form>
-          </section>
         </div>
       </main>
     </div>
@@ -549,6 +548,6 @@
       <p><a href="#hero">Back to top</a></p>
     </footer>
 
-    <script src="js/main.js?v=phase17" defer></script>
+    <script src="js/main.js?v=persistent-info" defer></script>
   </body>
 </html>

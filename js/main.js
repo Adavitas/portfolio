@@ -171,6 +171,27 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             document.documentElement.dataset.activeSection = activeSection;
+
+            return (
+                [...sectionPanels].find(
+                    (panel) => panel.dataset.sectionPanel === activeSection,
+                ) ?? null
+            );
+        }
+
+        function scrollSectionIntoView(sectionPanel) {
+            if (!sectionPanel?.scrollIntoView) {
+                return;
+            }
+
+            const prefersReducedMotion =
+                window.matchMedia?.('(prefers-reduced-motion: reduce)')
+                    .matches ?? false;
+
+            sectionPanel.scrollIntoView({
+                block: 'start',
+                behavior: prefersReducedMotion ? 'auto' : 'smooth',
+            });
         }
 
         sectionLinks.forEach((link) => {
@@ -189,7 +210,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     window.location.hash = section;
                 }
 
-                setActiveSection(section);
+                const activePanel = setActiveSection(section);
+                scrollSectionIntoView(activePanel);
             });
         });
 
