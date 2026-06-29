@@ -400,11 +400,22 @@ test('accessibility references point to existing IDs', () => {
 
             const contactIndex = source.indexOf('id="contact"');
             const sectionRailIndex = source.indexOf('class="section-rail"');
+            const appearanceCardIndex = source.indexOf('rail-appearance-card');
+            const creditCardIndex = source.indexOf('rail-credit-card');
             const infoGridIndex = source.indexOf('class="info-grid"');
             assert.ok(
                 contactIndex < sectionRailIndex && sectionRailIndex < infoGridIndex,
                 'home page order should be selected content, controls rail, then persistent info cards',
             );
+            assert.ok(
+                appearanceCardIndex < creditCardIndex &&
+                    creditCardIndex < infoGridIndex,
+                'home page credits should sit below appearance controls in the rail',
+            );
+            assert.match(source, /class=["'][^"']*\brail-credit-card\b/i);
+            assert.match(source, /&copy; 2026 Aleksandre Davitashvili\./);
+            assert.match(source, /Built with HTML, CSS, and JavaScript\./);
+            assert.doesNotMatch(source, />\s*Back to top\s*</i);
 
             const nowTag = source.match(
                 /<section\b(?=[^>]*id=["']now["'])[^>]*>/i,

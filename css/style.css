@@ -333,6 +333,21 @@ nav .nav-links a:hover {
   gap: 0.45rem;
 }
 
+.rail-credit-card {
+  width: 100%;
+  padding: 0.75rem;
+}
+
+.rail-credit-card p {
+  margin: 0;
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+.rail-credit-card p + p {
+  margin-top: 0.3rem;
+}
+
 .section-switcher .eyebrow {
   margin: 0;
 }
