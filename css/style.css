@@ -32,6 +32,7 @@
   --grid-gap: clamp(0.85rem, 2vw, 1.25rem);
   --content-width: 78rem;
   --section-panel-block-size: clamp(32rem, 72vh, 40rem);
+  --persistent-info-card-block-size: 9rem;
   --shadow-color: rgb(0 0 0 / 28%);
 }
 
@@ -842,6 +843,7 @@ nav .nav-links a:hover {
   display: grid;
   gap: var(--grid-gap);
   order: 3;
+  align-items: stretch;
 }
 
 .now-card-header {
@@ -897,6 +899,7 @@ nav .nav-links a:hover {
 .timezone-row {
   display: grid;
   gap: 0.35rem;
+  min-width: 0;
   padding-top: 0.85rem;
   border-top: 1px solid var(--border-color);
 }
@@ -905,6 +908,7 @@ nav .nav-links a:hover {
 .timezone-code {
   color: var(--muted-text-color);
   font-size: 0.85rem;
+  overflow-wrap: anywhere;
 }
 
 .timezone-value {
@@ -1095,7 +1099,6 @@ nav .nav-links a:hover {
 
   .info-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    align-items: start;
   }
 
   .contact-card {
@@ -1469,7 +1472,7 @@ footer {
 
   .section-rail {
     grid-column: 13;
-    grid-row: 1;
+    grid-row: 1 / 3;
     position: sticky;
     top: 1.5rem;
   }
@@ -1541,6 +1544,68 @@ footer {
 
   .featured-project .project-copy {
     padding-top: 0.7rem;
+  }
+
+  .rail-credit-card,
+  .info-grid > .card {
+    block-size: var(--persistent-info-card-block-size);
+  }
+
+  .rail-credit-card {
+    display: grid;
+    align-content: center;
+  }
+
+  .info-grid > .card {
+    padding: 0.85rem 1rem;
+  }
+
+  .info-grid .card h2 {
+    margin-bottom: 0;
+  }
+
+  .now-card-header {
+    margin-bottom: 0.4rem;
+  }
+
+  #now > time {
+    display: block;
+    margin-bottom: 0.35rem;
+    font-size: 0.88rem;
+  }
+
+  #now > p {
+    font-size: 0.9rem;
+    line-height: 1.35;
+  }
+
+  .time-card {
+    display: grid;
+    align-content: start;
+    gap: 0.45rem;
+  }
+
+  .time-card .timezone-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.65rem;
+  }
+
+  .time-card .timezone-row {
+    gap: 0.25rem;
+    padding-top: 0.55rem;
+  }
+
+  .time-card .timezone-label,
+  .time-card .timezone-code {
+    font-size: 0.75rem;
+  }
+
+  .time-card .timezone-value {
+    gap: 0.2rem 0.4rem;
+  }
+
+  .time-card .timezone-value time {
+    font-size: clamp(1.2rem, 2vw, 1.55rem);
   }
 
   .case-study-hero {

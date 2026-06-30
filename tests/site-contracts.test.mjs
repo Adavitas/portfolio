@@ -334,6 +334,48 @@ test('home section panels share one outer layout contract', () => {
     );
 });
 
+test('home persistent info cards stay compact below the active panel', () => {
+    assert.match(
+        styleSource,
+        /--persistent-info-card-block-size:\s*9rem;/,
+        'copyright, Now, and Time zones cards should share one compact height token',
+    );
+
+    const infoGridRule = styleSource.match(/\.info-grid\s*{([\s\S]*?)\n}/);
+    assert.ok(infoGridRule, 'info-grid needs a base layout rule');
+    assert.match(
+        infoGridRule[1],
+        /align-items:\s*stretch;/,
+        'Now and Time zones should stretch to matching card heights',
+    );
+
+    const desktopRailRule = styleSource.match(
+        /@media \(min-width: 900px\) {[\s\S]*?\.section-rail\s*{([\s\S]*?)\n  }/,
+    );
+    assert.ok(desktopRailRule, 'desktop section rail rule should exist');
+    assert.match(
+        desktopRailRule[1],
+        /grid-row:\s*1 \/ 3;/,
+        'desktop rail should span the panel and info rows without pushing info cards down',
+    );
+
+    assert.match(
+        styleSource,
+        /\.rail-credit-card,\s*\n\s*\.info-grid > \.card\s*{[\s\S]*?block-size:\s*var\(--persistent-info-card-block-size\);[\s\S]*?}/,
+        'copyright, Now, and Time zones cards should share the same desktop height',
+    );
+    assert.match(
+        styleSource,
+        /\.time-card \.timezone-list\s*{[\s\S]*?grid-template-columns:\s*repeat\(2,\s*minmax\(0,\s*1fr\)\);[\s\S]*?}/,
+        'desktop time card should place Wolfsburg and visitor time side by side',
+    );
+    assert.match(
+        styleSource,
+        /\.time-card \.timezone-value time\s*{[\s\S]*?font-size:\s*clamp\(1\.2rem,\s*2vw,\s*1\.55rem\);[\s\S]*?}/,
+        'side-by-side desktop times should use a compact type size',
+    );
+});
+
 test('internal links, local assets, and fragments resolve', async () => {
     for (const { file } of pages) {
         const source = pageSources.get(file);
