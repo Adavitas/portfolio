@@ -48,6 +48,10 @@ const pageSources = new Map(
         ]),
     ),
 );
+const styleSource = await readFile(
+    path.join(rootDirectory, 'css/style.css'),
+    'utf8',
+);
 
 function escapeRegex(value) {
     return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -296,6 +300,38 @@ test('document structure is consistent on every page', () => {
             ),
         );
     }
+});
+
+test('home section panels share one outer layout contract', () => {
+    assert.match(
+        styleSource,
+        /--section-panel-block-size:\s*clamp\(/,
+        'shared section panel height token should stay centralized',
+    );
+
+    const panelRule = styleSource.match(/\[data-section-panel\]\s*{([\s\S]*?)\n}/);
+    assert.ok(panelRule, 'data-section-panel needs a shared sizing rule');
+
+    for (const [property, value] of [
+        ['inline-size', '100%'],
+        ['block-size', 'var(--section-panel-block-size)'],
+        ['overflow-x', 'hidden'],
+        ['overflow-y', 'auto'],
+        ['overscroll-behavior', 'contain'],
+        ['scrollbar-gutter', 'stable'],
+    ]) {
+        assert.match(
+            panelRule[1],
+            new RegExp(`${property}\\s*:\\s*${escapeRegex(value)}\\s*;`),
+            `section panel rule should include ${property}: ${value}`,
+        );
+    }
+
+    assert.match(
+        styleSource,
+        /#contact-form\s*{[\s\S]*?width:\s*min\(100%,\s*44rem\);[\s\S]*?margin:\s*1\.5rem auto 0;/,
+        'contact form should stay readable inside the full-width contact panel',
+    );
 });
 
 test('internal links, local assets, and fragments resolve', async () => {
