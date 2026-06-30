@@ -357,6 +357,11 @@ nav .nav-links a:hover {
   margin-top: 0.3rem;
 }
 
+.credit-stack {
+  color: var(--primary-color);
+  font-weight: 700;
+}
+
 .section-switcher .eyebrow {
   margin: 0;
 }
@@ -1025,6 +1030,27 @@ nav .nav-links a:hover {
 .accent-swatch:focus-visible {
   outline: 3px solid var(--focus-outline-color);
   outline-offset: 3px;
+}
+
+@media (max-width: 899px) {
+  .section-rail {
+    display: contents;
+  }
+
+  .section-switcher,
+  .rail-appearance-card,
+  .rail-credit-card {
+    grid-column: 1 / -1;
+  }
+
+  .section-switcher,
+  .rail-appearance-card {
+    order: 2;
+  }
+
+  .rail-credit-card {
+    order: 4;
+  }
 }
 
 @media (min-width: 700px) {

@@ -366,6 +366,16 @@ test('home persistent info cards stay compact below the active panel', () => {
     );
     assert.match(
         styleSource,
+        /\.credit-stack\s*{[\s\S]*?color:\s*var\(--primary-color\);[\s\S]*?}/,
+        'credit stack text should follow the selected accent color',
+    );
+    assert.match(
+        styleSource,
+        /@media \(max-width: 899px\) {[\s\S]*?\.section-rail\s*{[\s\S]*?display:\s*contents;[\s\S]*?\.rail-credit-card\s*{[\s\S]*?order:\s*4;[\s\S]*?}/,
+        'small screens should place the credits card after persistent info cards',
+    );
+    assert.match(
+        styleSource,
         /\.time-card \.timezone-list\s*{[\s\S]*?grid-template-columns:\s*repeat\(2,\s*minmax\(0,\s*1fr\)\);[\s\S]*?}/,
         'desktop time card should place Wolfsburg and visitor time side by side',
     );
@@ -498,7 +508,16 @@ test('accessibility references point to existing IDs', () => {
             );
             assert.match(source, /class=["'][^"']*\brail-credit-card\b/i);
             assert.match(source, /&copy; 2026 Aleksandre Davitashvili\./);
-            assert.match(source, /Built with HTML, CSS, and JavaScript\./);
+            assert.match(
+                stripTags(source),
+                /Built with HTML\s*,\s*CSS\s*,\s*and JavaScript\s*\./,
+            );
+            const creditStackTexts = [
+                ...source.matchAll(
+                    /<span\b(?=[^>]*class=["'][^"']*\bcredit-stack\b)[^>]*>([\s\S]*?)<\/span>/gi,
+                ),
+            ].map(([, text]) => stripTags(text));
+            assert.deepEqual(creditStackTexts, ['HTML', 'CSS', 'JavaScript']);
             assert.doesNotMatch(source, />\s*Back to top\s*</i);
 
             const nowTag = source.match(
