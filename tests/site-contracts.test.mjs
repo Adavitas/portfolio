@@ -338,7 +338,7 @@ test('home persistent info cards stay compact below the active panel', () => {
     assert.match(
         styleSource,
         /--persistent-info-card-block-size:\s*9rem;/,
-        'copyright, Now, and Time zones cards should share one compact height token',
+        'copyright, Now, Time, and contact-link cards should share one compact height token',
     );
 
     const infoGridRule = styleSource.match(/\.info-grid\s*{([\s\S]*?)\n}/);
@@ -346,7 +346,7 @@ test('home persistent info cards stay compact below the active panel', () => {
     assert.match(
         infoGridRule[1],
         /align-items:\s*stretch;/,
-        'Now and Time zones should stretch to matching card heights',
+        'persistent info cards should stretch to matching card heights',
     );
 
     const desktopRailRule = styleSource.match(
@@ -362,7 +362,22 @@ test('home persistent info cards stay compact below the active panel', () => {
     assert.match(
         styleSource,
         /\.rail-credit-card,\s*\n\s*\.info-grid > \.card\s*{[\s\S]*?block-size:\s*var\(--persistent-info-card-block-size\);[\s\S]*?}/,
-        'copyright, Now, and Time zones cards should share the same desktop height',
+        'copyright, Now, Time, and contact-link cards should share the same desktop height',
+    );
+    assert.match(
+        styleSource,
+        /@media \(min-width: 900px\) {[\s\S]*?\.info-grid\s*{[\s\S]*?grid-template-columns:\s*repeat\(4,\s*minmax\(0,\s*1fr\)\);[\s\S]*?}/,
+        'desktop info grid should use four tracks for a 2/1/1 card split',
+    );
+    assert.match(
+        styleSource,
+        /#now\s*{[\s\S]*?grid-column:\s*span 2;[\s\S]*?}/,
+        'desktop Now card should keep half of the persistent info row',
+    );
+    assert.match(
+        styleSource,
+        /\.time-card,\s*\n\s*\.connect-card\s*{[\s\S]*?grid-column:\s*span 1;[\s\S]*?}/,
+        'desktop Time and contact-link cards should each use one quarter of the row',
     );
     assert.match(
         styleSource,
@@ -497,6 +512,8 @@ test('accessibility references point to existing IDs', () => {
             const appearanceCardIndex = source.indexOf('rail-appearance-card');
             const creditCardIndex = source.indexOf('rail-credit-card');
             const infoGridIndex = source.indexOf('class="info-grid"');
+            const timeCardIndex = source.indexOf('class="card time-card');
+            const connectCardIndex = source.indexOf('class="card connect-card');
             assert.ok(
                 contactIndex < sectionRailIndex && sectionRailIndex < infoGridIndex,
                 'home page order should be selected content, controls rail, then persistent info cards',
@@ -505,6 +522,10 @@ test('accessibility references point to existing IDs', () => {
                 appearanceCardIndex < creditCardIndex &&
                     creditCardIndex < infoGridIndex,
                 'home page credits should sit below appearance controls in the rail',
+            );
+            assert.ok(
+                infoGridIndex < timeCardIndex && timeCardIndex < connectCardIndex,
+                'home page info grid should place contact links beside the compact time card',
             );
             assert.match(source, /class=["'][^"']*\brail-credit-card\b/i);
             assert.match(source, /&copy; 2026 Aleksandre Davitashvili\./);
@@ -526,11 +547,21 @@ test('accessibility references point to existing IDs', () => {
             const timeTag = source.match(
                 /<section\b(?=[^>]*class=["'][^"']*\btime-card\b)[^>]*>/i,
             )?.[0];
+            const connectTag = source.match(
+                /<section\b(?=[^>]*class=["'][^"']*\bconnect-card\b)[^>]*>/i,
+            )?.[0];
 
             assert.ok(nowTag, 'home page needs a persistent Now card');
-            assert.ok(timeTag, 'home page needs a persistent Time zones card');
+            assert.ok(timeTag, 'home page needs a persistent Time card');
+            assert.ok(connectTag, 'home page needs a persistent contact-links card');
             assert.doesNotMatch(nowTag, /\bdata-section-panel\b/i);
             assert.doesNotMatch(timeTag, /\bdata-section-panel\b/i);
+            assert.doesNotMatch(connectTag, /\bdata-section-panel\b/i);
+            assert.match(timeTag, /\baria-label=["']Timezone comparison["']/i);
+            assert.doesNotMatch(timeTag, /\baria-labelledby\b/i);
+            assert.doesNotMatch(source, /<h2\b[^>]*>\s*Time zones\s*<\/h2>/i);
+            assert.doesNotMatch(source, /\bhero-actions\b|\bcall-to-action\b/);
+            assert.match(source, /class=["']connect-primary-link["']/i);
         } else {
             assert.match(
                 source,

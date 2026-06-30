@@ -584,19 +584,6 @@ nav .nav-links a:hover {
   font-size: 0.8rem;
 }
 
-.hero-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-}
-
-.hero-actions .call-to-action {
-  flex: 1 1 10rem;
-  justify-content: center;
-  max-width: 100%;
-  margin-top: 0;
-}
-
 .intro-portrait,
 .intro-skills {
   display: grid;
@@ -635,33 +622,6 @@ nav .nav-links a:hover {
 
 .intro-skills h2 {
   color: var(--primary-color);
-}
-
-.call-to-action {
-  display: inline-flex;
-  align-items: center;
-  min-height: 2.75rem;
-  margin-top: 1rem;
-  padding: 0.75rem 1.25rem;
-  background-color: var(--primary-color);
-  color: var(--accent-text-color);
-  border: none;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  text-decoration: none;
-  transition:
-    background-color 0.2s ease,
-    transform 0.2s ease;
-}
-
-.call-to-action:hover {
-  background-color: var(--primary-color-hover);
-  transform: translateY(-2px);
-}
-
-.call-to-action:focus-visible {
-  outline: 3px solid var(--focus-outline-color);
-  outline-offset: 3px;
 }
 
 .grid-gallery {
@@ -909,6 +869,11 @@ nav .nav-links a:hover {
   border-top: 1px solid var(--border-color);
 }
 
+.timezone-row:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
 .timezone-label,
 .timezone-code {
   color: var(--muted-text-color);
@@ -931,6 +896,71 @@ nav .nav-links a:hover {
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.06em;
   line-height: 1;
+}
+
+.connect-card {
+  display: grid;
+  align-content: center;
+  gap: 0.65rem;
+}
+
+.connect-primary-link,
+.connect-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  min-height: 2.35rem;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.1;
+  text-align: center;
+  text-decoration: none;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.connect-primary-link {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: var(--accent-text-color);
+}
+
+.connect-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.connect-links a {
+  flex: 1 1 5.5rem;
+  color: var(--primary-color);
+}
+
+.connect-primary-link:hover,
+.connect-primary-link:focus-visible {
+  background-color: var(--primary-color-hover);
+  border-color: var(--primary-color-hover);
+  transform: translateY(-2px);
+}
+
+.connect-links a:hover,
+.connect-links a:focus-visible {
+  border-color: var(--primary-color);
+  color: var(--primary-color-hover);
+  transform: translateY(-2px);
+}
+
+.connect-primary-link:focus-visible,
+.connect-links a:focus-visible {
+  outline: 3px solid var(--focus-outline-color);
+  outline-offset: 3px;
 }
 
 .appearance-controls {
@@ -1586,6 +1616,19 @@ footer {
     padding: 0.85rem 1rem;
   }
 
+  .info-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  #now {
+    grid-column: span 2;
+  }
+
+  .time-card,
+  .connect-card {
+    grid-column: span 1;
+  }
+
   .info-grid .card h2 {
     margin-bottom: 0;
   }
@@ -1607,7 +1650,7 @@ footer {
 
   .time-card {
     display: grid;
-    align-content: start;
+    align-content: center;
     gap: 0.45rem;
   }
 
@@ -1618,7 +1661,8 @@ footer {
 
   .time-card .timezone-row {
     gap: 0.25rem;
-    padding-top: 0.55rem;
+    padding-top: 0;
+    border-top: 0;
   }
 
   .time-card .timezone-label,
@@ -1632,6 +1676,17 @@ footer {
 
   .time-card .timezone-value time {
     font-size: clamp(1.2rem, 2vw, 1.55rem);
+  }
+
+  .connect-card {
+    gap: 0.5rem;
+  }
+
+  .connect-primary-link,
+  .connect-links a {
+    min-height: 2.15rem;
+    padding: 0.45rem 0.55rem;
+    font-size: 0.82rem;
   }
 
   .case-study-hero {
@@ -1660,7 +1715,6 @@ footer {
     animation: none;
   }
 
-  .call-to-action,
   .skip-link,
   .menu-button,
   .theme-button,
@@ -1668,6 +1722,8 @@ footer {
   .project-filter-button,
   #contact-form button,
   .project-card,
+  .connect-primary-link,
+  .connect-links a,
   .case-study-navigation a,
   .case-study-navigation a::after,
   .project-links a::after,
@@ -1677,7 +1733,6 @@ footer {
     animation: none;
   }
 
-  .call-to-action:hover,
   .menu-button:active,
   .theme-button:active,
   .accent-swatch:active,
@@ -1685,6 +1740,10 @@ footer {
   #contact-form button:active,
   .project-card:hover,
   .project-card:focus-within,
+  .connect-primary-link:hover,
+  .connect-primary-link:focus-visible,
+  .connect-links a:hover,
+  .connect-links a:focus-visible,
   .case-study-navigation a:hover::after,
   .case-study-navigation a:focus-visible::after,
   .project-links a:hover::after,
