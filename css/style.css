@@ -535,7 +535,7 @@ nav .nav-links a:hover {
 
 .intro-copy,
 .intro-portrait,
-.intro-about {
+.intro-skills {
   min-width: 0;
 }
 
@@ -570,7 +570,7 @@ nav .nav-links a:hover {
 }
 
 .intro-portrait,
-.intro-about {
+.intro-skills {
   display: grid;
   gap: 0.75rem;
   padding-top: clamp(0.85rem, 2vw, 1.2rem);
@@ -605,14 +605,8 @@ nav .nav-links a:hover {
   align-self: start;
 }
 
-.intro-about h2 {
+.intro-skills h2 {
   color: var(--primary-color);
-}
-
-.intro-about p {
-  max-width: 62ch;
-  color: var(--about-text-color);
-  line-height: 1.55;
 }
 
 .call-to-action {
@@ -767,7 +761,6 @@ nav .nav-links a:hover {
   font-size: 0.9rem;
 }
 
-.project-copy > a,
 .project-links a {
   display: inline-flex;
   align-items: center;
@@ -779,7 +772,6 @@ nav .nav-links a:hover {
   text-underline-offset: 0.25rem;
 }
 
-.project-copy > a::after,
 .project-links a::after {
   display: inline-block;
   content: "\2197";
@@ -791,15 +783,12 @@ nav .nav-links a:hover {
     transform 0.2s ease;
 }
 
-.project-copy > a:hover::after,
-.project-copy > a:focus-visible::after,
 .project-links a:hover::after,
 .project-links a:focus-visible::after {
   opacity: 1;
   transform: translate(0.12rem, -0.12rem);
 }
 
-.project-copy > a:focus-visible,
 .project-links a:focus-visible {
   outline: 3px solid var(--focus-outline-color);
   outline-offset: 3px;
@@ -814,7 +803,7 @@ nav .nav-links a:hover {
   list-style: none;
 }
 
-.intro-about .tag-list {
+.intro-skills .tag-list {
   justify-content: center;
 }
 
@@ -1065,7 +1054,7 @@ nav .nav-links a:hover {
     border-top: 0;
   }
 
-  .intro-about {
+  .intro-skills {
     grid-column: 1;
   }
 
@@ -1478,42 +1467,13 @@ footer {
     grid-template-columns: minmax(0, 1.25fr) minmax(16rem, 0.75fr);
   }
 
-  .intro-about {
-    display: grid;
-    grid-template-columns: minmax(0, 0.85fr) minmax(14rem, 1.15fr);
-    gap: 0.75rem 1.25rem;
-    align-items: start;
-  }
-
-  .intro-about h2 {
-    grid-column: 1;
-    grid-row: 1;
-  }
-
-  .intro-about p:first-of-type {
-    grid-column: 1;
-    grid-row: 2;
-  }
-
-  .intro-about p:last-of-type {
-    grid-column: 1;
-    grid-row: 3;
-  }
-
-  .intro-about h3 {
-    grid-column: 2;
-    grid-row: 1;
-  }
-
-  .intro-about .tag-list {
-    grid-column: 2;
-    grid-row: 2 / span 2;
+  .intro-skills .tag-list {
     gap: 0.4rem;
     justify-content: flex-start;
     margin-block: 0;
   }
 
-  .intro-about .tag-list li {
+  .intro-skills .tag-list li {
     padding: 0.32rem 0.65rem;
     font-size: 0.84rem;
   }
@@ -1595,7 +1555,6 @@ footer {
   .project-card,
   .case-study-navigation a,
   .case-study-navigation a::after,
-  .project-copy > a::after,
   .project-links a::after,
   .status-pulse::after,
   .card-spotlight::before {
@@ -1613,8 +1572,6 @@ footer {
   .project-card:focus-within,
   .case-study-navigation a:hover::after,
   .case-study-navigation a:focus-visible::after,
-  .project-copy > a:hover::after,
-  .project-copy > a:focus-visible::after,
   .project-links a:hover::after,
   .project-links a:focus-visible::after {
     transform: none;

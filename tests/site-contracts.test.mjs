@@ -382,11 +382,17 @@ test('accessibility references point to existing IDs', () => {
         }
 
         if (file === 'index.html') {
-            for (const section of ['about', 'projects', 'contact']) {
+            const sectionFragments = {
+                about: 'hero',
+                projects: 'projects',
+                contact: 'contact',
+            };
+
+            for (const [section, fragment] of Object.entries(sectionFragments)) {
                 assert.match(
                     source,
                     new RegExp(
-                        `<a\\b(?=[^>]*href=["']#${section}["'])(?=[^>]*data-section-link=["']${section}["'])`,
+                        `<a\\b(?=[^>]*href=["']#${fragment}["'])(?=[^>]*data-section-link=["']${section}["'])`,
                         'i',
                     ),
                     `home page needs a ${section} side-switcher link`,

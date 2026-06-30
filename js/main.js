@@ -204,10 +204,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 event.preventDefault();
 
+                const targetHash = link.getAttribute('href') || `#${section}`;
+
                 if (window.history?.pushState) {
-                    window.history.pushState(null, '', `#${section}`);
+                    window.history.pushState(null, '', targetHash);
                 } else if (window.location) {
-                    window.location.hash = section;
+                    window.location.hash = targetHash;
                 }
 
                 const activePanel = setActiveSection(section);

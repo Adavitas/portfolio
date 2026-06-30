@@ -708,7 +708,7 @@ function createSectionSwitcherDom() {
     const document = new MockDocument();
     const aboutLink = appendElement(document, 'a', {
         attributes: {
-            href: '#about',
+            href: '#hero',
             'aria-current': 'page',
             'data-section-link': 'about',
         },
@@ -737,7 +737,6 @@ function createSectionSwitcherDom() {
             'data-section-panel': 'about',
         },
     });
-    appendElement(document, 'section', { id: 'about' }, aboutPanel);
 
     const projectsPanel = appendElement(document, 'section', {
         id: 'projects',
