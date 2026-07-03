@@ -401,6 +401,46 @@ test('home persistent info cards stay compact below the active panel', () => {
     );
 });
 
+test('home time card exposes accent-aware format controls', () => {
+    const source = pageSources.get('index.html');
+
+    assert.match(
+        source,
+        /<script\b(?=[^>]*src=["']js\/main\.js\?v=time-format["'])(?=[^>]*\bdefer\b)/i,
+        'home page should cache-bust the time-format behavior',
+    );
+    assert.match(
+        source,
+        /class=["'][^"']*\btime-format-accent\b/i,
+        'time format control should include an accent-color indicator',
+    );
+    assert.match(
+        source,
+        /<button\b(?=[^>]*class=["'][^"']*\btime-format-button\b)(?=[^>]*data-time-format=["']24["'])(?=[^>]*aria-pressed=["']true["'])/i,
+        'time card should expose 24-hour format as the initial active choice',
+    );
+    assert.match(
+        source,
+        /<button\b(?=[^>]*class=["'][^"']*\btime-format-button\b)(?=[^>]*data-time-format=["']12["'])(?=[^>]*aria-pressed=["']false["'])/i,
+        'time card should expose 12-hour format as an alternate choice',
+    );
+    assert.match(
+        styleSource,
+        /\.time-format-control\s*{[\s\S]*?position:\s*absolute;[\s\S]*?right:\s*0\.85rem;[\s\S]*?}/,
+        'time format control should stay in the top-right corner of the time card',
+    );
+    assert.match(
+        styleSource,
+        /\.time-format-accent\s*{[\s\S]*?background-color:\s*var\(--primary-color\);[\s\S]*?}/,
+        'time format accent dot should follow the selected accent color',
+    );
+    assert.match(
+        styleSource,
+        /\.time-format-button\[aria-pressed="true"\]\s*{[\s\S]*?background-color:\s*var\(--primary-color\);[\s\S]*?}/,
+        'selected time format should follow the selected accent color',
+    );
+});
+
 test('internal links, local assets, and fragments resolve', async () => {
     for (const { file } of pages) {
         const source = pageSources.get(file);

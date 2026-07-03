@@ -375,16 +375,46 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Dynamic Timezone Display
+    const timeFormatStorageKey = 'portfolio-time-format';
     const homeTimeElement = document.getElementById('home-time');
     const visitorTimeElement = document.getElementById('visitor-time');
     const homeTimezoneLabel = document.getElementById('home-timezone-label');
     const visitorTimezoneLabel = document.getElementById(
         'visitor-timezone-label',
     );
+    const timeFormatButtons = document.querySelectorAll('.time-format-button');
 
     if (homeTimeElement && visitorTimeElement) {
         const homeTimezone =
             homeTimeElement.dataset.timezone || 'Europe/Berlin';
+        let activeTimeFormat = '24';
+
+        function readSavedTimeFormat() {
+            try {
+                const savedTimeFormat = localStorage.getItem(timeFormatStorageKey);
+                return savedTimeFormat === '12' || savedTimeFormat === '24'
+                    ? savedTimeFormat
+                    : null;
+            } catch {
+                return null;
+            }
+        }
+
+        function saveTimeFormat(timeFormat) {
+            try {
+                localStorage.setItem(timeFormatStorageKey, timeFormat);
+            } catch {
+                // The selected time format still works for this page load.
+            }
+        }
+
+        function updateTimeFormatButtons(timeFormat) {
+            timeFormatButtons.forEach((button) => {
+                const isActive = button.dataset.timeFormat === timeFormat;
+                button.classList.toggle('is-active', isActive);
+                button.setAttribute('aria-pressed', String(isActive));
+            });
+        }
 
         function getVisitorTimezone() {
             try {
@@ -394,9 +424,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        function formatTime(date, timezone) {
+        function formatTime(date, timezone, timeFormat) {
             return new Intl.DateTimeFormat(undefined, {
                 hour: 'numeric',
+                hour12: timeFormat === '12',
                 minute: '2-digit',
                 timeZone: timezone,
             }).format(date);
@@ -422,9 +453,17 @@ document.addEventListener('DOMContentLoaded', () => {
             const now = new Date();
             const visitorTimezone = getVisitorTimezone();
 
-            homeTimeElement.textContent = formatTime(now, homeTimezone);
+            homeTimeElement.textContent = formatTime(
+                now,
+                homeTimezone,
+                activeTimeFormat,
+            );
             homeTimeElement.dateTime = now.toISOString();
-            visitorTimeElement.textContent = formatTime(now, visitorTimezone);
+            visitorTimeElement.textContent = formatTime(
+                now,
+                visitorTimezone,
+                activeTimeFormat,
+            );
             visitorTimeElement.dateTime = now.toISOString();
 
             if (homeTimezoneLabel) {
@@ -437,7 +476,24 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        updateTimezones();
+        function setTimeFormat(timeFormat, shouldSave = false) {
+            activeTimeFormat = timeFormat === '12' ? '12' : '24';
+            document.documentElement.dataset.timeFormat = activeTimeFormat;
+            updateTimeFormatButtons(activeTimeFormat);
+            updateTimezones();
+
+            if (shouldSave) {
+                saveTimeFormat(activeTimeFormat);
+            }
+        }
+
+        timeFormatButtons.forEach((button) => {
+            button.addEventListener('click', () => {
+                setTimeFormat(button.dataset.timeFormat, true);
+            });
+        });
+
+        setTimeFormat(readSavedTimeFormat() ?? '24');
         setInterval(updateTimezones, 60000);
     }
 

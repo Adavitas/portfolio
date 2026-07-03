@@ -472,6 +472,34 @@
             data-reveal
             data-reveal-delay="short"
           >
+            <div class="time-format-control">
+              <span class="time-format-label">
+                <span class="time-format-accent" aria-hidden="true"></span>
+                Format
+              </span>
+              <div
+                class="time-format-buttons"
+                role="group"
+                aria-label="Choose time display format"
+              >
+                <button
+                  class="time-format-button is-active"
+                  type="button"
+                  data-time-format="24"
+                  aria-pressed="true"
+                >
+                  24h
+                </button>
+                <button
+                  class="time-format-button"
+                  type="button"
+                  data-time-format="12"
+                  aria-pressed="false"
+                >
+                  12h
+                </button>
+              </div>
+            </div>
             <div class="timezone-list">
               <div class="timezone-row">
                 <span class="timezone-label">Wolfsburg time</span>
@@ -537,6 +565,6 @@
       </main>
     </div>
 
-    <script src="js/main.js?v=persistent-info" defer></script>
+    <script src="js/main.js?v=time-format" defer></script>
   </body>
 </html>

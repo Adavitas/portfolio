@@ -763,7 +763,7 @@ function createSectionSwitcherDom() {
     };
 }
 
-function createTimezoneDom() {
+function createTimezoneDom(options = {}) {
     const document = new MockDocument();
     const homeTime = appendElement(document, 'time', {
         id: 'home-time',
@@ -776,6 +776,24 @@ function createTimezoneDom() {
     const visitorTimezoneLabel = appendElement(document, 'span', {
         id: 'visitor-timezone-label',
     });
+    const twentyFourHourButton = options.withoutFormatButtons
+        ? null
+        : appendElement(document, 'button', {
+              className: 'time-format-button is-active',
+              attributes: {
+                  'aria-pressed': 'true',
+                  'data-time-format': '24',
+              },
+          });
+    const twelveHourButton = options.withoutFormatButtons
+        ? null
+        : appendElement(document, 'button', {
+              className: 'time-format-button',
+              attributes: {
+                  'aria-pressed': 'false',
+                  'data-time-format': '12',
+              },
+          });
 
     return {
         document,
@@ -783,6 +801,8 @@ function createTimezoneDom() {
         visitorTime,
         homeTimezoneLabel,
         visitorTimezoneLabel,
+        twelveHourButton,
+        twentyFourHourButton,
     };
 }
 
@@ -1191,6 +1211,7 @@ test('missing IntersectionObserver leaves reveal content visible', () => {
 test('timezone clock writes visible text and machine-readable datetimes', () => {
     const dom = createTimezoneDom();
     const fixedIso = '2026-06-25T20:30:40.000Z';
+    const storage = createStorage();
 
     class FixedDate extends Date {
         constructor(...args) {
@@ -1209,19 +1230,46 @@ test('timezone clock writes visible text and machine-readable datetimes', () => 
     const { intervals } = runMain({
         document: dom.document,
         DateConstructor: FixedDate,
+        storage,
     });
+    const expectedHomeTime24 = new Intl.DateTimeFormat(undefined, {
+        hour: 'numeric',
+        hour12: false,
+        minute: '2-digit',
+        timeZone: 'Europe/Berlin',
+    }).format(new FixedDate());
+    const expectedHomeTime12 = new Intl.DateTimeFormat(undefined, {
+        hour: 'numeric',
+        hour12: true,
+        minute: '2-digit',
+        timeZone: 'Europe/Berlin',
+    }).format(new FixedDate());
 
-    assert.ok(dom.homeTime.textContent);
+    assert.equal(dom.homeTime.textContent, expectedHomeTime24);
     assert.ok(dom.visitorTime.textContent);
     assert.ok(dom.homeTimezoneLabel.textContent);
     assert.ok(dom.visitorTimezoneLabel.textContent);
+    assert.equal(dom.twentyFourHourButton.getAttribute('aria-pressed'), 'true');
+    assert.equal(dom.twelveHourButton.getAttribute('aria-pressed'), 'false');
+    assert.equal(dom.document.documentElement.dataset.timeFormat, '24');
     assert.equal(dom.homeTime.dateTime, fixedIso);
     assert.equal(dom.visitorTime.dateTime, fixedIso);
     assert.equal(Date.parse(dom.homeTime.dateTime), FixedDate.now());
     assert.equal(Date.parse(dom.visitorTime.dateTime), FixedDate.now());
     assert.equal(intervals[0].delay, 60000);
+
+    dom.twelveHourButton.dispatchEvent(createEvent('click'));
+
+    assert.equal(dom.homeTime.textContent, expectedHomeTime12);
+    assert.equal(dom.twelveHourButton.getAttribute('aria-pressed'), 'true');
+    assert.equal(dom.twentyFourHourButton.getAttribute('aria-pressed'), 'false');
+    assert.equal(dom.document.documentElement.dataset.timeFormat, '12');
+    assert.equal(storage.valueFor('portfolio-time-format'), '12');
 });
 
 test('missing optional timezone and palette markup does not throw', () => {
     assert.doesNotThrow(() => runMain({ document: new MockDocument() }));
+    assert.doesNotThrow(() =>
+        runMain({ document: createTimezoneDom({ withoutFormatButtons: true }).document }),
+    );
 });
