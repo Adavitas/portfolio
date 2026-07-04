@@ -301,13 +301,16 @@ nav .nav-links a:hover {
 }
 
 .section-switcher {
+  position: relative;
   display: grid;
   gap: 0.7rem;
+  overflow: hidden;
   padding: 0.75rem;
   border: 1px solid var(--border-color);
   border-radius: var(--radius-card);
   background-color: var(--surface-color);
   box-shadow: 0 1rem 3rem var(--shadow-color);
+  isolation: isolate;
 }
 
 .rail-appearance-card {
@@ -364,6 +367,11 @@ nav .nav-links a:hover {
 
 .section-switcher .eyebrow {
   margin: 0;
+}
+
+.section-switcher > * {
+  position: relative;
+  z-index: 1;
 }
 
 .section-switcher ul {
@@ -456,14 +464,13 @@ nav .nav-links a:hover {
   opacity: 0;
   background: radial-gradient(
     22rem circle at var(--spotlight-x, 50%) var(--spotlight-y, 50%),
-    rgb(154 219 200 / 18%),
-    transparent 42%
+    var(--primary-focus-color),
+    transparent 30%
   );
   transition: opacity 0.25s ease;
 }
 
-.js-enabled .card-spotlight:hover::before,
-.js-enabled .card-spotlight:focus-within::before {
+.js-enabled .card-spotlight:hover::before {
   opacity: 1;
 }
 

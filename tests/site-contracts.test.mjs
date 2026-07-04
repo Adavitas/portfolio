@@ -401,6 +401,29 @@ test('home persistent info cards stay compact below the active panel', () => {
     );
 });
 
+test('card spotlight glow follows the selected accent token', () => {
+    assert.match(
+        styleSource,
+        /\.card-spotlight::before\s*{[\s\S]*?radial-gradient\([\s\S]*?var\(--primary-focus-color\)[\s\S]*?transparent 30%[\s\S]*?}/,
+        'mouse-follow card spotlight should use the accent-aware focus color token',
+    );
+    assert.doesNotMatch(
+        styleSource,
+        /\.card-spotlight::before\s*{[\s\S]*?rgb\(154 219 200 \/ 18%\)[\s\S]*?}/,
+        'mouse-follow card spotlight should not hardcode the old mint glow color',
+    );
+    assert.match(
+        pageSources.get('index.html'),
+        /<nav\b(?=[^>]*class=["'][^"']*\bsection-switcher\b)(?=[^>]*class=["'][^"']*\bcard-spotlight\b)/i,
+        'section switcher should use the same mouse-follow spotlight behavior as other rail boxes',
+    );
+    assert.doesNotMatch(
+        styleSource,
+        /\.card-spotlight:focus-within::before\b/,
+        'card spotlight should not stay visible only because a clicked control keeps focus',
+    );
+});
+
 test('home time card exposes accent-aware format controls', () => {
     const source = pageSources.get('index.html');
 
