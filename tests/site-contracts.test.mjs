@@ -356,7 +356,17 @@ test('home persistent info cards stay compact below the active panel', () => {
     assert.match(
         desktopRailRule[1],
         /grid-row:\s*1 \/ 3;/,
-        'desktop rail should span the panel and info rows without pushing info cards down',
+        'desktop rail should span the active panel row and the aligned credit row',
+    );
+    assert.match(
+        desktopRailRule[1],
+        /block-size:\s*calc\(\s*var\(--section-panel-block-size\)\s*\+\s*var\(--grid-gap\)\s*\+\s*var\(--persistent-info-card-block-size\)\s*\);/,
+        'desktop rail should reserve active panel height, one grid gap, and the credit row height',
+    );
+    assert.match(
+        desktopRailRule[1],
+        /grid-template-rows:\s*auto minmax\(0,\s*1fr\) var\(\s*--persistent-info-card-block-size\s*\);/,
+        'desktop rail should keep sections and appearance above a fixed-height credit row',
     );
 
     assert.match(
@@ -367,17 +377,17 @@ test('home persistent info cards stay compact below the active panel', () => {
     assert.match(
         styleSource,
         /@media \(min-width: 900px\) {[\s\S]*?\.info-grid\s*{[\s\S]*?grid-template-columns:\s*repeat\(4,\s*minmax\(0,\s*1fr\)\);[\s\S]*?}/,
-        'desktop info grid should use four tracks for a 2/1/1 card split',
+        'desktop info grid should use four tracks for a 2/1/1 left-side split',
     );
     assert.match(
         styleSource,
         /#now\s*{[\s\S]*?grid-column:\s*span 2;[\s\S]*?}/,
-        'desktop Now card should keep half of the persistent info row',
+        'desktop Now card should keep half of the left persistent info row',
     );
     assert.match(
         styleSource,
         /\.time-card,\s*\n\s*\.connect-card\s*{[\s\S]*?grid-column:\s*span 1;[\s\S]*?}/,
-        'desktop Time and contact-link cards should each use one quarter of the row',
+        'desktop Time and contact-link cards should each use one quarter of the left row',
     );
     assert.match(
         styleSource,
