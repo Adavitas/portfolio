@@ -862,42 +862,25 @@ nav .nav-links a:hover {
 }
 
 .time-card {
+  display: grid;
+  align-content: start;
+  gap: 0.65rem;
   position: relative;
 }
 
 .time-format-control {
-  position: absolute;
-  top: 0.85rem;
-  right: 0.85rem;
   z-index: 2;
   display: flex;
-  max-width: calc(100% - 1.7rem);
+  max-width: 100%;
   align-items: center;
   justify-content: flex-end;
   gap: 0.4rem;
-}
-
-.time-format-label {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  color: var(--muted-text-color);
-  font-size: 0.7rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.time-format-accent {
-  width: 0.45rem;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background-color: var(--primary-color);
-  box-shadow: 0 0 0.7rem var(--primary-color);
+  justify-self: end;
 }
 
 .time-format-buttons {
   display: inline-flex;
+  align-items: center;
   gap: 0.15rem;
   padding: 0.15rem;
   border: 1px solid var(--border-color);
@@ -943,7 +926,8 @@ nav .nav-links a:hover {
 }
 
 .time-card .timezone-list {
-  padding-top: 1.85rem;
+  min-width: 0;
+  padding-top: 0;
 }
 
 .timezone-row {
@@ -1734,15 +1718,14 @@ footer {
   }
 
   .time-card {
-    display: grid;
-    align-content: center;
+    align-content: start;
     gap: 0.45rem;
   }
 
   .time-card .timezone-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0.65rem;
-    padding-top: 1.25rem;
+    padding-top: 0;
   }
 
   .time-card .timezone-row {

@@ -409,10 +409,10 @@ test('home time card exposes accent-aware format controls', () => {
         /<script\b(?=[^>]*src=["']js\/main\.js\?v=time-format["'])(?=[^>]*\bdefer\b)/i,
         'home page should cache-bust the time-format behavior',
     );
-    assert.match(
-        source,
-        /class=["'][^"']*\btime-format-accent\b/i,
-        'time format control should include an accent-color indicator',
+    assert.doesNotMatch(
+        styleSource,
+        /\.time-format-buttons::before\b/,
+        'time format control should not recreate a decorative dot before the buttons',
     );
     assert.match(
         source,
@@ -426,13 +426,8 @@ test('home time card exposes accent-aware format controls', () => {
     );
     assert.match(
         styleSource,
-        /\.time-format-control\s*{[\s\S]*?position:\s*absolute;[\s\S]*?right:\s*0\.85rem;[\s\S]*?}/,
-        'time format control should stay in the top-right corner of the time card',
-    );
-    assert.match(
-        styleSource,
-        /\.time-format-accent\s*{[\s\S]*?background-color:\s*var\(--primary-color\);[\s\S]*?}/,
-        'time format accent dot should follow the selected accent color',
+        /\.time-format-control\s*{[\s\S]*?justify-self:\s*end;[\s\S]*?}/,
+        'time format control should stay top-right without overlapping timezone text',
     );
     assert.match(
         styleSource,
