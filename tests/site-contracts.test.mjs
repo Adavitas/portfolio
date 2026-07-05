@@ -332,6 +332,16 @@ test('home section panels share one outer layout contract', () => {
         /#contact-form\s*{[\s\S]*?width:\s*min\(100%,\s*44rem\);[\s\S]*?margin:\s*1\.5rem auto 0;/,
         'contact form should stay readable inside the full-width contact panel',
     );
+    assert.match(
+        styleSource,
+        /\.projects-card,\s*\n\s*\.certificates-card,\s*\n\s*\.contact-card\s*{[\s\S]*?order:\s*1;[\s\S]*?}/,
+        'Projects, Certificates, and Contact should share the same main-panel order',
+    );
+    assert.match(
+        styleSource,
+        /@media \(min-width: 900px\) {[\s\S]*?\.intro-card,\s*\n\s*\.projects-card,\s*\n\s*\.certificates-card,\s*\n\s*\.contact-card,\s*\n\s*\.info-grid\s*{[\s\S]*?grid-column:\s*1 \/ 13;/,
+        'Certificates should share the same desktop width as the other main panels',
+    );
 });
 
 test('home persistent info cards stay compact below the active panel', () => {
@@ -556,6 +566,7 @@ test('accessibility references point to existing IDs', () => {
             const sectionFragments = {
                 about: 'hero',
                 projects: 'projects',
+                certificates: 'certificates',
                 contact: 'contact',
             };
 
@@ -576,6 +587,7 @@ test('accessibility references point to existing IDs', () => {
             }
 
             const contactIndex = source.indexOf('id="contact"');
+            const certificatesIndex = source.indexOf('id="certificates"');
             const sectionRailIndex = source.indexOf('class="section-rail"');
             const appearanceCardIndex = source.indexOf('rail-appearance-card');
             const creditCardIndex = source.indexOf('rail-credit-card');
@@ -583,8 +595,20 @@ test('accessibility references point to existing IDs', () => {
             const timeCardIndex = source.indexOf('class="card time-card');
             const connectCardIndex = source.indexOf('class="card connect-card');
             assert.ok(
-                contactIndex < sectionRailIndex && sectionRailIndex < infoGridIndex,
+                certificatesIndex < contactIndex &&
+                    contactIndex < sectionRailIndex &&
+                    sectionRailIndex < infoGridIndex,
                 'home page order should be selected content, controls rail, then persistent info cards',
+            );
+            assert.match(
+                source,
+                /<section\b(?=[^>]*id=["']certificates["'])(?=[^>]*class=["'][^"']*\bcertificates-card\b)(?=[^>]*data-section-panel=["']certificates["'])/i,
+                'home page needs a switchable Certificates panel',
+            );
+            assert.match(
+                source,
+                /href=["']https:\/\/codeinplace\.stanford\.edu\/cip5\/certificate\/ic8whm["'][\s\S]*?>\s*View certificate\s*<\/a\s*>/i,
+                'Certificates panel should link to the Stanford Code in Place certificate proof',
             );
             assert.ok(
                 appearanceCardIndex < creditCardIndex &&

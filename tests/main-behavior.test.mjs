@@ -723,6 +723,14 @@ function createSectionSwitcherDom() {
     });
     projectsLink.textContent = 'Projects';
 
+    const certificatesLink = appendElement(document, 'a', {
+        attributes: {
+            href: '#certificates',
+            'data-section-link': 'certificates',
+        },
+    });
+    certificatesLink.textContent = 'Certificates';
+
     const contactLink = appendElement(document, 'a', {
         attributes: {
             href: '#contact',
@@ -745,6 +753,13 @@ function createSectionSwitcherDom() {
         },
     });
 
+    const certificatesPanel = appendElement(document, 'section', {
+        id: 'certificates',
+        attributes: {
+            'data-section-panel': 'certificates',
+        },
+    });
+
     const contactPanel = appendElement(document, 'div', {
         attributes: {
             'data-section-panel': 'contact',
@@ -756,9 +771,11 @@ function createSectionSwitcherDom() {
         document,
         aboutLink,
         projectsLink,
+        certificatesLink,
         contactLink,
         aboutPanel,
         projectsPanel,
+        certificatesPanel,
         contactPanel,
     };
 }
@@ -988,11 +1005,26 @@ test('home section switcher shows only the selected main panel', () => {
 
     assert.equal(dom.aboutPanel.hidden, true);
     assert.equal(dom.projectsPanel.hidden, false);
+    assert.equal(dom.certificatesPanel.hidden, true);
     assert.equal(dom.contactPanel.hidden, true);
     assert.equal(dom.aboutLink.getAttribute('aria-current'), null);
     assert.equal(dom.projectsLink.getAttribute('aria-current'), 'page');
     assert.equal(dom.document.documentElement.dataset.activeSection, 'projects');
     assert.equal(dom.projectsPanel.scrollIntoViewCalls.length, 0);
+
+    dom.certificatesLink.dispatchEvent(createEvent('click'));
+
+    assert.equal(dom.aboutPanel.hidden, true);
+    assert.equal(dom.projectsPanel.hidden, true);
+    assert.equal(dom.certificatesPanel.hidden, false);
+    assert.equal(dom.contactPanel.hidden, true);
+    assert.equal(dom.projectsLink.getAttribute('aria-current'), null);
+    assert.equal(dom.certificatesLink.getAttribute('aria-current'), 'page');
+    assert.equal(
+        dom.document.documentElement.dataset.activeSection,
+        'certificates',
+    );
+    assert.equal(dom.certificatesPanel.scrollIntoViewCalls.length, 1);
 
     const clickEvent = createEvent('click');
     dom.contactLink.dispatchEvent(clickEvent);
@@ -1000,8 +1032,10 @@ test('home section switcher shows only the selected main panel', () => {
     assert.equal(clickEvent.defaultPrevented, true);
     assert.equal(dom.aboutPanel.hidden, true);
     assert.equal(dom.projectsPanel.hidden, true);
+    assert.equal(dom.certificatesPanel.hidden, true);
     assert.equal(dom.contactPanel.hidden, false);
     assert.equal(dom.projectsLink.getAttribute('aria-current'), null);
+    assert.equal(dom.certificatesLink.getAttribute('aria-current'), null);
     assert.equal(dom.contactLink.getAttribute('aria-current'), 'page');
     assert.equal(dom.document.documentElement.dataset.activeSection, 'contact');
     assert.equal(dom.contactPanel.scrollIntoViewCalls.length, 1);

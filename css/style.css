@@ -558,6 +558,7 @@ nav .nav-links a:hover {
 }
 
 .projects-card,
+.certificates-card,
 .contact-card {
   order: 1;
 }
@@ -785,6 +786,80 @@ nav .nav-links a:hover {
 }
 
 .project-links a:focus-visible {
+  outline: 3px solid var(--focus-outline-color);
+  outline-offset: 3px;
+}
+
+.certificates-card {
+  display: grid;
+  align-content: start;
+  gap: clamp(1rem, 2vw, 1.5rem);
+}
+
+.certificates-header {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.certificates-header p:last-child {
+  max-width: 62ch;
+}
+
+.certificate-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.certificate-item {
+  display: grid;
+  gap: 1rem;
+  align-items: end;
+  padding: clamp(1rem, 2vw, 1.35rem);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-inner);
+  background-color: var(--surface-color-soft);
+}
+
+.certificate-copy {
+  display: grid;
+  gap: 0.55rem;
+  min-width: 0;
+}
+
+.certificate-copy .tag-list {
+  gap: 0.4rem;
+  margin-block: 0.25rem 0;
+}
+
+.certificate-link {
+  display: inline-flex;
+  align-items: center;
+  justify-self: start;
+  gap: 0.35rem;
+  min-height: 2.4rem;
+  color: var(--primary-color);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.certificate-link::after {
+  display: inline-block;
+  content: "\2197";
+  font-size: 0.85em;
+  line-height: 1;
+  opacity: 0.72;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.certificate-link:hover::after,
+.certificate-link:focus-visible::after {
+  opacity: 1;
+  transform: translate(0.12rem, -0.12rem);
+}
+
+.certificate-link:focus-visible {
   outline: 3px solid var(--focus-outline-color);
   outline-offset: 3px;
 }
@@ -1217,6 +1292,7 @@ nav .nav-links a:hover {
   }
 
   .projects-card,
+  .certificates-card,
   .info-grid {
     grid-column: 1 / -1;
   }
@@ -1647,6 +1723,7 @@ footer {
 
   .intro-card,
   .projects-card,
+  .certificates-card,
   .contact-card,
   .info-grid {
     grid-column: 1 / 13;
@@ -1658,6 +1735,10 @@ footer {
 
   .projects-card > p {
     max-width: 62ch;
+  }
+
+  .certificate-item {
+    grid-template-columns: minmax(0, 1fr) auto;
   }
 
   .project-filter {
