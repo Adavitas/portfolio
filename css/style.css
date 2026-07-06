@@ -169,12 +169,6 @@ header nav {
   backdrop-filter: blur(18px);
 }
 
-.logo {
-  line-height: 1.2;
-  font-weight: 700;
-  letter-spacing: -0.03em;
-}
-
 .nav-actions {
   display: flex;
   align-items: center;
@@ -272,7 +266,7 @@ nav .nav-links a:hover {
   gap: var(--grid-gap);
   grid-column: 1 / -1;
   grid-row: 2;
-  order: 2;
+  order: 1;
   position: relative;
   z-index: 3;
   align-content: start;
@@ -294,6 +288,7 @@ nav .nav-links a:hover {
 .rail-appearance-card {
   width: 100%;
   padding: 0.85rem;
+  order: 3;
 }
 
 .rail-appearance-card h2 {
@@ -326,6 +321,7 @@ nav .nav-links a:hover {
 .rail-credit-card {
   width: 100%;
   padding: 0.75rem;
+  Order: 4;
 }
 
 .rail-credit-card p {
@@ -523,7 +519,7 @@ nav .nav-links a:hover {
 
 .intro-card {
   grid-column: 1 / -1;
-  order: 1;
+  order: 2;
   display: grid;
   padding: clamp(0.85rem, 1.6vw, 1.1rem);
   background:
@@ -538,7 +534,7 @@ nav .nav-links a:hover {
 .projects-card,
 .certificates-card,
 .contact-card {
-  order: 1;
+  order: 2;
 }
 
 .intro-layout {
@@ -1202,9 +1198,12 @@ nav .nav-links a:hover {
     grid-column: 1 / -1;
   }
 
-  .section-switcher,
-  .rail-appearance-card {
-    order: 2;
+  .section-switcher{
+    order: 1;
+  }
+
+   .rail-appearance-card {
+    order: 3;
   }
 
   .rail-credit-card {
