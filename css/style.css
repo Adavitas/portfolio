@@ -321,7 +321,7 @@ nav .nav-links a:hover {
 .rail-credit-card {
   width: 100%;
   padding: 0.75rem;
-  Order: 4;
+  order: 4;
 }
 
 .rail-credit-card p {
@@ -1198,11 +1198,11 @@ nav .nav-links a:hover {
     grid-column: 1 / -1;
   }
 
-  .section-switcher{
+  .section-switcher {
     order: 1;
   }
 
-   .rail-appearance-card {
+  .rail-appearance-card {
     order: 3;
   }
 
@@ -1857,7 +1857,6 @@ footer {
     animation: none;
   }
 
-  .skip-link,
   .menu-button,
   .theme-button,
   .accent-swatch,

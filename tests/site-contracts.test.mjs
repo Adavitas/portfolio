@@ -253,10 +253,15 @@ test('document structure is consistent on every page', () => {
             1,
             `${file} needs one main landmark with id main-content`,
         );
-        assert.match(
+        assert.doesNotMatch(
             source,
-            /<a\b(?=[^>]*class=["'][^"']*\bskip-link\b)(?=[^>]*href=["']#main-content["'])/i,
-            `${file} needs a skip link to main-content`,
+            /\bskip-link\b/i,
+            `${file} should not restore the removed skip-link class`,
+        );
+        assert.doesNotMatch(
+            source,
+            /\bclass=["'][^"']*\blogo\b/i,
+            `${file} should not restore the removed logo nav class`,
         );
         assert.equal(
             countOccurrences(source, /<h1\b/gi),
@@ -334,13 +339,33 @@ test('home section panels share one outer layout contract', () => {
     );
     assert.match(
         styleSource,
-        /\.projects-card,\s*\n\s*\.certificates-card,\s*\n\s*\.contact-card\s*{[\s\S]*?order:\s*1;[\s\S]*?}/,
+        /\.projects-card,\s*\n\s*\.certificates-card,\s*\n\s*\.contact-card\s*{[\s\S]*?order:\s*2;[\s\S]*?}/,
         'Projects, Certificates, and Contact should share the same main-panel order',
+    );
+    assert.match(
+        styleSource,
+        /\.intro-card\s*{[\s\S]*?order:\s*2;[\s\S]*?}/,
+        'About should use the same main-panel order as the other section panels',
+    );
+    assert.match(
+        styleSource,
+        /@media \(max-width: 899px\) {[\s\S]*?\.section-switcher\s*{[\s\S]*?order:\s*1;[\s\S]*?\.rail-appearance-card\s*{[\s\S]*?order:\s*3;[\s\S]*?\.rail-credit-card\s*{[\s\S]*?order:\s*4;[\s\S]*?}/,
+        'small screens should order section controls before panels, then appearance controls and credits',
     );
     assert.match(
         styleSource,
         /@media \(min-width: 900px\) {[\s\S]*?\.intro-card,\s*\n\s*\.projects-card,\s*\n\s*\.certificates-card,\s*\n\s*\.contact-card,\s*\n\s*\.info-grid\s*{[\s\S]*?grid-column:\s*1 \/ 13;/,
         'Certificates should share the same desktop width as the other main panels',
+    );
+    assert.doesNotMatch(
+        styleSource,
+        /\.skip-link\b/i,
+        'removed skip-link styles should not remain in CSS',
+    );
+    assert.doesNotMatch(
+        styleSource,
+        /\.logo\b/i,
+        'removed logo nav styles should not remain in CSS',
     );
 });
 
