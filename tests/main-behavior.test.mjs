@@ -562,38 +562,6 @@ function createAccentDom(initialAccent = 'mint') {
     };
 }
 
-function createNavigationDom() {
-    const document = new MockDocument();
-    const button = appendElement(document, 'button', {
-        className: 'menu-button',
-        attributes: {
-            'aria-expanded': 'false',
-            'aria-controls': 'nav-links',
-        },
-    });
-    const label = appendElement(
-        document,
-        'span',
-        { className: 'menu-button-label' },
-        button,
-    );
-    const navigation = appendElement(document, 'ul', {
-        id: 'nav-links',
-        className: 'nav-links',
-    });
-    const firstLink = appendElement(document, 'a', {}, navigation);
-    const secondLink = appendElement(document, 'a', {}, navigation);
-
-    return {
-        document,
-        button,
-        label,
-        navigation,
-        firstLink,
-        secondLink,
-    };
-}
-
 function createContactDom() {
     const document = new MockDocument();
     const contactForm = appendElement(document, 'form', { id: 'contact-form' });
@@ -981,48 +949,6 @@ test('accent swatches update data-accent, pressed state, and storage', () => {
     assert.equal(storage.valueFor('portfolio-accent'), 'rose');
     assert.equal(blueButton.getAttribute('aria-pressed'), 'false');
     assert.equal(roseButton.getAttribute('aria-pressed'), 'true');
-});
-
-test('mobile navigation toggles, closes from links, and closes with Escape', () => {
-    const { document, button, label, navigation, firstLink } = createNavigationDom();
-
-    runMain({ document });
-
-    button.dispatchEvent(createEvent('click'));
-
-    assert.equal(navigation.classList.contains('is-open'), true);
-    assert.equal(button.getAttribute('aria-expanded'), 'true');
-    assert.equal(label.textContent, 'Close');
-
-    firstLink.dispatchEvent(createEvent('click'));
-
-    assert.equal(navigation.classList.contains('is-open'), false);
-    assert.equal(button.getAttribute('aria-expanded'), 'false');
-    assert.equal(label.textContent, 'Menu');
-
-    button.dispatchEvent(createEvent('click'));
-    document.dispatchEvent(createEvent('keydown', { key: 'Escape' }));
-
-    assert.equal(navigation.classList.contains('is-open'), false);
-    assert.equal(button.getAttribute('aria-expanded'), 'false');
-    assert.equal(document.activeElement, button);
-});
-
-test('desktop breakpoint resets mobile navigation state', () => {
-    const { document, button, navigation } = createNavigationDom();
-    const media = createMatchMediaController({
-        '(min-width: 700px)': false,
-    });
-
-    runMain({ document, media });
-    button.dispatchEvent(createEvent('click'));
-
-    assert.equal(navigation.classList.contains('is-open'), true);
-
-    media.set('(min-width: 700px)', true);
-
-    assert.equal(navigation.classList.contains('is-open'), false);
-    assert.equal(button.getAttribute('aria-expanded'), 'false');
 });
 
 test('home section switcher shows only the selected main panel', () => {

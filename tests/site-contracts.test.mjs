@@ -15,21 +15,6 @@ const pages = [
         cssPrefix: '',
         scriptPrefix: '',
     },
-    {
-        file: 'projects/portfolio.html',
-        cssPrefix: '../',
-        scriptPrefix: '../',
-    },
-    {
-        file: 'projects/minishell.html',
-        cssPrefix: '../',
-        scriptPrefix: '../',
-    },
-    {
-        file: 'projects/push-swap.html',
-        cssPrefix: '../',
-        scriptPrefix: '../',
-    },
 ];
 
 const requiredAssets = [
@@ -187,6 +172,18 @@ test('development tooling remains dependency-free', async () => {
 test('required pages exist', async () => {
     for (const { file } of pages) {
         await assertFileExists(file);
+    }
+
+    for (const deletedPage of [
+        'projects/portfolio.html',
+        'projects/minishell.html',
+        'projects/push-swap.html',
+    ]) {
+        await assert.rejects(
+            access(path.join(rootDirectory, deletedPage)),
+            { code: 'ENOENT' },
+            `${deletedPage} should stay deleted because case studies live in index.html`,
+        );
     }
 });
 
@@ -366,6 +363,21 @@ test('home section panels share one outer layout contract', () => {
         styleSource,
         /\.logo\b/i,
         'removed logo nav styles should not remain in CSS',
+    );
+    assert.doesNotMatch(
+        styleSource,
+        /\.menu-button\b|\.nav-actions\b|\.nav-links\b/i,
+        'removed standalone page navigation styles should not remain in CSS',
+    );
+    assert.doesNotMatch(
+        styleSource,
+        /\.case-study-page\b|\.case-study-back-link\b|\.case-study-navigation\b/i,
+        'removed standalone case-study page styles should not remain in CSS',
+    );
+    assert.doesNotMatch(
+        styleSource,
+        /\bfooter\b/i,
+        'removed standalone page footer styles should not remain in CSS',
     );
 });
 
@@ -736,12 +748,6 @@ test('accessibility references point to existing IDs', () => {
             assert.doesNotMatch(source, /<h2\b[^>]*>\s*Time zones\s*<\/h2>/i);
             assert.doesNotMatch(source, /\bhero-actions\b|\bcall-to-action\b/);
             assert.match(source, /class=["']connect-primary-link["']/i);
-        } else {
-            assert.match(
-                source,
-                /<button\b(?=[^>]*class=["'][^"']*\bmenu-button\b)(?=[^>]*aria-expanded=["']false["'])(?=[^>]*aria-controls=["']nav-links["'])/i,
-            );
-            assert.ok(idSet.has('nav-links'), `${file} needs #nav-links`);
         }
     }
 });

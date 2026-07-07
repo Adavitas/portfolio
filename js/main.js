@@ -548,47 +548,6 @@ document.addEventListener('DOMContentLoaded', () => {
         setInterval(updateTimezones, 60000);
     }
 
-    // Responsive Navigation
-    const menuButton = document.querySelector('.menu-button');
-    const menuButtonLabel = document.querySelector('.menu-button-label');
-    const navigation = document.getElementById('nav-links');
-
-    if (menuButton && menuButtonLabel && navigation) {
-        function setMenuState(isOpen) {
-            navigation.classList.toggle('is-open', isOpen);
-            menuButton.setAttribute('aria-expanded', String(isOpen));
-            menuButtonLabel.textContent = isOpen ? 'Close' : 'Menu';
-        }
-
-        menuButton.addEventListener('click', () => {
-            const isOpen = menuButton.getAttribute('aria-expanded') === 'true';
-            setMenuState(!isOpen);
-        });
-
-        navigation.querySelectorAll('a').forEach((link) => {
-            link.addEventListener('click', () => {
-                setMenuState(false);
-            });
-        });
-
-        document.addEventListener('keydown', (event) => {
-            const isOpen = menuButton.getAttribute('aria-expanded') === 'true';
-
-            if (event.key === 'Escape' && isOpen) {
-                setMenuState(false);
-                menuButton.focus();
-            }
-        });
-
-        const desktopLayout = window.matchMedia('(min-width: 700px)');
-
-        desktopLayout.addEventListener('change', (event) => {
-            if (event.matches) {
-                setMenuState(false);
-            }
-        });
-    }
-
     // Contact Form Validation and Email Draft
     const contactForm = document.getElementById('contact-form');
     const nameInput = document.getElementById('name');

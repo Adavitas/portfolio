@@ -5,7 +5,6 @@
   --surface-color: #151b1d;
   --surface-color-soft: #1b2326;
   --surface-color-raised: #202a2d;
-  --nav-bg-color: rgb(21 27 29 / 72%);
   --border-color: rgb(201 229 220 / 12%);
   --strong-border-color: rgb(201 229 220 / 24%);
   --text-color: #f3f4ee;
@@ -42,7 +41,6 @@
   --surface-color: #fbfcf7;
   --surface-color-soft: #e4ebe3;
   --surface-color-raised: #ffffff;
-  --nav-bg-color: rgb(251 252 247 / 78%);
   --border-color: rgb(40 74 63 / 16%);
   --strong-border-color: rgb(40 74 63 / 28%);
   --text-color: #17201c;
@@ -156,26 +154,6 @@ header {
   margin-inline: auto;
 }
 
-header nav {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: var(--grid-gap);
-  padding: 0.85rem;
-  border: 1px solid var(--border-color);
-  border-radius: calc(var(--radius-card) + 0.25rem);
-  background-color: var(--nav-bg-color);
-  backdrop-filter: blur(18px);
-}
-
-.nav-actions {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.menu-button,
 .theme-button {
   display: none;
   align-items: center;
@@ -195,63 +173,22 @@ header nav {
     transform 0.2s ease;
 }
 
-.js-enabled .menu-button,
 .js-enabled .theme-button.is-ready {
   display: inline-flex;
 }
 
-.menu-button:hover,
-.menu-button[aria-expanded="true"],
 .theme-button:hover {
   border-color: var(--primary-color);
   color: var(--primary-color);
 }
 
-.menu-button:active,
 .theme-button:active {
   transform: translateY(1px);
 }
 
-.menu-button:focus-visible,
-.theme-button:focus-visible,
-nav a:focus-visible {
+.theme-button:focus-visible {
   outline: 3px solid var(--focus-outline-color);
   outline-offset: 3px;
-}
-
-nav .nav-links {
-  grid-column: 1 / -1;
-  display: grid;
-  width: 100%;
-  list-style: none;
-  gap: 0;
-  padding-top: 0.5rem;
-}
-
-.js-enabled nav .nav-links {
-  display: none;
-}
-
-.js-enabled nav .nav-links.is-open {
-  display: grid;
-}
-
-nav a {
-  text-decoration: none;
-  color: inherit;
-  font-weight: 500;
-}
-
-nav .nav-links a {
-  display: block;
-  min-height: 2.75rem;
-  padding: 0.75rem 0;
-  border-top: 1px solid var(--border-color);
-  transition: color 0.2s ease;
-}
-
-nav .nav-links a:hover {
-  color: var(--primary-color);
 }
 
 .portfolio-shell {
@@ -1301,37 +1238,6 @@ nav .nav-links a:hover {
 }
 
 @media (min-width: 700px) {
-  header nav {
-    grid-template-columns: auto minmax(0, 1fr) auto;
-  }
-
-  .js-enabled .menu-button {
-    display: none;
-  }
-
-  .nav-actions {
-    grid-column: 3;
-    grid-row: 1;
-  }
-
-  nav .nav-links,
-  .js-enabled nav .nav-links,
-  .js-enabled nav .nav-links.is-open {
-    grid-column: 2;
-    grid-row: 1;
-    display: flex;
-    justify-self: end;
-    width: auto;
-    gap: 1.5rem;
-    padding-top: 0;
-  }
-
-  nav .nav-links a {
-    min-height: 0;
-    padding: 0;
-    border-top: 0;
-  }
-
   .portfolio-grid {
     grid-template-columns: repeat(6, minmax(0, 1fr));
     align-items: stretch;
@@ -1394,14 +1300,12 @@ nav .nav-links a:hover {
   overflow-wrap: anywhere;
 }
 
-.contact-card address a,
-footer a {
+.contact-card address a {
   color: var(--primary-color);
   text-underline-offset: 0.25rem;
 }
 
-.contact-card address a:focus-visible,
-footer a:focus-visible {
+.contact-card address a:focus-visible {
   outline: 3px solid var(--focus-outline-color);
   outline-offset: 3px;
 }
@@ -1537,30 +1441,9 @@ footer a:focus-visible {
   color: var(--accent-text-color);
 }
 
-.case-study-page {
-  display: grid;
-  gap: 1rem;
-  max-width: var(--content-width);
-  margin-inline: auto;
-}
-
 .case-study {
   display: grid;
   gap: 1.5rem;
-}
-
-.case-study-back-link {
-  justify-self: start;
-  padding-block: 0.35rem;
-  color: var(--primary-color);
-  font-weight: 600;
-  text-underline-offset: 0.25rem;
-}
-
-.case-study-back-link:focus-visible,
-.case-study-navigation a:focus-visible {
-  outline: 3px solid var(--focus-outline-color);
-  outline-offset: 3px;
 }
 
 .case-study-hero {
@@ -1576,12 +1459,6 @@ footer a:focus-visible {
   display: grid;
   align-content: center;
   gap: 1rem;
-}
-
-.case-study-hero h1 {
-  max-width: 15ch;
-  font-size: clamp(2.5rem, 8vw, 4.25rem);
-  line-height: 0.98;
 }
 
 .case-study-introduction {
@@ -1665,71 +1542,6 @@ footer a:focus-visible {
 
 .case-study-section .tag-list {
   margin-bottom: 0;
-}
-
-.case-study-navigation {
-  display: grid;
-  gap: 1.25rem;
-  align-items: center;
-}
-
-.case-study-navigation h2 {
-  margin-bottom: 0;
-}
-
-.case-study-navigation-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-}
-
-.case-study-navigation a {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  min-height: 2.75rem;
-  padding: 0.65rem 1rem;
-  border: 1px solid var(--primary-color);
-  border-radius: 0.5rem;
-  color: var(--primary-color);
-  font-weight: 600;
-  text-decoration: none;
-  transition:
-    background-color 0.2s ease,
-    color 0.2s ease;
-}
-
-.case-study-navigation a::after {
-  display: inline-block;
-  content: "\2197";
-  font-size: 0.85em;
-  line-height: 1;
-  opacity: 0.72;
-  transition:
-    opacity 0.2s ease,
-    transform 0.2s ease;
-}
-
-.case-study-navigation a:hover {
-  background-color: var(--primary-color);
-  color: var(--accent-text-color);
-}
-
-.case-study-navigation a:hover::after,
-.case-study-navigation a:focus-visible::after {
-  opacity: 1;
-  transform: translate(0.12rem, -0.12rem);
-}
-
-footer {
-  display: grid;
-  gap: 0.35rem;
-  max-width: var(--content-width);
-  margin-inline: auto;
-  margin-top: 5rem;
-  padding-top: 2rem;
-  border-top: 1px solid var(--border-color);
-  text-align: center;
 }
 
 @media (min-width: 900px) {
@@ -1930,14 +1742,6 @@ footer {
   .case-study-meta {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
-
-  .case-study-navigation {
-    grid-template-columns: minmax(14rem, 0.7fr) minmax(0, 1.3fr);
-  }
-
-  .case-study-navigation-links {
-    justify-content: flex-end;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1948,7 +1752,6 @@ footer {
     animation: none;
   }
 
-  .menu-button,
   .theme-button,
   .accent-swatch,
   .time-format-button,
@@ -1958,8 +1761,6 @@ footer {
   .connect-primary-link,
   .connect-links a,
   .case-panel-actions a,
-  .case-study-navigation a,
-  .case-study-navigation a::after,
   .project-links a::after,
   .status-pulse::after,
   .card-spotlight::before {
@@ -1967,7 +1768,6 @@ footer {
     animation: none;
   }
 
-  .menu-button:active,
   .theme-button:active,
   .accent-swatch:active,
   .time-format-button:active,
@@ -1981,8 +1781,6 @@ footer {
   .case-panel-actions a:focus-visible,
   .connect-links a:hover,
   .connect-links a:focus-visible,
-  .case-study-navigation a:hover::after,
-  .case-study-navigation a:focus-visible::after,
   .project-links a:hover::after,
   .project-links a:focus-visible::after {
     transform: none;
