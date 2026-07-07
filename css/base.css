@@ -1,0 +1,52 @@
+/* base.css */
+[hidden] {
+  display: none !important;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: var(--font-family);
+  padding: var(--space-page);
+  min-height: 100vh;
+  min-height: 100dvh;
+  background-image:
+    radial-gradient(
+      circle at 12% 8%,
+      rgb(154 219 200 / 20%),
+      transparent 28rem
+    ),
+    radial-gradient(
+      circle at 88% 22%,
+      rgb(154 219 200 / 10%),
+      transparent 24rem
+    ),
+    linear-gradient(var(--border-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border-color) 1px, transparent 1px);
+  background-attachment: fixed;
+  background-size:
+    auto,
+    auto,
+    4.75rem 4.75rem,
+    4.75rem 4.75rem;
+}
+
+body::before {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  content: "";
+  opacity: 0.12;
+  background-image: repeating-radial-gradient(
+    circle at 0 0,
+    rgb(255 255 255 / 18%) 0 1px,
+    transparent 1px 4px
+  );
+  mix-blend-mode: overlay;
+}
+
+header {
+  max-width: var(--content-width);
+  margin-inline: auto;
+}

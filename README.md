@@ -8,12 +8,12 @@ systems work.
 
 - Semantic single-page structure
 - Responsive bento-style CSS Grid layout
-- Accessible mobile navigation
+- Accessible section switching
 - Persistent light and dark themes
 - Contact-form validation that prepares an email draft
 - One-time card reveals using `IntersectionObserver`
 - Reduced-motion support
-- Keyboard skip link and visible focus states
+- Visible focus states
 - Lazy-loaded project previews
 - Social-sharing and search metadata
 
@@ -34,15 +34,17 @@ portfolio/
 |-- assets/
 |   `-- images/
 |-- css/
+|   |-- base.css
+|   |-- components.css
+|   |-- layout.css
+|   |-- motion.css
 |   |-- reset.css
-|   `-- style.css
+|   |-- responsive.css
+|   |-- sections.css
+|   `-- tokens.css
 |-- js/
 |   |-- main.js
 |   `-- theme-init.js
-|-- projects/
-|   |-- minishell.html
-|   |-- portfolio.html
-|   `-- push-swap.html
 |-- scripts/
 |   `-- check.mjs
 |-- tests/

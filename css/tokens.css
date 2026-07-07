@@ -1,0 +1,103 @@
+/* tokens.css */
+:root {
+  color-scheme: dark;
+  --bg-color: #0d1112;
+  --surface-color: #151b1d;
+  --surface-color-soft: #1b2326;
+  --surface-color-raised: #202a2d;
+  --border-color: rgb(201 229 220 / 12%);
+  --strong-border-color: rgb(201 229 220 / 24%);
+  --text-color: #f3f4ee;
+  --muted-text-color: #aab6b2;
+  --about-text-color: #d2ddd9;
+  --primary-color: #9adbc8;
+  --primary-color-hover: #b8eadb;
+  --accent-text-color: #08110e;
+  --error-color: #ff9a9a;
+  --success-color: #82d9a7;
+  --input-bg-color: #ffffff;
+  --input-text-color: #1a1a1a;
+  --input-border-color: #cccccc;
+  --focus-outline-color: #f7f7f7;
+  --primary-focus-color: rgb(154 219 200 / 22%);
+  --error-focus-color: rgb(255 154 154 / 25%);
+  --font-family:
+    "Aptos", "SF Pro Display", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --mono-family:
+    "SFMono-Regular", "Cascadia Code", "Roboto Mono", Consolas, monospace;
+  --radius-card: 1.35rem;
+  --radius-inner: 0.95rem;
+  --space-page: clamp(0.85rem, 3vw, 2rem);
+  --grid-gap: clamp(0.85rem, 2vw, 1.25rem);
+  --content-width: 78rem;
+  --section-panel-block-size: clamp(32rem, 72vh, 40rem);
+  --persistent-info-card-block-size: 9rem;
+  --shadow-color: rgb(0 0 0 / 28%);
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg-color: #eef2ec;
+  --surface-color: #fbfcf7;
+  --surface-color-soft: #e4ebe3;
+  --surface-color-raised: #ffffff;
+  --border-color: rgb(40 74 63 / 16%);
+  --strong-border-color: rgb(40 74 63 / 28%);
+  --text-color: #17201c;
+  --muted-text-color: #60706a;
+  --about-text-color: #32433d;
+  --primary-color: #2d755f;
+  --primary-color-hover: #205643;
+  --accent-text-color: #ffffff;
+  --error-color: #b42318;
+  --success-color: #166534;
+  --input-bg-color: #ffffff;
+  --input-text-color: #182126;
+  --input-border-color: #9cabb3;
+  --focus-outline-color: #182126;
+  --primary-focus-color: rgb(45 117 95 / 20%);
+  --error-focus-color: rgb(180 35 24 / 20%);
+  --shadow-color: rgb(34 55 47 / 12%);
+}
+
+:root[data-accent="amber"] {
+  --primary-color: #e4b95b;
+  --primary-color-hover: #f0ca78;
+  --accent-text-color: #171104;
+  --primary-focus-color: rgb(228 185 91 / 24%);
+}
+
+:root[data-theme="light"][data-accent="amber"] {
+  --primary-color: #946516;
+  --primary-color-hover: #704b0d;
+  --accent-text-color: #ffffff;
+  --primary-focus-color: rgb(148 101 22 / 22%);
+}
+
+:root[data-accent="blue"] {
+  --primary-color: #8fc7ff;
+  --primary-color-hover: #b8dcff;
+  --accent-text-color: #07111a;
+  --primary-focus-color: rgb(143 199 255 / 24%);
+}
+
+:root[data-theme="light"][data-accent="blue"] {
+  --primary-color: #236da8;
+  --primary-color-hover: #174f7d;
+  --accent-text-color: #ffffff;
+  --primary-focus-color: rgb(35 109 168 / 22%);
+}
+
+:root[data-accent="rose"] {
+  --primary-color: #f0a4b8;
+  --primary-color-hover: #ffc1cf;
+  --accent-text-color: #1a0710;
+  --primary-focus-color: rgb(240 164 184 / 24%);
+}
+
+:root[data-theme="light"][data-accent="rose"] {
+  --primary-color: #a83d5c;
+  --primary-color-hover: #7d2a43;
+  --accent-text-color: #ffffff;
+  --primary-focus-color: rgb(168 61 92 / 22%);
+}

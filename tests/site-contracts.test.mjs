@@ -17,6 +17,21 @@ const pages = [
     },
 ];
 
+const cssFiles = [
+    'css/reset.css',
+    'css/tokens.css',
+    'css/base.css',
+    'css/layout.css',
+    'css/components.css',
+    'css/sections.css',
+    'css/responsive.css',
+    'css/motion.css',
+];
+
+const expectedStylesheetHrefs = cssFiles.map((file) =>
+    file === 'css/reset.css' ? file : `${file}?v=split-scroll`,
+);
+
 const requiredAssets = [
     'assets/images/favicon.svg',
     'assets/images/portrait.jpeg',
@@ -33,10 +48,19 @@ const pageSources = new Map(
         ]),
     ),
 );
-const styleSource = await readFile(
-    path.join(rootDirectory, 'css/style.css'),
-    'utf8',
+const cssSources = new Map(
+    await Promise.all(
+        cssFiles.map(async (file) => [
+            file,
+            await readFile(path.join(rootDirectory, file), 'utf8'),
+        ]),
+    ),
 );
+const styleSource = (
+    cssFiles
+        .filter((file) => file !== 'css/reset.css')
+        .map((file) => cssSources.get(file))
+).join('\n');
 
 function escapeRegex(value) {
     return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -66,6 +90,12 @@ function getElementText(source, tagName) {
 
 function stripTags(value) {
     return value.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
+function stripCssCommentsAndStrings(value) {
+    return value
+        .replace(/\/\*[\s\S]*?\*\//g, '')
+        .replace(/"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'/g, '""');
 }
 
 function getIds(source) {
@@ -193,8 +223,40 @@ test('required assets exist and the unused event photograph stays deleted', asyn
     }
 
     await assert.rejects(
+        access(path.join(rootDirectory, 'css/style.css')),
+        { code: 'ENOENT' },
+        'style.css should stay deleted after the responsibility-based CSS split',
+    );
+
+    await assert.rejects(
         access(path.join(rootDirectory, 'assets/images/20260417_pz_5636.jpg')),
         { code: 'ENOENT' },
+    );
+});
+
+test('css files keep valid block structure', () => {
+    for (const [file, source] of cssSources) {
+        let depth = 0;
+
+        for (const character of stripCssCommentsAndStrings(source)) {
+            if (character === '{') {
+                depth += 1;
+            }
+
+            if (character === '}') {
+                depth -= 1;
+            }
+
+            assert.ok(depth >= 0, `${file} has an extra closing brace`);
+        }
+
+        assert.equal(depth, 0, `${file} has an unclosed CSS block`);
+    }
+
+    assert.match(
+        cssSources.get('css/responsive.css'),
+        /@media\s*\(min-width:\s*900px\)/,
+        'responsive.css should own desktop breakpoint overrides so they load after base section rules',
     );
 });
 
@@ -265,23 +327,13 @@ test('document structure is consistent on every page', () => {
             1,
             `${file} needs one page-level h1`,
         );
-        assert.match(
-            source,
-            new RegExp(
-                `<link\\b(?=[^>]*rel=["']stylesheet["'])(?=[^>]*href=["']${escapeRegex(
-                    `${cssPrefix}css/reset.css`,
-                )}["'])`,
-                'i',
-            ),
-        );
-        assert.match(
-            source,
-            new RegExp(
-                `<link\\b(?=[^>]*rel=["']stylesheet["'])(?=[^>]*href=["']${escapeRegex(
-                    `${cssPrefix}css/style.css`,
-                )}["'])`,
-                'i',
-            ),
+        const loadedStylesheetHrefs = getTags(source, 'link')
+            .filter((tag) => getAttribute(tag, 'rel') === 'stylesheet')
+            .map((tag) => getAttribute(tag, 'href'));
+        assert.deepEqual(
+            loadedStylesheetHrefs,
+            expectedStylesheetHrefs.map((stylesheet) => `${cssPrefix}${stylesheet}`),
+            `${file} should load CSS files in the documented cascade order`,
         );
         assert.match(
             source,
@@ -313,6 +365,12 @@ test('home section panels share one outer layout contract', () => {
 
     const panelRule = styleSource.match(/\[data-section-panel\]\s*{([\s\S]*?)\n}/);
     assert.ok(panelRule, 'data-section-panel needs a shared sizing rule');
+
+    assert.ok(
+        styleSource.indexOf('[data-section-panel]') >
+            styleSource.indexOf('.card {'),
+        'section panel overflow must load after .card overflow so active panels can scroll internally',
+    );
 
     for (const [property, value] of [
         ['inline-size', '100%'],

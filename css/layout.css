@@ -1,0 +1,41 @@
+/* layout.css */
+.portfolio-shell {
+  display: grid;
+  gap: var(--grid-gap);
+  width: min(100% - 2rem, calc(var(--content-width) + 14rem));
+  margin-inline: auto;
+}
+
+.section-rail {
+  display: grid;
+  gap: var(--grid-gap);
+  grid-column: 1 / -1;
+  grid-row: 2;
+  order: 1;
+  position: relative;
+  z-index: 3;
+  align-content: start;
+}
+
+.portfolio-grid {
+  display: grid;
+  gap: var(--grid-gap);
+  grid-row: 1;
+  width: 100%;
+  max-width: var(--content-width);
+  margin-inline: auto;
+}
+
+.projects-card,
+.certificates-card,
+.case-panel,
+.contact-card {
+  order: 2;
+}
+
+.info-grid {
+  display: grid;
+  gap: var(--grid-gap);
+  order: 3;
+  align-items: stretch;
+}
