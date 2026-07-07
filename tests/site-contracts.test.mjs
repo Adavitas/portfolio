@@ -339,8 +339,8 @@ test('home section panels share one outer layout contract', () => {
     );
     assert.match(
         styleSource,
-        /\.projects-card,\s*\n\s*\.certificates-card,\s*\n\s*\.contact-card\s*{[\s\S]*?order:\s*2;[\s\S]*?}/,
-        'Projects, Certificates, and Contact should share the same main-panel order',
+        /\.projects-card,\s*\n\s*\.certificates-card,\s*\n\s*\.case-panel,\s*\n\s*\.contact-card\s*{[\s\S]*?order:\s*2;[\s\S]*?}/,
+        'Projects, Certificates, case studies, and Contact should share the same main-panel order',
     );
     assert.match(
         styleSource,
@@ -354,8 +354,8 @@ test('home section panels share one outer layout contract', () => {
     );
     assert.match(
         styleSource,
-        /@media \(min-width: 900px\) {[\s\S]*?\.intro-card,\s*\n\s*\.projects-card,\s*\n\s*\.certificates-card,\s*\n\s*\.contact-card,\s*\n\s*\.info-grid\s*{[\s\S]*?grid-column:\s*1 \/ 13;/,
-        'Certificates should share the same desktop width as the other main panels',
+        /@media \(min-width: 900px\) {[\s\S]*?\.intro-card,\s*\n\s*\.projects-card,\s*\n\s*\.certificates-card,\s*\n\s*\.case-panel,\s*\n\s*\.contact-card,\s*\n\s*\.info-grid\s*{[\s\S]*?grid-column:\s*1 \/ 13;/,
+        'Certificates and case studies should share the same desktop width as the other main panels',
     );
     assert.doesNotMatch(
         styleSource,
@@ -474,8 +474,8 @@ test('home time card exposes accent-aware format controls', () => {
 
     assert.match(
         source,
-        /<script\b(?=[^>]*src=["']js\/main\.js\?v=time-format["'])(?=[^>]*\bdefer\b)/i,
-        'home page should cache-bust the time-format behavior',
+        /<script\b(?=[^>]*src=["']js\/main\.js\?v=same-shell-cases["'])(?=[^>]*\bdefer\b)/i,
+        'home page should cache-bust the same-shell case-study behavior',
     );
     assert.doesNotMatch(
         styleSource,
@@ -554,9 +554,8 @@ test('home project card link labels remain specific and unique', () => {
     );
     assert.ok(galleryMatch, 'home page should have a project gallery');
 
-    const linkTexts = [
-        ...galleryMatch[1].matchAll(/<a\b[^>]*>([\s\S]*?)<\/a\s*>/gi),
-    ].map(([, text]) => stripTags(text));
+    const links = [...galleryMatch[1].matchAll(/<a\b[^>]*>([\s\S]*?)<\/a\s*>/gi)];
+    const linkTexts = links.map(([, text]) => stripTags(text));
 
     assert.deepEqual(linkTexts, [
         'Read portfolio case study',
@@ -567,6 +566,23 @@ test('home project card link labels remain specific and unique', () => {
         'View Push Swap source',
     ]);
     assert.equal(new Set(linkTexts).size, linkTexts.length);
+
+    assert.deepEqual(
+        links.map(([tag]) => getAttribute(tag, 'href')),
+        [
+            '#case-portfolio',
+            'https://github.com/Adavitas/portfolio',
+            '#case-minishell',
+            'https://github.com/Adavitas/minishell',
+            '#case-push-swap',
+            'https://github.com/Adavitas/push_swap',
+        ],
+    );
+    assert.equal(
+        links.filter(([tag]) => getAttribute(tag, 'data-panel-link')).length,
+        3,
+        'case-study project links should switch same-shell panels',
+    );
 });
 
 test('accessibility references point to existing IDs', () => {
@@ -613,6 +629,9 @@ test('accessibility references point to existing IDs', () => {
 
             const contactIndex = source.indexOf('id="contact"');
             const certificatesIndex = source.indexOf('id="certificates"');
+            const casePortfolioIndex = source.indexOf('id="case-portfolio"');
+            const caseMinishellIndex = source.indexOf('id="case-minishell"');
+            const casePushSwapIndex = source.indexOf('id="case-push-swap"');
             const sectionRailIndex = source.indexOf('class="section-rail"');
             const appearanceCardIndex = source.indexOf('rail-appearance-card');
             const creditCardIndex = source.indexOf('rail-credit-card');
@@ -620,10 +639,48 @@ test('accessibility references point to existing IDs', () => {
             const timeCardIndex = source.indexOf('class="card time-card');
             const connectCardIndex = source.indexOf('class="card connect-card');
             assert.ok(
-                certificatesIndex < contactIndex &&
+                casePortfolioIndex < caseMinishellIndex &&
+                    caseMinishellIndex < casePushSwapIndex &&
+                    casePushSwapIndex < certificatesIndex &&
+                    certificatesIndex < contactIndex &&
                     contactIndex < sectionRailIndex &&
                     sectionRailIndex < infoGridIndex,
-                'home page order should be selected content, controls rail, then persistent info cards',
+                'home page order should be main content panels, controls rail, then persistent info cards',
+            );
+            for (const section of [
+                'case-portfolio',
+                'case-minishell',
+                'case-push-swap',
+            ]) {
+                assert.match(
+                    source,
+                    new RegExp(
+                        `<section\\b(?=[^>]*id=["']${section}["'])(?=[^>]*class=["'][^"']*\\bcase-panel\\b)(?=[^>]*data-section-panel=["']${section}["'])`,
+                        'i',
+                    ),
+                    `home page needs a same-shell ${section} case-study panel`,
+                );
+                assert.match(
+                    source,
+                    new RegExp(
+                        `href=["']#${section}["'][^>]*data-panel-link=["']${section}["']`,
+                        'i',
+                    ),
+                    `home page needs a same-shell link for #${section}`,
+                );
+            }
+            assert.equal(
+                countOccurrences(
+                    source,
+                    /href=["']#projects["'][^>]*data-panel-link=["']projects["']/gi,
+                ),
+                3,
+                'each same-shell case study should include a Back to projects link',
+            );
+            assert.doesNotMatch(
+                source,
+                /href=["']projects\/(?:portfolio|minishell|push-swap)\.html["'][\s\S]*?>\s*Read /i,
+                'home project cards should not visually navigate away for case studies',
             );
             assert.match(
                 source,

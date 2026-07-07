@@ -533,6 +533,7 @@ nav .nav-links a:hover {
 
 .projects-card,
 .certificates-card,
+.case-panel,
 .contact-card {
   order: 2;
 }
@@ -834,6 +835,94 @@ nav .nav-links a:hover {
 }
 
 .certificate-link:focus-visible {
+  outline: 3px solid var(--focus-outline-color);
+  outline-offset: 3px;
+}
+
+.case-panel {
+  display: grid;
+  align-content: start;
+  padding: clamp(1rem, 2vw, 1.5rem);
+}
+
+.case-panel .case-study {
+  gap: clamp(1rem, 2vw, 1.35rem);
+}
+
+.case-panel .case-study-hero {
+  padding: clamp(1rem, 2vw, 1.5rem);
+}
+
+.case-study-hero h2 {
+  max-width: 18ch;
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  line-height: 1;
+}
+
+.case-panel .case-study-hero img {
+  max-height: 15rem;
+}
+
+.case-panel .case-study-section {
+  gap: 0.65rem;
+  padding: clamp(1rem, 2vw, 1.35rem) 0 0;
+  border-top: 1px solid var(--border-color);
+}
+
+.case-panel .case-study-section h3 {
+  margin-top: 0;
+  color: var(--text-color);
+  font-size: clamp(1.25rem, 3vw, 1.6rem);
+  line-height: 1.15;
+}
+
+.case-panel-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding-top: clamp(1rem, 2vw, 1.35rem);
+  border-top: 1px solid var(--border-color);
+}
+
+.case-panel-actions a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.5rem;
+  padding: 0.6rem 0.9rem;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  color: var(--primary-color);
+  font-weight: 700;
+  text-decoration: none;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.case-panel-actions a:hover,
+.case-panel-actions a:focus-visible {
+  border-color: var(--primary-color);
+  color: var(--primary-color-hover);
+  transform: translateY(-2px);
+}
+
+.case-panel-actions a:first-child {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: var(--accent-text-color);
+}
+
+.case-panel-actions a:first-child:hover,
+.case-panel-actions a:first-child:focus-visible {
+  background-color: var(--primary-color-hover);
+  border-color: var(--primary-color-hover);
+  color: var(--accent-text-color);
+}
+
+.case-panel-actions a:focus-visible {
   outline: 3px solid var(--focus-outline-color);
   outline-offset: 3px;
 }
@@ -1270,6 +1359,7 @@ nav .nav-links a:hover {
 
   .projects-card,
   .certificates-card,
+  .case-panel,
   .info-grid {
     grid-column: 1 / -1;
   }
@@ -1701,6 +1791,7 @@ footer {
   .intro-card,
   .projects-card,
   .certificates-card,
+  .case-panel,
   .contact-card,
   .info-grid {
     grid-column: 1 / 13;
@@ -1866,6 +1957,7 @@ footer {
   .project-card,
   .connect-primary-link,
   .connect-links a,
+  .case-panel-actions a,
   .case-study-navigation a,
   .case-study-navigation a::after,
   .project-links a::after,
@@ -1885,6 +1977,8 @@ footer {
   .project-card:focus-within,
   .connect-primary-link:hover,
   .connect-primary-link:focus-visible,
+  .case-panel-actions a:hover,
+  .case-panel-actions a:focus-visible,
   .connect-links a:hover,
   .connect-links a:focus-visible,
   .case-study-navigation a:hover::after,

@@ -463,6 +463,7 @@ function runMain(options = {}) {
     return {
         document,
         intervals,
+        window,
     };
 }
 
@@ -739,6 +740,22 @@ function createSectionSwitcherDom() {
     });
     contactLink.textContent = 'Contact';
 
+    const casePortfolioLink = appendElement(document, 'a', {
+        attributes: {
+            href: '#case-portfolio',
+            'data-panel-link': 'case-portfolio',
+        },
+    });
+    casePortfolioLink.textContent = 'Read portfolio case study';
+
+    const backToProjectsLink = appendElement(document, 'a', {
+        attributes: {
+            href: '#projects',
+            'data-panel-link': 'projects',
+        },
+    });
+    backToProjectsLink.textContent = 'Back to projects';
+
     const aboutPanel = appendElement(document, 'section', {
         id: 'hero',
         attributes: {
@@ -767,16 +784,26 @@ function createSectionSwitcherDom() {
     });
     appendElement(document, 'section', { id: 'contact' }, contactPanel);
 
+    const casePortfolioPanel = appendElement(document, 'section', {
+        id: 'case-portfolio',
+        attributes: {
+            'data-section-panel': 'case-portfolio',
+        },
+    });
+
     return {
         document,
         aboutLink,
         projectsLink,
         certificatesLink,
         contactLink,
+        casePortfolioLink,
+        backToProjectsLink,
         aboutPanel,
         projectsPanel,
         certificatesPanel,
         contactPanel,
+        casePortfolioPanel,
     };
 }
 
@@ -1007,10 +1034,31 @@ test('home section switcher shows only the selected main panel', () => {
     assert.equal(dom.projectsPanel.hidden, false);
     assert.equal(dom.certificatesPanel.hidden, true);
     assert.equal(dom.contactPanel.hidden, true);
+    assert.equal(dom.casePortfolioPanel.hidden, true);
     assert.equal(dom.aboutLink.getAttribute('aria-current'), null);
     assert.equal(dom.projectsLink.getAttribute('aria-current'), 'page');
     assert.equal(dom.document.documentElement.dataset.activeSection, 'projects');
     assert.equal(dom.projectsPanel.scrollIntoViewCalls.length, 0);
+
+    dom.casePortfolioLink.dispatchEvent(createEvent('click'));
+
+    assert.equal(dom.aboutPanel.hidden, true);
+    assert.equal(dom.projectsPanel.hidden, true);
+    assert.equal(dom.certificatesPanel.hidden, true);
+    assert.equal(dom.contactPanel.hidden, true);
+    assert.equal(dom.casePortfolioPanel.hidden, false);
+    assert.equal(dom.projectsLink.getAttribute('aria-current'), null);
+    assert.equal(dom.document.documentElement.dataset.activeSection, 'case-portfolio');
+    assert.equal(dom.document.activeElement, dom.casePortfolioPanel);
+    assert.equal(dom.casePortfolioPanel.scrollIntoViewCalls.length, 1);
+    assert.equal(dom.casePortfolioPanel.scrollTop, 0);
+
+    dom.backToProjectsLink.dispatchEvent(createEvent('click'));
+
+    assert.equal(dom.projectsPanel.hidden, false);
+    assert.equal(dom.casePortfolioPanel.hidden, true);
+    assert.equal(dom.projectsLink.getAttribute('aria-current'), 'page');
+    assert.equal(dom.document.documentElement.dataset.activeSection, 'projects');
 
     dom.certificatesLink.dispatchEvent(createEvent('click'));
 
@@ -1018,6 +1066,7 @@ test('home section switcher shows only the selected main panel', () => {
     assert.equal(dom.projectsPanel.hidden, true);
     assert.equal(dom.certificatesPanel.hidden, false);
     assert.equal(dom.contactPanel.hidden, true);
+    assert.equal(dom.casePortfolioPanel.hidden, true);
     assert.equal(dom.projectsLink.getAttribute('aria-current'), null);
     assert.equal(dom.certificatesLink.getAttribute('aria-current'), 'page');
     assert.equal(
@@ -1034,6 +1083,7 @@ test('home section switcher shows only the selected main panel', () => {
     assert.equal(dom.projectsPanel.hidden, true);
     assert.equal(dom.certificatesPanel.hidden, true);
     assert.equal(dom.contactPanel.hidden, false);
+    assert.equal(dom.casePortfolioPanel.hidden, true);
     assert.equal(dom.projectsLink.getAttribute('aria-current'), null);
     assert.equal(dom.certificatesLink.getAttribute('aria-current'), null);
     assert.equal(dom.contactLink.getAttribute('aria-current'), 'page');
@@ -1041,6 +1091,30 @@ test('home section switcher shows only the selected main panel', () => {
     assert.equal(dom.contactPanel.scrollIntoViewCalls.length, 1);
     assert.equal(dom.contactPanel.scrollIntoViewCalls[0].block, 'start');
     assert.equal(dom.contactPanel.scrollIntoViewCalls[0].behavior, 'smooth');
+});
+
+test('home case-study hashes can load directly and respond to browser history', () => {
+    const dom = createSectionSwitcherDom();
+    const run = runMain({
+        document: dom.document,
+        locationHash: '#case-portfolio',
+    });
+
+    assert.equal(dom.casePortfolioPanel.hidden, false);
+    assert.equal(dom.projectsPanel.hidden, true);
+    assert.equal(dom.projectsLink.getAttribute('aria-current'), null);
+    assert.equal(
+        dom.document.documentElement.dataset.activeSection,
+        'case-portfolio',
+    );
+
+    run.window.location.hash = '#projects';
+    run.window.dispatchEvent(createEvent('popstate'));
+
+    assert.equal(dom.casePortfolioPanel.hidden, true);
+    assert.equal(dom.projectsPanel.hidden, false);
+    assert.equal(dom.projectsLink.getAttribute('aria-current'), 'page');
+    assert.equal(dom.document.activeElement, dom.projectsPanel);
 });
 
 test('home section switcher respects reduced motion when scrolling clicked panel', () => {

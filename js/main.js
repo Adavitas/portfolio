@@ -131,6 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Home Section Switcher
     const sectionLinks = document.querySelectorAll('[data-section-link]');
+    const panelLinks = document.querySelectorAll('[data-panel-link]');
     const sectionPanels = document.querySelectorAll('[data-section-panel]');
 
     if (sectionLinks.length > 0 && sectionPanels.length > 0) {
@@ -194,9 +195,47 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        sectionLinks.forEach((link) => {
+        function focusSectionPanel(sectionPanel) {
+            if (!sectionPanel?.focus) {
+                return;
+            }
+
+            sectionPanel.focus({ preventScroll: true });
+        }
+
+        function showSection(section, options = {}) {
+            const activePanel = setActiveSection(section);
+
+            if (!activePanel) {
+                return null;
+            }
+
+            if (options.resetPanelScroll) {
+                activePanel.scrollTop = 0;
+            }
+
+            if (options.scroll) {
+                scrollSectionIntoView(activePanel);
+            }
+
+            if (options.focus) {
+                focusSectionPanel(activePanel);
+            }
+
+            return activePanel;
+        }
+
+        function pushHash(targetHash) {
+            if (window.history?.pushState) {
+                window.history.pushState(null, '', targetHash);
+            } else if (window.location) {
+                window.location.hash = targetHash;
+            }
+        }
+
+        function bindPanelLink(link) {
             link.addEventListener('click', (event) => {
-                const section = link.dataset.sectionLink;
+                const section = link.dataset.sectionLink ?? link.dataset.panelLink;
 
                 if (!sections.has(section)) {
                     return;
@@ -206,28 +245,40 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const targetHash = link.getAttribute('href') || `#${section}`;
 
-                if (window.history?.pushState) {
-                    window.history.pushState(null, '', targetHash);
-                } else if (window.location) {
-                    window.location.hash = targetHash;
-                }
-
-                const activePanel = setActiveSection(section);
-                scrollSectionIntoView(activePanel);
+                pushHash(targetHash);
+                showSection(section, {
+                    focus: true,
+                    resetPanelScroll: true,
+                    scroll: true,
+                });
             });
+        }
+
+        sectionLinks.forEach((link) => {
+            bindPanelLink(link);
+        });
+
+        panelLinks.forEach((link) => {
+            bindPanelLink(link);
         });
 
         if (window.addEventListener) {
             window.addEventListener('hashchange', () => {
-                setActiveSection(getSectionFromHash());
+                showSection(getSectionFromHash(), {
+                    focus: true,
+                    scroll: true,
+                });
             });
 
             window.addEventListener('popstate', () => {
-                setActiveSection(getSectionFromHash());
+                showSection(getSectionFromHash(), {
+                    focus: true,
+                    scroll: true,
+                });
             });
         }
 
-        setActiveSection(getSectionFromHash());
+        showSection(getSectionFromHash());
     }
 
     // One-time Card Reveals
