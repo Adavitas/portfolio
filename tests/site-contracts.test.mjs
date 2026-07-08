@@ -409,7 +409,17 @@ test('home section panels share one outer layout contract', () => {
     );
     assert.match(
         styleSource,
-        /@media \(min-width: 900px\) {[\s\S]*?\.intro-card,\s*\n\s*\.projects-card,\s*\n\s*\.certificates-card,\s*\n\s*\.case-panel,\s*\n\s*\.contact-card,\s*\n\s*\.info-grid\s*{[\s\S]*?grid-column:\s*1 \/ 13;/,
+        /\.section-switcher ul\s*{[\s\S]*?display:\s*grid;[\s\S]*?grid-template-columns:\s*minmax\(0,\s*0\.85fr\)\s*minmax\(0,\s*1\.05fr\)\s*minmax\(0,\s*1\.45fr\)\s*minmax\(0,\s*1fr\);[\s\S]*?}/,
+        'mobile and tablet section controls should stay on one adaptive row',
+    );
+    assert.match(
+        styleSource,
+        /\.section-switcher a\s*{[\s\S]*?font-size:\s*clamp\(0\.68rem,\s*2\.6vw,\s*0\.9rem\);[\s\S]*?white-space:\s*nowrap;[\s\S]*?}/,
+        'section control labels should adapt instead of wrapping onto a second row',
+    );
+    assert.match(
+        styleSource,
+        /@media \(min-width: 900px\) {[\s\S]*?\.section-switcher ul\s*{[\s\S]*?grid-template-columns:\s*1fr;[\s\S]*?\.intro-card,\s*\n\s*\.projects-card,\s*\n\s*\.certificates-card,\s*\n\s*\.case-panel,\s*\n\s*\.contact-card,\s*\n\s*\.info-grid\s*{[\s\S]*?grid-column:\s*1 \/ 13;/,
         'Certificates and case studies should share the same desktop width as the other main panels',
     );
     assert.doesNotMatch(

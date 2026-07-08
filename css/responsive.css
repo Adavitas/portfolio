@@ -111,10 +111,14 @@
 
   .section-switcher ul {
     display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.45rem;
   }
 
   .section-switcher a {
     justify-content: flex-start;
+    padding: 0.55rem 0.75rem;
+    font-size: 0.9rem;
   }
 
   .portfolio-grid {
