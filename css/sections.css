@@ -12,37 +12,28 @@
   isolation: isolate;
 }
 
-.rail-appearance-card {
+.rail-skills-card {
+  display: grid;
+  align-content: center;
   width: 100%;
   padding: 0.85rem;
   order: 3;
 }
 
-.rail-appearance-card h2 {
-  font-size: 1.15rem;
+.rail-skills-card h2 {
+  margin-bottom: 0.65rem;
+  color: var(--primary-color);
+  font-size: 1rem;
 }
 
-.rail-appearance-card p {
-  font-size: 0.9rem;
+.rail-skills-card .tag-list {
+  gap: 0.35rem;
+  margin: 0;
 }
 
-.rail-appearance-card .appearance-controls {
-  gap: 0.75rem;
-}
-
-.rail-appearance-card .appearance-control-group {
-  gap: 0.5rem;
-  padding-top: 0.7rem;
-}
-
-.rail-appearance-card .theme-button,
-.rail-appearance-card .accent-swatch {
-  width: 100%;
-  justify-content: center;
-}
-
-.rail-appearance-card .accent-swatches {
-  gap: 0.45rem;
+.rail-skills-card .tag-list li {
+  padding: 0.28rem 0.5rem;
+  font-size: 0.72rem;
 }
 
 .rail-credit-card {
@@ -167,8 +158,7 @@
 }
 
 .intro-copy,
-.intro-portrait,
-.intro-skills {
+.intro-portrait {
   min-width: 0;
 }
 
@@ -183,8 +173,7 @@
   line-height: 1.55;
 }
 
-.intro-portrait,
-.intro-skills {
+.intro-portrait {
   display: grid;
   gap: 0.55rem;
   padding-top: clamp(0.6rem, 1.4vw, 0.9rem);
@@ -217,10 +206,6 @@
   aspect-ratio: 16 / 9;
   height: auto;
   align-self: start;
-}
-
-.intro-skills h2 {
-  color: var(--primary-color);
 }
 
 .grid-gallery {
@@ -434,6 +419,42 @@
   display: grid;
   align-content: center;
   gap: 0.65rem;
+}
+
+.info-appearance-card {
+  display: grid;
+  align-content: center;
+}
+
+.info-appearance-card .appearance-controls {
+  align-items: center;
+  justify-items: center;
+  gap: 0.65rem;
+}
+
+.info-appearance-card .theme-button {
+  width: 100%;
+  min-height: 2.15rem;
+  padding: 0.45rem 0.55rem;
+  font-size: 0.82rem;
+}
+
+.info-appearance-card .accent-swatches {
+  justify-content: center;
+  gap: 0.45rem;
+}
+
+.info-appearance-card .accent-swatch {
+  width: 2rem;
+  min-height: 2rem;
+  justify-content: center;
+  padding: 0;
+  font-size: 0;
+  gap: 0;
+}
+
+.info-appearance-card .accent-swatch::before {
+  width: 0.75rem;
 }
 
 .contact-card {

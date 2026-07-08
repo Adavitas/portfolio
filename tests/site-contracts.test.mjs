@@ -404,8 +404,8 @@ test('home section panels share one outer layout contract', () => {
     );
     assert.match(
         styleSource,
-        /@media \(max-width: 899px\) {[\s\S]*?\.section-switcher\s*{[\s\S]*?order:\s*1;[\s\S]*?\.rail-appearance-card\s*{[\s\S]*?order:\s*3;[\s\S]*?\.rail-credit-card\s*{[\s\S]*?order:\s*4;[\s\S]*?}/,
-        'small screens should order section controls before panels, then appearance controls and credits',
+        /@media \(max-width: 899px\) {[\s\S]*?\.section-switcher\s*{[\s\S]*?order:\s*1;[\s\S]*?\.rail-skills-card\s*{[\s\S]*?order:\s*3;[\s\S]*?\.rail-credit-card\s*{[\s\S]*?order:\s*4;[\s\S]*?}/,
+        'small screens should order section controls before panels, then skills, persistent info, and credits',
     );
     assert.match(
         styleSource,
@@ -443,7 +443,7 @@ test('home persistent info cards stay compact below the active panel', () => {
     assert.match(
         styleSource,
         /--persistent-info-card-block-size:\s*9rem;/,
-        'copyright, Now, Time, and contact-link cards should share one compact height token',
+        'copyright, Now, appearance, Time, and contact-link cards should share one compact height token',
     );
 
     const infoGridRule = styleSource.match(/\.info-grid\s*{([\s\S]*?)\n}/);
@@ -477,22 +477,22 @@ test('home persistent info cards stay compact below the active panel', () => {
     assert.match(
         styleSource,
         /\.rail-credit-card,\s*\n\s*\.info-grid > \.card\s*{[\s\S]*?block-size:\s*var\(--persistent-info-card-block-size\);[\s\S]*?}/,
-        'copyright, Now, Time, and contact-link cards should share the same desktop height',
+        'copyright, Now, appearance, Time, and contact-link cards should share the same desktop height',
     );
     assert.match(
         styleSource,
         /@media \(min-width: 900px\) {[\s\S]*?\.info-grid\s*{[\s\S]*?grid-template-columns:\s*repeat\(4,\s*minmax\(0,\s*1fr\)\);[\s\S]*?}/,
-        'desktop info grid should use four tracks for a 2/1/1 left-side split',
+        'desktop info grid should use four equal tracks below the active panel',
     );
     assert.match(
         styleSource,
-        /#now\s*{[\s\S]*?grid-column:\s*span 2;[\s\S]*?}/,
-        'desktop Now card should keep half of the left persistent info row',
+        /#now,\s*\n\s*\.info-appearance-card,\s*\n\s*\.time-card,\s*\n\s*\.connect-card\s*{[\s\S]*?grid-column:\s*span 1;[\s\S]*?}/,
+        'desktop Now, appearance, Time, and contact-link cards should each use one equal track',
     );
     assert.match(
         styleSource,
-        /\.time-card,\s*\n\s*\.connect-card\s*{[\s\S]*?grid-column:\s*span 1;[\s\S]*?}/,
-        'desktop Time and contact-link cards should each use one quarter of the left row',
+        /\.info-appearance-card \.accent-swatch\s*{[\s\S]*?font-size:\s*0;[\s\S]*?}/,
+        'appearance card should show accent controls visually without color-name text',
     );
     assert.match(
         styleSource,
@@ -511,7 +511,7 @@ test('home persistent info cards stay compact below the active panel', () => {
     );
     assert.match(
         styleSource,
-        /\.time-card \.timezone-value time\s*{[\s\S]*?font-size:\s*clamp\(1\.2rem,\s*2vw,\s*1\.55rem\);[\s\S]*?}/,
+        /\.time-card \.timezone-value time\s*{[\s\S]*?font-size:\s*clamp\(1rem,\s*1\.55vw,\s*1\.25rem\);[\s\S]*?}/,
         'side-by-side desktop times should use a compact type size',
     );
 });
@@ -703,9 +703,12 @@ test('accessibility references point to existing IDs', () => {
             const caseMinishellIndex = source.indexOf('id="case-minishell"');
             const casePushSwapIndex = source.indexOf('id="case-push-swap"');
             const sectionRailIndex = source.indexOf('class="section-rail"');
-            const appearanceCardIndex = source.indexOf('rail-appearance-card');
+            const railSkillsCardIndex = source.indexOf('rail-skills-card');
             const creditCardIndex = source.indexOf('rail-credit-card');
             const infoGridIndex = source.indexOf('class="info-grid"');
+            const infoAppearanceCardIndex = source.indexOf(
+                'info-appearance-card',
+            );
             const timeCardIndex = source.indexOf('class="card time-card');
             const connectCardIndex = source.indexOf('class="card connect-card');
             assert.ok(
@@ -763,15 +766,20 @@ test('accessibility references point to existing IDs', () => {
                 'Certificates panel should link to the Stanford Code in Place certificate proof',
             );
             assert.ok(
-                appearanceCardIndex < creditCardIndex &&
+                railSkillsCardIndex < creditCardIndex &&
                     creditCardIndex < infoGridIndex,
-                'home page credits should sit below appearance controls in the rail',
+                'home page credits should sit below skills in the rail',
             );
             assert.ok(
-                infoGridIndex < timeCardIndex && timeCardIndex < connectCardIndex,
-                'home page info grid should place contact links beside the compact time card',
+                infoGridIndex < infoAppearanceCardIndex &&
+                    infoAppearanceCardIndex < timeCardIndex &&
+                    timeCardIndex < connectCardIndex,
+                'home page info grid should place appearance controls between Now and the compact time card',
             );
+            assert.match(source, /class=["'][^"']*\brail-skills-card\b/i);
             assert.match(source, /class=["'][^"']*\brail-credit-card\b/i);
+            assert.doesNotMatch(source, /\bintro-skills\b/i);
+            assert.doesNotMatch(source, /\brail-appearance-card\b/i);
             assert.match(source, /&copy; 2026 Aleksandre Davitashvili\./);
             assert.match(
                 stripTags(source),
@@ -791,16 +799,28 @@ test('accessibility references point to existing IDs', () => {
             const timeTag = source.match(
                 /<section\b(?=[^>]*class=["'][^"']*\btime-card\b)[^>]*>/i,
             )?.[0];
+            const appearanceTag = source.match(
+                /<section\b(?=[^>]*class=["'][^"']*\binfo-appearance-card\b)[^>]*>/i,
+            )?.[0];
             const connectTag = source.match(
                 /<section\b(?=[^>]*class=["'][^"']*\bconnect-card\b)[^>]*>/i,
             )?.[0];
 
             assert.ok(nowTag, 'home page needs a persistent Now card');
+            assert.ok(
+                appearanceTag,
+                'home page needs a persistent appearance controls card',
+            );
             assert.ok(timeTag, 'home page needs a persistent Time card');
             assert.ok(connectTag, 'home page needs a persistent contact-links card');
             assert.doesNotMatch(nowTag, /\bdata-section-panel\b/i);
+            assert.doesNotMatch(appearanceTag, /\bdata-section-panel\b/i);
             assert.doesNotMatch(timeTag, /\bdata-section-panel\b/i);
             assert.doesNotMatch(connectTag, /\bdata-section-panel\b/i);
+            assert.match(
+                appearanceTag,
+                /\baria-label=["']Appearance controls["']/i,
+            );
             assert.match(timeTag, /\baria-label=["']Timezone comparison["']/i);
             assert.doesNotMatch(timeTag, /\baria-labelledby\b/i);
             assert.doesNotMatch(source, /<h2\b[^>]*>\s*Time zones\s*<\/h2>/i);

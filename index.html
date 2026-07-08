@@ -43,7 +43,6 @@
     <link rel="stylesheet" href="css/motion.css?v=split-scroll" />
   </head>
   <body>
-
     <div class="portfolio-shell">
       <main id="main-content" class="portfolio-grid" tabindex="-1">
         <section
@@ -87,19 +86,6 @@
               </div>
             </aside>
 
-            <section class="intro-skills">
-              <h2>Skills and tools</h2>
-              <ul class="tag-list">
-                <li>HTML</li>
-                <li>CSS</li>
-                <li>JavaScript</li>
-                <li>C</li>
-                <li>Unix</li>
-                <li>Git</li>
-                <li>Responsive design</li>
-                <li>Accessibility</li>
-              </ul>
-            </section>
           </div>
         </section>
 
@@ -345,11 +331,23 @@
               <p class="eyebrow">Implementation decisions</p>
               <h3>Browser-native structure first</h3>
               <ul class="case-study-section-list">
-                <li>Semantic sections and one page-level heading keep structure clear.</li>
+                <li>
+                  Semantic sections and one page-level heading keep structure
+                  clear.
+                </li>
                 <li>CSS Grid controls the page shell and project gallery.</li>
-                <li>Custom properties keep dark, light, and accent themes centralized.</li>
-                <li>JavaScript features are guarded so optional missing markup does not break the page.</li>
-                <li>The contact form prepares an email draft instead of pretending to send server data.</li>
+                <li>
+                  Custom properties keep dark, light, and accent themes
+                  centralized.
+                </li>
+                <li>
+                  JavaScript features are guarded so optional missing markup
+                  does not break the page.
+                </li>
+                <li>
+                  The contact form prepares an email draft instead of pretending
+                  to send server data.
+                </li>
               </ul>
             </section>
 
@@ -376,7 +374,9 @@
             </section>
 
             <div class="case-panel-actions">
-              <a href="#projects" data-panel-link="projects">Back to projects</a>
+              <a href="#projects" data-panel-link="projects"
+                >Back to projects</a
+              >
               <a
                 href="https://github.com/Adavitas/portfolio"
                 target="_blank"
@@ -455,11 +455,24 @@
               <p class="eyebrow">Implementation decisions</p>
               <h3>A staged route from text to execution</h3>
               <ul class="case-study-section-list">
-                <li>Lexical analysis preserves quote context for later expansion.</li>
-                <li>An abstract syntax tree represents commands, pipes, and redirections before execution.</li>
-                <li>Environment values and <code>$?</code> expand after parsing.</li>
-                <li>Pipelines use <code>fork</code>, <code>execve</code>, <code>pipe</code>, <code>dup2</code>, and <code>waitpid</code>.</li>
-                <li>Parent-process built-ins preserve shell state where needed.</li>
+                <li>
+                  Lexical analysis preserves quote context for later expansion.
+                </li>
+                <li>
+                  An abstract syntax tree represents commands, pipes, and
+                  redirections before execution.
+                </li>
+                <li>
+                  Environment values and <code>$?</code> expand after parsing.
+                </li>
+                <li>
+                  Pipelines use <code>fork</code>, <code>execve</code>,
+                  <code>pipe</code>, <code>dup2</code>, and
+                  <code>waitpid</code>.
+                </li>
+                <li>
+                  Parent-process built-ins preserve shell state where needed.
+                </li>
               </ul>
             </section>
 
@@ -485,7 +498,9 @@
             </section>
 
             <div class="case-panel-actions">
-              <a href="#projects" data-panel-link="projects">Back to projects</a>
+              <a href="#projects" data-panel-link="projects"
+                >Back to projects</a
+              >
               <a
                 href="https://github.com/Adavitas/minishell"
                 target="_blank"
@@ -542,9 +557,9 @@
               <h3>Sort by describing every allowed move</h3>
               <p>
                 The program receives integers and may only manipulate two stacks
-                with swap, push, rotate, and reverse-rotate operations. It prints
-                the instructions that produce the sorted state, and a separate
-                checker verifies the sequence.
+                with swap, push, rotate, and reverse-rotate operations. It
+                prints the instructions that produce the sorted state, and a
+                separate checker verifies the sequence.
               </p>
             </section>
 
@@ -563,11 +578,23 @@
               <p class="eyebrow">Implementation decisions</p>
               <h3>Normalize first, then plan stack movement</h3>
               <ul class="case-study-section-list">
-                <li>Input validation rejects malformed, duplicate, and out-of-range integers.</li>
-                <li>Each linked-list node stores the original value and relative rank.</li>
+                <li>
+                  Input validation rejects malformed, duplicate, and
+                  out-of-range integers.
+                </li>
+                <li>
+                  Each linked-list node stores the original value and relative
+                  rank.
+                </li>
                 <li>Small inputs use dedicated direct strategies.</li>
-                <li>Larger inputs move rank chunks between stacks before rebuilding stack A.</li>
-                <li>The checker independently applies instructions and reports <code>OK</code> or <code>KO</code>.</li>
+                <li>
+                  Larger inputs move rank chunks between stacks before
+                  rebuilding stack A.
+                </li>
+                <li>
+                  The checker independently applies instructions and reports
+                  <code>OK</code> or <code>KO</code>.
+                </li>
               </ul>
             </section>
 
@@ -595,7 +622,9 @@
             </section>
 
             <div class="case-panel-actions">
-              <a href="#projects" data-panel-link="projects">Back to projects</a>
+              <a href="#projects" data-panel-link="projects"
+                >Back to projects</a
+              >
               <a
                 href="https://github.com/Adavitas/push_swap"
                 target="_blank"
@@ -744,7 +773,6 @@
             class="section-switcher card-spotlight"
             aria-label="Portfolio sections"
           >
-            <p class="eyebrow">Sections</p>
             <ul>
               <li>
                 <a href="#hero" data-section-link="about" aria-current="page"
@@ -766,63 +794,20 @@
           </nav>
 
           <section
-            class="card appearance-card rail-appearance-card card-spotlight"
-            aria-label="Appearance controls"
+            class="card rail-skills-card card-spotlight"
+            aria-labelledby="rail-skills-heading"
           >
-            <div class="appearance-controls">
-              <p class="appearance-control-label">Mode</p>
-              <button
-                class="theme-button"
-                type="button"
-                aria-label="Switch theme"
-              >
-                <span class="theme-button-label" aria-hidden="true">Theme</span>
-              </button>
-              <div class="appearance-control-group">
-                <p class="appearance-control-label">Accent</p>
-                <div
-                  class="accent-swatches"
-                  role="group"
-                  aria-label="Accent colors"
-                >
-                  <button
-                    class="accent-swatch"
-                    type="button"
-                    data-accent="mint"
-                    aria-pressed="true"
-                  >
-                    Mint
-                  </button>
-                  <button
-                    class="accent-swatch"
-                    type="button"
-                    data-accent="amber"
-                    aria-pressed="false"
-                  >
-                    Amber
-                  </button>
-                  <button
-                    class="accent-swatch"
-                    type="button"
-                    data-accent="blue"
-                    aria-pressed="false"
-                  >
-                    Blue
-                  </button>
-                  <button
-                    class="accent-swatch"
-                    type="button"
-                    data-accent="rose"
-                    aria-pressed="false"
-                  >
-                    Rose
-                  </button>
-                </div>
-              </div>
-            </div>
-            <noscript>
-              <p>JavaScript is required to change the theme or accent color.</p>
-            </noscript>
+            <h2 id="rail-skills-heading">Skills and tools</h2>
+            <ul class="tag-list">
+              <li>HTML</li>
+              <li>CSS</li>
+              <li>JavaScript</li>
+              <li>C</li>
+              <li>Unix</li>
+              <li>Git</li>
+              <li>Responsive design</li>
+              <li>Accessibility</li>
+            </ul>
           </section>
 
           <section
@@ -847,9 +832,63 @@
             </div>
             <time datetime="2026-06-25">June 25, 2026</time>
             <p>
-              Completing the final portfolio quality audit and setting up a
-              maintenance routine for future content updates.
+              Polishing the portfolio layout, accessibility checks, and content
+              upkeep.
             </p>
+          </section>
+
+          <section
+            class="card appearance-card info-appearance-card card-spotlight"
+            aria-label="Appearance controls"
+            data-reveal
+            data-reveal-delay="short"
+          >
+            <div class="appearance-controls">
+              <button
+                class="theme-button"
+                type="button"
+                aria-label="Switch theme"
+              >
+                <span class="theme-button-label" aria-hidden="true">Theme</span>
+              </button>
+              <div
+                class="accent-swatches"
+                role="group"
+                aria-label="Accent colors"
+              >
+                <button
+                  class="accent-swatch"
+                  type="button"
+                  data-accent="mint"
+                  aria-label="Use mint accent"
+                  aria-pressed="true"
+                ></button>
+                <button
+                  class="accent-swatch"
+                  type="button"
+                  data-accent="amber"
+                  aria-label="Use amber accent"
+                  aria-pressed="false"
+                ></button>
+                <button
+                  class="accent-swatch"
+                  type="button"
+                  data-accent="blue"
+                  aria-label="Use blue accent"
+                  aria-pressed="false"
+                ></button>
+                <button
+                  class="accent-swatch"
+                  type="button"
+                  data-accent="rose"
+                  aria-label="Use rose accent"
+                  aria-pressed="false"
+                ></button>
+              </div>
+            </div>
+            <noscript>
+              <p>JavaScript is required to change appearance controls.</p>
+            </noscript>
           </section>
 
           <section
