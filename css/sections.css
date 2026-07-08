@@ -14,26 +14,43 @@
 
 .rail-skills-card {
   display: grid;
-  align-content: center;
+  align-content: stretch;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 0.75rem;
   width: 100%;
   padding: 0.85rem;
   order: 3;
 }
 
 .rail-skills-card h2 {
-  margin-bottom: 0.65rem;
+  margin-bottom: 0;
   color: var(--primary-color);
   font-size: 1rem;
+  text-align: center;
 }
 
 .rail-skills-card .tag-list {
-  gap: 0.35rem;
+  display: flex;
+  min-block-size: 0;
+  align-content: space-evenly;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: clamp(0.38rem, 0.9vw, 0.55rem);
   margin: 0;
+  padding-block: 0.1rem;
 }
 
 .rail-skills-card .tag-list li {
-  padding: 0.28rem 0.5rem;
+  display: flex;
+  flex: 0 1 auto;
+  min-inline-size: min-content;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(0.28rem, 0.55vw, 0.38rem) clamp(0.45rem, 1vw, 0.75rem);
   font-size: 0.72rem;
+  line-height: 1.12;
+  text-align: center;
 }
 
 .rail-credit-card {

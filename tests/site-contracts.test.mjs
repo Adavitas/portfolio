@@ -777,6 +777,26 @@ test('accessibility references point to existing IDs', () => {
                 'home page info grid should place appearance controls between Now and the compact time card',
             );
             assert.match(source, /class=["'][^"']*\brail-skills-card\b/i);
+            assert.match(
+                source,
+                /<li>\s*C\+\+\s*<\/li>[\s\S]*<li>\s*Python\s*<\/li>/i,
+                'rail skills card should include C++ and Python',
+            );
+            assert.match(
+                styleSource,
+                /\.rail-skills-card \.tag-list\s*{[\s\S]*?display:\s*flex;[\s\S]*?align-content:\s*space-evenly;[\s\S]*?justify-content:\s*center;[\s\S]*?flex-wrap:\s*wrap;[\s\S]*?}/,
+                'desktop skills tags should wrap at natural text widths with balanced row spacing inside the rail card',
+            );
+            assert.match(
+                styleSource,
+                /\.rail-skills-card h2\s*{[\s\S]*?text-align:\s*center;[\s\S]*?}/,
+                'rail skills heading should align with the centered tag group',
+            );
+            assert.match(
+                styleSource,
+                /\.rail-skills-card \.tag-list li\s*{[\s\S]*?flex:\s*0 1 auto;[\s\S]*?min-inline-size:\s*min-content;[\s\S]*?padding:\s*clamp\(0\.28rem,\s*0\.55vw,\s*0\.38rem\)\s*clamp\(0\.45rem,\s*1vw,\s*0\.75rem\);[\s\S]*?}/,
+                'skill pills should size around their own text with adaptive padding instead of sharing one fixed column width',
+            );
             assert.match(source, /class=["'][^"']*\brail-credit-card\b/i);
             assert.doesNotMatch(source, /\bintro-skills\b/i);
             assert.doesNotMatch(source, /\brail-appearance-card\b/i);

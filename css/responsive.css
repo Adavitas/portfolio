@@ -21,6 +21,16 @@
   .rail-credit-card {
     order: 4;
   }
+
+  .rail-skills-card {
+    align-content: start;
+    grid-template-rows: auto;
+  }
+
+  .rail-skills-card .tag-list {
+    align-content: flex-start;
+    justify-content: center;
+  }
 }
 
 @media (min-width: 700px) {
