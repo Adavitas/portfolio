@@ -526,6 +526,39 @@ test('home persistent info cards stay compact below the active panel', () => {
     );
 });
 
+test('desktop rail width adapts with the viewport', () => {
+    assert.match(
+        styleSource,
+        /--rail-column-min-inline-size:\s*10rem;/,
+        'desktop rail should keep a readable minimum width',
+    );
+    assert.match(
+        styleSource,
+        /--rail-column-inline-size:\s*clamp\(10rem,\s*16vw,\s*16rem\);/,
+        'desktop rail should use a viewport-aware width token',
+    );
+    assert.match(
+        styleSource,
+        /--rail-layout-width:\s*calc\(\s*var\(--content-width\)\s*\+\s*var\(--rail-column-inline-size\)\s*\+\s*var\(--grid-gap\)\s*\);/,
+        'shell width should budget for the adaptive rail column and grid gap',
+    );
+    assert.match(
+        styleSource,
+        /\.portfolio-shell\s*{[\s\S]*?width:\s*min\(100%\s*-\s*2rem,\s*var\(--rail-layout-width\)\);[\s\S]*?}/,
+        'outer shell should use the adaptive rail layout width token',
+    );
+    assert.match(
+        styleSource,
+        /@media \(min-width: 900px\) {[\s\S]*?\.portfolio-grid\s*{[\s\S]*?grid-template-columns:\s*repeat\(12,\s*minmax\(0,\s*1fr\)\)\s*minmax\(\s*var\(--rail-column-min-inline-size\),\s*var\(--rail-column-inline-size\)\s*\);[\s\S]*?}/,
+        'desktop grid should give the rail an adaptive column width',
+    );
+    assert.doesNotMatch(
+        styleSource,
+        /minmax\(11rem,\s*13rem\)/,
+        'desktop rail should not return to the old nearly fixed width range',
+    );
+});
+
 test('card spotlight glow follows the selected accent token', () => {
     assert.match(
         styleSource,

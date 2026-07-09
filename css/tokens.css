@@ -30,6 +30,11 @@
   --space-page: clamp(0.85rem, 3vw, 2rem);
   --grid-gap: clamp(0.85rem, 2vw, 1.25rem);
   --content-width: 78rem;
+  --rail-column-min-inline-size: 10rem;
+  --rail-column-inline-size: clamp(10rem, 16vw, 16rem);
+  --rail-layout-width: calc(
+    var(--content-width) + var(--rail-column-inline-size) + var(--grid-gap)
+  );
   --section-panel-block-size: clamp(32rem, 72vh, 40rem);
   --persistent-info-card-block-size: 9rem;
   --shadow-color: rgb(0 0 0 / 28%);

@@ -2,7 +2,7 @@
 .portfolio-shell {
   display: grid;
   gap: var(--grid-gap);
-  width: min(100% - 2rem, calc(var(--content-width) + 14rem));
+  width: min(100% - 2rem, var(--rail-layout-width));
   margin-inline: auto;
 }
 

@@ -122,7 +122,12 @@
   }
 
   .portfolio-grid {
-    grid-template-columns: repeat(12, minmax(0, 1fr)) minmax(11rem, 13rem);
+    grid-template-columns:
+      repeat(12, minmax(0, 1fr))
+      minmax(
+        var(--rail-column-min-inline-size),
+        var(--rail-column-inline-size)
+      );
     grid-auto-flow: dense;
   }
 
