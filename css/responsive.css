@@ -16,20 +16,16 @@
 
   .rail-skills-card {
     order: 3;
+    align-content: start;
+    grid-template-rows: auto;
   }
 
   .rail-credit-card {
     order: 4;
   }
 
-  .rail-skills-card {
-    align-content: start;
-    grid-template-rows: auto;
-  }
-
   .rail-skills-card .tag-list {
     align-content: flex-start;
-    justify-content: center;
   }
 }
 
@@ -76,24 +72,10 @@
 
   .contact-card {
     grid-column: 1 / -1;
-    justify-self: stretch;
-    width: 100%;
   }
 }
 
 @media (min-width: 900px) {
-  .portfolio-shell {
-    grid-template-columns: 1fr;
-    align-items: start;
-  }
-
-  .portfolio-shell .portfolio-grid {
-    grid-column: 1;
-    grid-row: 1;
-    max-width: none;
-    margin-inline: 0;
-  }
-
   .section-rail {
     grid-column: 13;
     grid-row: 1 / 3;
@@ -110,7 +92,6 @@
   }
 
   .section-switcher ul {
-    display: grid;
     grid-template-columns: 1fr;
     gap: 0.45rem;
   }
@@ -129,6 +110,8 @@
         var(--rail-column-inline-size)
       );
     grid-auto-flow: dense;
+    max-width: none;
+    margin-inline: 0;
   }
 
   .intro-layout {
@@ -148,10 +131,6 @@
     padding: clamp(1rem, 2vw, 1.35rem);
   }
 
-  .projects-card > p {
-    max-width: 62ch;
-  }
-
   .certificate-item {
     grid-template-columns: minmax(0, 1fr) auto;
   }
@@ -167,19 +146,11 @@
 
   .featured-project {
     grid-column: auto;
-    grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr;
-    gap: 0;
     align-items: start;
   }
 
   .featured-project img {
-    height: auto;
     min-height: 0;
-  }
-
-  .featured-project .project-copy {
-    padding-top: 0.7rem;
   }
 
   .rail-credit-card,
@@ -207,10 +178,6 @@
     grid-column: span 1;
   }
 
-  .info-grid .card h2 {
-    margin-bottom: 0;
-  }
-
   .now-card-header {
     margin-bottom: 0.4rem;
   }
@@ -227,7 +194,6 @@
   }
 
   .time-card {
-    align-content: start;
     gap: 0.35rem;
   }
 
@@ -240,7 +206,6 @@
   .time-card .timezone-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0.45rem;
-    padding-top: 0;
   }
 
   .time-card .timezone-row {

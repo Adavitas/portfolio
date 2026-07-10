@@ -72,6 +72,26 @@ class MockClassList {
     }
 }
 
+class MockStyle {
+    constructor() {
+        this.properties = new Map();
+    }
+
+    setProperty(name, value) {
+        this.properties.set(name, String(value));
+    }
+
+    getPropertyValue(name) {
+        return this.properties.get(name) ?? '';
+    }
+
+    removeProperty(name) {
+        const previousValue = this.getPropertyValue(name);
+        this.properties.delete(name);
+        return previousValue;
+    }
+}
+
 class MockElement {
     constructor(tagName = 'div', options = {}) {
         this.tagName = tagName.toUpperCase();
@@ -89,8 +109,15 @@ class MockElement {
         this.validity = { valid: true };
         this.focusCount = 0;
         this.scrollIntoViewCalls = [];
+        this.boundingClientRect = {
+            left: 0,
+            top: 0,
+            width: 1,
+            height: 1,
+        };
         this._className = '';
         this.classList = new MockClassList(this);
+        this.style = new MockStyle();
 
         if (options.id) {
             this.setAttribute('id', options.id);
@@ -189,6 +216,10 @@ class MockElement {
 
     scrollIntoView(options) {
         this.scrollIntoViewCalls.push(options);
+    }
+
+    getBoundingClientRect() {
+        return this.boundingClientRect;
     }
 
     matches(selector) {
@@ -409,7 +440,8 @@ function runMain(options = {}) {
     const document = options.document ?? new MockDocument();
     const media = options.media ?? createMatchMediaController();
     const storage = options.storage ?? createStorage();
-    const intervals = [];
+    const timeouts = [];
+    const historyPushes = [];
     const windowListeners = new Map();
     const window = {
         matchMedia: media.matchMedia,
@@ -418,6 +450,7 @@ function runMain(options = {}) {
         },
         history: {
             pushState(_state, _title, url) {
+                historyPushes.push(String(url));
                 const hashIndex = String(url).indexOf('#');
 
                 window.location.hash =
@@ -441,9 +474,9 @@ function runMain(options = {}) {
         document,
         window,
         localStorage: storage,
-        setInterval(callback, delay) {
-            intervals.push({ callback, delay });
-            return intervals.length;
+        setTimeout(callback, delay) {
+            timeouts.push({ callback, delay });
+            return timeouts.length;
         },
         Date: options.DateConstructor ?? Date,
         Intl,
@@ -462,7 +495,8 @@ function runMain(options = {}) {
 
     return {
         document,
-        intervals,
+        historyPushes,
+        timeouts,
         window,
     };
 }
@@ -565,6 +599,7 @@ function createAccentDom(initialAccent = 'mint') {
 function createContactDom() {
     const document = new MockDocument();
     const contactForm = appendElement(document, 'form', { id: 'contact-form' });
+    contactForm.hidden = true;
     const nameInput = appendElement(document, 'input', { id: 'name' }, contactForm);
     const emailInput = appendElement(
         document,
@@ -581,6 +616,8 @@ function createContactDom() {
     const nameError = appendElement(document, 'p', { id: 'name-error' });
     const emailError = appendElement(document, 'p', { id: 'email-error' });
     const messageError = appendElement(document, 'p', { id: 'message-error' });
+    const formNote = appendElement(document, 'p', { id: 'form-note' });
+    formNote.hidden = true;
     const formStatus = appendElement(document, 'p', {
         id: 'form-status',
         className: 'form-status',
@@ -600,6 +637,7 @@ function createContactDom() {
         nameError,
         emailError,
         messageError,
+        formNote,
         formStatus,
         emailDraftLink,
     };
@@ -623,7 +661,7 @@ function createProjectFilterDom() {
     const document = new MockDocument();
     const status = appendElement(document, 'p', { id: 'project-filter-status' });
     const allButton = appendElement(document, 'button', {
-        className: 'project-filter-button is-active',
+        className: 'project-filter-button',
         attributes: {
             'aria-pressed': 'true',
             'data-project-filter': 'all',
@@ -777,6 +815,10 @@ function createSectionSwitcherDom() {
 
 function createTimezoneDom(options = {}) {
     const document = new MockDocument();
+    const timeFormatControl = appendElement(document, 'div', {
+        className: 'time-format-control',
+    });
+    timeFormatControl.hidden = true;
     const homeTime = appendElement(document, 'time', {
         id: 'home-time',
         attributes: { 'data-timezone': 'Europe/Berlin' },
@@ -790,28 +832,39 @@ function createTimezoneDom(options = {}) {
     });
     const twentyFourHourButton = options.withoutFormatButtons
         ? null
-        : appendElement(document, 'button', {
-              className: 'time-format-button is-active',
-              attributes: {
-                  'aria-pressed': 'true',
-                  'data-time-format': '24',
+        : appendElement(
+              document,
+              'button',
+              {
+                  className: 'time-format-button',
+                  attributes: {
+                      'aria-pressed': 'true',
+                      'data-time-format': '24',
+                  },
               },
-          });
+              timeFormatControl,
+          );
     const twelveHourButton = options.withoutFormatButtons
         ? null
-        : appendElement(document, 'button', {
-              className: 'time-format-button',
-              attributes: {
-                  'aria-pressed': 'false',
-                  'data-time-format': '12',
+        : appendElement(
+              document,
+              'button',
+              {
+                  className: 'time-format-button',
+                  attributes: {
+                      'aria-pressed': 'false',
+                      'data-time-format': '12',
+                  },
               },
-          });
+              timeFormatControl,
+          );
 
     return {
         document,
         homeTime,
         visitorTime,
         homeTimezoneLabel,
+        timeFormatControl,
         visitorTimezoneLabel,
         twelveHourButton,
         twentyFourHourButton,
@@ -1035,12 +1088,27 @@ test('home case-study hashes can load directly and respond to browser history', 
     );
 
     run.window.location.hash = '#projects';
-    run.window.dispatchEvent(createEvent('popstate'));
+    run.window.dispatchEvent(createEvent('hashchange'));
 
     assert.equal(dom.casePortfolioPanel.hidden, true);
     assert.equal(dom.projectsPanel.hidden, false);
     assert.equal(dom.projectsLink.getAttribute('aria-current'), 'page');
     assert.equal(dom.document.activeElement, dom.projectsPanel);
+});
+
+test('section links do not add duplicate entries for the current hash', () => {
+    const dom = createSectionSwitcherDom();
+    const run = runMain({ document: dom.document, locationHash: '#projects' });
+
+    dom.projectsLink.dispatchEvent(createEvent('click'));
+
+    assert.deepEqual(run.historyPushes, []);
+    assert.equal(dom.projectsPanel.scrollIntoViewCalls.length, 1);
+
+    dom.casePortfolioLink.dispatchEvent(createEvent('click'));
+    dom.casePortfolioLink.dispatchEvent(createEvent('click'));
+
+    assert.deepEqual(run.historyPushes, ['#case-portfolio']);
 });
 
 test('home section switcher respects reduced motion when scrolling clicked panel', () => {
@@ -1089,6 +1157,10 @@ test('empty contact form submission exposes required errors and focuses first fi
     const dom = createContactDom();
 
     runMain({ document: dom.document });
+
+    assert.equal(dom.formNote.hidden, false);
+    assert.equal(dom.contactForm.hidden, false);
+
     dom.contactForm.dispatchEvent(createEvent('submit'));
 
     assert.equal(dom.contactForm.noValidate, true);
@@ -1161,6 +1233,7 @@ test('valid contact form data creates an encoded mailto draft', () => {
 
 test('editing a contact field clears stale draft state', () => {
     const dom = createContactDom();
+    dom.formStatus.classList.add('persistent-status-hook');
     dom.nameInput.value = 'Ada Lovelace';
     dom.emailInput.value = 'ada@example.com';
     dom.messageInput.value = 'I would like to discuss a portfolio opportunity.';
@@ -1173,7 +1246,9 @@ test('editing a contact field clears stale draft state', () => {
     dom.messageInput.dispatchEvent(createEvent('input'));
 
     assert.equal(dom.formStatus.textContent, '');
-    assert.equal(dom.formStatus.className, 'form-status');
+    assert.equal(dom.formStatus.classList.contains('form-status'), true);
+    assert.equal(dom.formStatus.classList.contains('persistent-status-hook'), true);
+    assert.equal(dom.formStatus.classList.contains('is-success'), false);
     assert.equal(dom.emailDraftLink.hidden, true);
     assert.equal(dom.emailDraftLink.getAttribute('href'), null);
 });
@@ -1202,6 +1277,45 @@ test('card reveals observe targets and disconnect after the final reveal', () =>
 
     assert.equal(revealElements[1].classList.contains('is-visible'), true);
     assert.equal(observer.disconnected, true);
+});
+
+test('fine-pointer spotlight tracks pointer position and clears it on leave', () => {
+    const document = new MockDocument();
+    const spotlightCard = appendElement(document, 'article', {
+        className: 'card-spotlight',
+    });
+    spotlightCard.boundingClientRect = {
+        left: 10,
+        top: 20,
+        width: 200,
+        height: 100,
+    };
+    const media = createMatchMediaController({ '(pointer: fine)': true });
+
+    runMain({ document, media });
+    spotlightCard.dispatchEvent(
+        createEvent('pointermove', { clientX: 110, clientY: 45 }),
+    );
+
+    assert.equal(spotlightCard.style.getPropertyValue('--spotlight-x'), '50%');
+    assert.equal(spotlightCard.style.getPropertyValue('--spotlight-y'), '25%');
+
+    spotlightCard.dispatchEvent(createEvent('pointerleave'));
+
+    assert.equal(spotlightCard.style.getPropertyValue('--spotlight-x'), '');
+    assert.equal(spotlightCard.style.getPropertyValue('--spotlight-y'), '');
+});
+
+test('coarse pointers do not install spotlight movement listeners', () => {
+    const document = new MockDocument();
+    const spotlightCard = appendElement(document, 'article', {
+        className: 'card-spotlight',
+    });
+
+    runMain({ document });
+
+    assert.equal(spotlightCard.eventListeners.has('pointermove'), false);
+    assert.equal(spotlightCard.eventListeners.has('pointerleave'), false);
 });
 
 test('card reveals do not start when reduced motion is already requested', () => {
@@ -1261,7 +1375,7 @@ test('timezone clock writes visible text and machine-readable datetimes', () => 
         }
     }
 
-    const { intervals } = runMain({
+    const { timeouts } = runMain({
         document: dom.document,
         DateConstructor: FixedDate,
         storage,
@@ -1285,12 +1399,18 @@ test('timezone clock writes visible text and machine-readable datetimes', () => 
     assert.ok(dom.visitorTimezoneLabel.textContent);
     assert.equal(dom.twentyFourHourButton.getAttribute('aria-pressed'), 'true');
     assert.equal(dom.twelveHourButton.getAttribute('aria-pressed'), 'false');
+    assert.equal(dom.timeFormatControl.hidden, false);
     assert.equal(dom.document.documentElement.dataset.timeFormat, '24');
     assert.equal(dom.homeTime.dateTime, fixedIso);
     assert.equal(dom.visitorTime.dateTime, fixedIso);
     assert.equal(Date.parse(dom.homeTime.dateTime), FixedDate.now());
     assert.equal(Date.parse(dom.visitorTime.dateTime), FixedDate.now());
-    assert.equal(intervals[0].delay, 60000);
+    assert.equal(timeouts[0].delay, 20000);
+
+    timeouts[0].callback();
+
+    assert.equal(timeouts.length, 2);
+    assert.equal(timeouts[1].delay, 20000);
 
     dom.twelveHourButton.dispatchEvent(createEvent('click'));
 

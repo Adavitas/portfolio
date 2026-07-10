@@ -74,10 +74,6 @@
   font-weight: 700;
 }
 
-.section-switcher .eyebrow {
-  margin: 0;
-}
-
 .section-switcher > * {
   position: relative;
   z-index: 1;
@@ -145,17 +141,12 @@
   scrollbar-gutter: stable;
 }
 
-#hero {
-  margin-bottom: 0;
-}
-
 #hero h1 {
   max-width: 100%;
   font-size: clamp(1.85rem, 5.2vw, 3.25rem);
   line-height: 0.98;
   letter-spacing: -0.055em;
   margin-bottom: 0.35rem;
-  overflow-wrap: break-word;
   text-wrap: balance;
 }
 
@@ -196,13 +187,10 @@
 
 .intro-portrait {
   display: grid;
+  align-content: start;
   gap: 0.55rem;
   padding-top: clamp(0.6rem, 1.4vw, 0.9rem);
   border-top: 1px solid var(--border-color);
-}
-
-.intro-portrait {
-  align-content: start;
 }
 
 .intro-portrait img,
@@ -246,10 +234,6 @@
     border-color 0.25s ease,
     transform 0.25s ease,
     box-shadow 0.25s ease;
-}
-
-.project-card[hidden] {
-  display: none;
 }
 
 .project-card:hover,
@@ -328,35 +312,10 @@
   padding: clamp(1rem, 2vw, 1.5rem);
 }
 
-.case-panel .case-study {
-  gap: clamp(1rem, 2vw, 1.35rem);
-}
-
-.case-panel .case-study-hero {
-  padding: clamp(1rem, 2vw, 1.5rem);
-}
-
 .case-study-hero h2 {
   max-width: 18ch;
   font-size: clamp(2rem, 5vw, 3.25rem);
   line-height: 1;
-}
-
-.case-panel .case-study-hero img {
-  max-height: 15rem;
-}
-
-.case-panel .case-study-section {
-  gap: 0.65rem;
-  padding: clamp(1rem, 2vw, 1.35rem) 0 0;
-  border-top: 1px solid var(--border-color);
-}
-
-.case-panel .case-study-section h3 {
-  margin-top: 0;
-  color: var(--text-color);
-  font-size: clamp(1.25rem, 3vw, 1.6rem);
-  line-height: 1.15;
 }
 
 .now-card-header {
@@ -391,12 +350,10 @@
   display: grid;
   align-content: start;
   gap: 0.65rem;
-  position: relative;
 }
 
 .time-card .timezone-list {
   min-width: 0;
-  padding-top: 0;
 }
 
 .timezone-row {
@@ -443,7 +400,6 @@
 }
 
 .info-appearance-card {
-  display: grid;
   align-content: center;
 }
 
@@ -501,13 +457,13 @@
 
 .case-study {
   display: grid;
-  gap: 1.5rem;
+  gap: clamp(1rem, 2vw, 1.35rem);
 }
 
 .case-study-hero {
   display: grid;
   gap: 1.5rem;
-  padding: clamp(1.5rem, 4vw, 3rem);
+  padding: clamp(1rem, 2vw, 1.5rem);
   border: 1px solid var(--strong-border-color);
   border-radius: var(--radius-card);
   background-color: var(--surface-color-soft);
@@ -532,6 +488,7 @@
   align-self: center;
   border-radius: calc(var(--radius-card) - 0.25rem);
   object-fit: cover;
+  max-height: 15rem;
 }
 
 .case-study-meta {
@@ -562,24 +519,20 @@
 
 .case-study-section {
   display: grid;
-  gap: 1rem;
-  padding: clamp(1.5rem, 4vw, 2.5rem);
+  gap: 0.65rem;
+  padding: clamp(1rem, 2vw, 1.35rem) 0 0;
+  border-top: 1px solid var(--border-color);
 }
 
-.case-study-section > :not(.tag-list) {
+.case-study-section > * {
   max-width: 72ch;
 }
 
-.case-study-section h2 {
-  color: var(--text-color);
-  font-size: clamp(1.65rem, 4vw, 2.3rem);
-  line-height: 1.1;
-}
-
 .case-study-section h3 {
-  margin-top: 0.5rem;
-  color: var(--primary-color);
-  font-size: 1.1rem;
+  margin-top: 0;
+  color: var(--text-color);
+  font-size: clamp(1.25rem, 3vw, 1.6rem);
+  line-height: 1.15;
 }
 
 .case-study-section code {
@@ -596,8 +549,4 @@
   gap: 0.65rem;
   padding-left: 1.25rem;
   color: var(--muted-text-color);
-}
-
-.case-study-section .tag-list {
-  margin-bottom: 0;
 }

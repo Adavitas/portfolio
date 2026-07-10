@@ -179,14 +179,14 @@
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  justify-self: start;
   padding-block: 0.25rem;
   color: var(--primary-color);
   font-weight: 600;
   text-underline-offset: 0.25rem;
 }
 
-.project-links a::after {
+.project-links a::after,
+.certificate-link::after {
   display: inline-block;
   content: "\2197";
   font-size: 0.85em;
@@ -198,12 +198,15 @@
 }
 
 .project-links a:hover::after,
-.project-links a:focus-visible::after {
+.project-links a:focus-visible::after,
+.certificate-link:hover::after,
+.certificate-link:focus-visible::after {
   opacity: 1;
   transform: translate(0.12rem, -0.12rem);
 }
 
-.project-links a:focus-visible {
+.project-links a:focus-visible,
+.certificate-link:focus-visible {
   outline: 3px solid var(--focus-outline-color);
   outline-offset: 3px;
 }
@@ -217,28 +220,6 @@
   color: var(--primary-color);
   font-weight: 700;
   text-decoration: none;
-}
-
-.certificate-link::after {
-  display: inline-block;
-  content: "\2197";
-  font-size: 0.85em;
-  line-height: 1;
-  opacity: 0.72;
-  transition:
-    opacity 0.2s ease,
-    transform 0.2s ease;
-}
-
-.certificate-link:hover::after,
-.certificate-link:focus-visible::after {
-  opacity: 1;
-  transform: translate(0.12rem, -0.12rem);
-}
-
-.certificate-link:focus-visible {
-  outline: 3px solid var(--focus-outline-color);
-  outline-offset: 3px;
 }
 
 .case-panel-actions {

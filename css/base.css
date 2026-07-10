@@ -45,8 +45,3 @@ body::before {
   );
   mix-blend-mode: overlay;
 }
-
-header {
-  max-width: var(--content-width);
-  margin-inline: auto;
-}

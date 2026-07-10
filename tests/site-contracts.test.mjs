@@ -29,7 +29,7 @@ const cssFiles = [
 ];
 
 const expectedStylesheetHrefs = cssFiles.map((file) =>
-    file === 'css/reset.css' ? file : `${file}?v=split-scroll`,
+    file === 'css/reset.css' ? file : `${file}?v=20260710`,
 );
 
 const requiredAssets = [
@@ -78,14 +78,6 @@ function getTags(source, tagName) {
     return [...source.matchAll(new RegExp(`<${tagName}\\b[^>]*>`, 'gi'))].map(
         ([tag]) => tag,
     );
-}
-
-function getElementText(source, tagName) {
-    return [
-        ...source.matchAll(
-            new RegExp(`<${tagName}\\b[^>]*>([\\s\\S]*?)<\\/${tagName}>`, 'gi'),
-        ),
-    ].map(([, text]) => stripTags(text));
 }
 
 function stripTags(value) {
@@ -587,8 +579,8 @@ test('home time card exposes accent-aware format controls', () => {
 
     assert.match(
         source,
-        /<script\b(?=[^>]*src=["']js\/main\.js\?v=same-shell-cases["'])(?=[^>]*\bdefer\b)/i,
-        'home page should cache-bust the same-shell case-study behavior',
+        /<script\b(?=[^>]*src=["']js\/main\.js\?v=20260710["'])(?=[^>]*\bdefer\b)/i,
+        'home page should load the current cache-busted main behavior',
     );
     assert.doesNotMatch(
         styleSource,
@@ -604,6 +596,11 @@ test('home time card exposes accent-aware format controls', () => {
         source,
         /<button\b(?=[^>]*class=["'][^"']*\btime-format-button\b)(?=[^>]*data-time-format=["']12["'])(?=[^>]*aria-pressed=["']false["'])/i,
         'time card should expose 12-hour format as an alternate choice',
+    );
+    assert.match(
+        source,
+        /<div\b(?=[^>]*class=["'][^"']*\btime-format-control\b)(?=[^>]*\bhidden\b)/i,
+        'time format controls should stay hidden until JavaScript initializes them',
     );
     assert.match(
         styleSource,
@@ -903,6 +900,22 @@ test('home form labels target real controls', () => {
         assert.ok(controlId, 'every form label needs a for attribute');
         assert.ok(idSet.has(controlId), `label points to missing #${controlId}`);
     }
+
+    assert.match(
+        source,
+        /<p\b(?=[^>]*id=["']form-note["'])(?=[^>]*\bhidden\b)/i,
+        'enhanced form guidance should stay hidden until JavaScript initializes it',
+    );
+    assert.match(
+        source,
+        /<form\b(?=[^>]*id=["']contact-form["'])(?=[^>]*\bhidden\b)/i,
+        'the enhanced contact form should not submit inertly without JavaScript',
+    );
+    assert.match(
+        source,
+        /<noscript>[\s\S]*?Use the email address above[\s\S]*?<\/noscript>/i,
+        'contact should provide a no-JavaScript fallback',
+    );
 });
 
 test('informative images have non-empty alternative text', () => {

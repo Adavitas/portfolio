@@ -34,21 +34,22 @@
     <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml" />
     <script src="js/theme-init.js"></script>
     <link rel="stylesheet" href="css/reset.css" />
-    <link rel="stylesheet" href="css/tokens.css?v=split-scroll" />
-    <link rel="stylesheet" href="css/base.css?v=split-scroll" />
-    <link rel="stylesheet" href="css/layout.css?v=split-scroll" />
-    <link rel="stylesheet" href="css/components.css?v=split-scroll" />
-    <link rel="stylesheet" href="css/sections.css?v=split-scroll" />
-    <link rel="stylesheet" href="css/responsive.css?v=split-scroll" />
-    <link rel="stylesheet" href="css/motion.css?v=split-scroll" />
+    <link rel="stylesheet" href="css/tokens.css?v=20260710" />
+    <link rel="stylesheet" href="css/base.css?v=20260710" />
+    <link rel="stylesheet" href="css/layout.css?v=20260710" />
+    <link rel="stylesheet" href="css/components.css?v=20260710" />
+    <link rel="stylesheet" href="css/sections.css?v=20260710" />
+    <link rel="stylesheet" href="css/responsive.css?v=20260710" />
+    <link rel="stylesheet" href="css/motion.css?v=20260710" />
   </head>
   <body>
     <div class="portfolio-shell">
-      <main id="main-content" class="portfolio-grid" tabindex="-1">
+      <main id="main-content" class="portfolio-grid">
         <section
           id="hero"
           class="card intro-card card-spotlight"
           data-section-panel="about"
+          aria-label="About"
           tabindex="-1"
         >
           <div class="intro-layout">
@@ -85,7 +86,6 @@
                 </p>
               </div>
             </aside>
-
           </div>
         </section>
 
@@ -93,16 +93,17 @@
           id="projects"
           class="card projects-card card-spotlight"
           data-section-panel="projects"
+          aria-label="Selected projects"
           tabindex="-1"
         >
-          <div class="project-filter" aria-label="Filter selected projects">
+          <div class="project-filter">
             <div
               class="project-filter-buttons"
               role="group"
               aria-label="Project filters"
             >
               <button
-                class="project-filter-button is-active"
+                class="project-filter-button"
                 type="button"
                 data-project-filter="all"
                 aria-pressed="true"
@@ -269,6 +270,7 @@
           id="case-portfolio"
           class="card case-panel card-spotlight"
           data-section-panel="case-portfolio"
+          aria-label="Portfolio case study"
           tabindex="-1"
         >
           <article class="case-study">
@@ -391,6 +393,7 @@
           id="case-minishell"
           class="card case-panel card-spotlight"
           data-section-panel="case-minishell"
+          aria-label="Minishell case study"
           tabindex="-1"
         >
           <article class="case-study">
@@ -515,6 +518,7 @@
           id="case-push-swap"
           class="card case-panel card-spotlight"
           data-section-panel="case-push-swap"
+          aria-label="Push Swap case study"
           tabindex="-1"
         >
           <article class="case-study">
@@ -639,6 +643,7 @@
           id="certificates"
           class="card certificates-card card-spotlight"
           data-section-panel="certificates"
+          aria-label="Certificates"
           data-reveal
           tabindex="-1"
         >
@@ -682,6 +687,7 @@
           id="contact"
           class="card contact-card card-spotlight"
           data-section-panel="contact"
+          aria-label="Contact"
           data-reveal
           tabindex="-1"
         >
@@ -697,12 +703,19 @@
             >
           </address>
 
-          <p class="form-note" id="form-note">
+          <p class="form-note" id="form-note" hidden>
             This form prepares an email draft. You will review and send it from
             your email application.
           </p>
 
-          <form id="contact-form" aria-describedby="form-note">
+          <noscript>
+            <p class="form-note">
+              JavaScript is unavailable. Use the email address above to contact
+              me directly.
+            </p>
+          </noscript>
+
+          <form id="contact-form" aria-describedby="form-note" hidden>
             <div class="form-field">
               <label for="name">Name</label>
               <input
@@ -899,14 +912,14 @@
             data-reveal
             data-reveal-delay="short"
           >
-            <div class="time-format-control">
+            <div class="time-format-control" hidden>
               <div
                 class="time-format-buttons"
                 role="group"
                 aria-label="Choose time display format"
               >
                 <button
-                  class="time-format-button is-active"
+                  class="time-format-button"
                   type="button"
                   data-time-format="24"
                   aria-pressed="true"
@@ -988,6 +1001,6 @@
       </main>
     </div>
 
-    <script src="js/main.js?v=same-shell-cases" defer></script>
+    <script src="js/main.js?v=20260710" defer></script>
   </body>
 </html>

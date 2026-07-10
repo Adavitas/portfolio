@@ -105,7 +105,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             accentButtons.forEach((button) => {
                 const isActive = button.dataset.accent === nextAccent;
-                button.classList.toggle('is-active', isActive);
                 button.setAttribute('aria-pressed', String(isActive));
             });
 
@@ -161,8 +160,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             sectionLinks.forEach((link) => {
                 const isActive = link.dataset.sectionLink === activeSection;
-
-                link.classList.toggle('is-active', isActive);
 
                 if (isActive) {
                     link.setAttribute('aria-current', 'page');
@@ -226,6 +223,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         function pushHash(targetHash) {
+            if (window.location?.hash === targetHash) {
+                return;
+            }
+
             if (window.history?.pushState) {
                 window.history.pushState(null, '', targetHash);
             } else if (window.location) {
@@ -264,13 +265,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (window.addEventListener) {
             window.addEventListener('hashchange', () => {
-                showSection(getSectionFromHash(), {
-                    focus: true,
-                    scroll: true,
-                });
-            });
-
-            window.addEventListener('popstate', () => {
                 showSection(getSectionFromHash(), {
                     focus: true,
                     scroll: true,
@@ -385,7 +379,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             projectFilterButtons.forEach((button) => {
                 const isActive = button === activeButton;
-                button.classList.toggle('is-active', isActive);
                 button.setAttribute('aria-pressed', String(isActive));
             });
 
@@ -433,6 +426,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const visitorTimezoneLabel = document.getElementById(
         'visitor-timezone-label',
     );
+    const timeFormatControl = document.querySelector('.time-format-control');
     const timeFormatButtons = document.querySelectorAll('.time-format-button');
 
     if (homeTimeElement && visitorTimeElement) {
@@ -462,7 +456,6 @@ document.addEventListener('DOMContentLoaded', () => {
         function updateTimeFormatButtons(timeFormat) {
             timeFormatButtons.forEach((button) => {
                 const isActive = button.dataset.timeFormat === timeFormat;
-                button.classList.toggle('is-active', isActive);
                 button.setAttribute('aria-pressed', String(isActive));
             });
         }
@@ -538,6 +531,17 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
+        function scheduleNextTimezoneUpdate() {
+            const millisecondsPerMinute = 60000;
+            const delay =
+                millisecondsPerMinute - (Date.now() % millisecondsPerMinute);
+
+            setTimeout(() => {
+                updateTimezones();
+                scheduleNextTimezoneUpdate();
+            }, delay);
+        }
+
         timeFormatButtons.forEach((button) => {
             button.addEventListener('click', () => {
                 setTimeFormat(button.dataset.timeFormat, true);
@@ -545,7 +549,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         setTimeFormat(readSavedTimeFormat() ?? '24');
-        setInterval(updateTimezones, 60000);
+
+        if (timeFormatControl && timeFormatButtons.length > 0) {
+            timeFormatControl.hidden = false;
+        }
+
+        scheduleNextTimezoneUpdate();
     }
 
     // Contact Form Validation and Email Draft
@@ -556,6 +565,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const nameError = document.getElementById('name-error');
     const emailError = document.getElementById('email-error');
     const messageError = document.getElementById('message-error');
+    const formNote = document.getElementById('form-note');
     const formStatus = document.getElementById('form-status');
     const emailDraftLink = document.getElementById('email-draft-link');
 
@@ -567,6 +577,7 @@ document.addEventListener('DOMContentLoaded', () => {
         nameError &&
         emailError &&
         messageError &&
+        formNote &&
         formStatus &&
         emailDraftLink
     ) {
@@ -577,6 +588,8 @@ document.addEventListener('DOMContentLoaded', () => {
         ];
 
         contactForm.noValidate = true;
+        formNote.hidden = false;
+        contactForm.hidden = false;
 
         function clearFieldError(input, errorElement) {
             input.removeAttribute('aria-invalid');
@@ -590,7 +603,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         function resetPreparedEmail() {
             formStatus.textContent = '';
-            formStatus.className = 'form-status';
+            formStatus.classList.remove('is-error', 'is-success');
             emailDraftLink.hidden = true;
             emailDraftLink.removeAttribute('href');
         }

@@ -22,7 +22,7 @@ systems work.
 - HTML5
 - CSS Grid, Flexbox, custom properties, and media queries
 - Vanilla JavaScript
-- No framework, package manager, or build step
+- No framework, runtime dependencies, or build step
 
 ## Project Structure
 
