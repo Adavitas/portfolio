@@ -369,8 +369,9 @@ document.addEventListener('DOMContentLoaded', () => {
             return categories.includes(filter);
         }
 
-        function getFilterLabel(filterButton) {
-            return filterButton.textContent.trim().toLowerCase();
+        function getFilterLabel(filterButton, isSingular) {
+            const label = filterButton.textContent.trim().toLowerCase();
+            return isSingular ? label.replace(/s$/, '') : label;
         }
 
         function updateProjectFilter(activeButton) {
@@ -396,7 +397,10 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             const projectWord = visibleProjects === 1 ? 'project' : 'projects';
-            const filterLabel = getFilterLabel(activeButton);
+            const filterLabel = getFilterLabel(
+                activeButton,
+                visibleProjects === 1,
+            );
 
             projectFilterStatus.textContent =
                 activeFilter === 'all'

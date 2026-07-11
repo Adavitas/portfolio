@@ -1,0 +1,45 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 800 450"
+  role="img"
+  aria-labelledby="title description"
+>
+  <title id="title">Movie Mania trivia preview</title>
+  <desc id="description">
+    A timed movie question with four answers, round progress, and lifelines.
+  </desc>
+  <rect width="800" height="450" fill="#101415" />
+  <g stroke="#263337" stroke-width="1">
+    <path d="M0 90h800M0 180h800M0 270h800M0 360h800" />
+    <path d="M100 0v450M200 0v450M300 0v450M400 0v450M500 0v450M600 0v450M700 0v450" />
+  </g>
+  <rect x="54" y="42" width="692" height="366" rx="22" fill="#171d1f" stroke="#425156" stroke-width="2" />
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+    <text x="88" y="84" fill="#00bbff" font-size="19">MOVIE MANIA</text>
+    <text x="712" y="84" fill="#aab8bd" font-size="17" text-anchor="end">QUESTION 5 / 8</text>
+    <rect x="88" y="104" width="624" height="7" rx="3.5" fill="#2b363a" />
+    <rect x="88" y="104" width="390" height="7" rx="3.5" fill="#00bbff" />
+    <circle cx="670" cy="149" r="24" fill="#20282b" stroke="#00bbff" stroke-width="3" />
+    <text x="670" y="156" fill="#f4f7f8" font-size="19" text-anchor="middle">18</text>
+    <text x="88" y="154" fill="#7f9197" font-size="15">MEDIUM</text>
+    <text x="88" y="193" fill="#f4f7f8" font-size="23">Which film matches this clue?</text>
+    <g font-size="18">
+      <rect x="88" y="222" width="290" height="50" rx="10" fill="#20282b" stroke="#425156" />
+      <text x="108" y="253" fill="#dce6e9">A  First answer</text>
+      <rect x="422" y="222" width="290" height="50" rx="10" fill="#20282b" stroke="#00bbff" />
+      <text x="442" y="253" fill="#dce6e9">B  Second answer</text>
+      <rect x="88" y="286" width="290" height="50" rx="10" fill="#20282b" stroke="#425156" />
+      <text x="108" y="317" fill="#dce6e9">C  Third answer</text>
+      <rect x="422" y="286" width="290" height="50" rx="10" fill="#20282b" stroke="#425156" />
+      <text x="442" y="317" fill="#dce6e9">D  Fourth answer</text>
+    </g>
+    <g font-size="14" text-anchor="middle">
+      <rect x="182" y="356" width="120" height="30" rx="8" fill="#2b363a" />
+      <text x="242" y="376" fill="#00bbff">50 / 50</text>
+      <rect x="340" y="356" width="120" height="30" rx="8" fill="#2b363a" />
+      <text x="400" y="376" fill="#00bbff">PHONE</text>
+      <rect x="498" y="356" width="120" height="30" rx="8" fill="#2b363a" />
+      <text x="558" y="376" fill="#00bbff">AUDIENCE</text>
+    </g>
+  </g>
+</svg>

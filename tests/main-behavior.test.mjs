@@ -660,54 +660,47 @@ function createRevealDom(count) {
 function createProjectFilterDom() {
     const document = new MockDocument();
     const status = appendElement(document, 'p', { id: 'project-filter-status' });
-    const allButton = appendElement(document, 'button', {
-        className: 'project-filter-button',
-        attributes: {
-            'aria-pressed': 'true',
-            'data-project-filter': 'all',
-        },
-    });
-    allButton.textContent = 'All';
-
-    const frontendButton = appendElement(document, 'button', {
-        className: 'project-filter-button',
-        attributes: {
-            'aria-pressed': 'false',
-            'data-project-filter': 'frontend',
-        },
-    });
-    frontendButton.textContent = 'Frontend';
-
-    const systemsButton = appendElement(document, 'button', {
-        className: 'project-filter-button',
-        attributes: {
-            'aria-pressed': 'false',
-            'data-project-filter': 'systems',
-        },
-    });
-    systemsButton.textContent = 'Systems';
-
-    const frontendProject = appendElement(document, 'article', {
-        className: 'project-card',
-        attributes: {
-            'data-project-categories': 'frontend accessibility javascript',
-        },
-    });
-    const systemsProject = appendElement(document, 'article', {
-        className: 'project-card',
-        attributes: {
-            'data-project-categories': 'systems c unix parsing',
-        },
-    });
+    const filterLabels = {
+        all: 'All',
+        interfaces: 'Interfaces',
+        systems: 'Systems',
+        games: 'Games',
+        algorithms: 'Algorithms',
+    };
+    const buttons = Object.fromEntries(
+        Object.entries(filterLabels).map(([filter, label]) => {
+            const button = appendElement(document, 'button', {
+                className: 'project-filter-button',
+                attributes: {
+                    'aria-pressed': filter === 'all' ? 'true' : 'false',
+                    'data-project-filter': filter,
+                },
+            });
+            button.textContent = label;
+            return [filter, button];
+        }),
+    );
+    const projectCategories = [
+        'interfaces',
+        'systems',
+        'algorithms',
+        'games',
+        'games systems',
+        'interfaces games',
+        'systems',
+    ];
+    const projects = projectCategories.map((categories) =>
+        appendElement(document, 'article', {
+            className: 'project-card',
+            attributes: { 'data-project-categories': categories },
+        }),
+    );
 
     return {
         document,
         status,
-        allButton,
-        frontendButton,
-        systemsButton,
-        frontendProject,
-        systemsProject,
+        buttons,
+        projects,
     };
 }
 
@@ -1127,30 +1120,27 @@ test('home section switcher respects reduced motion when scrolling clicked panel
 
 test('project filter toggles cards, button state, and live status', () => {
     const dom = createProjectFilterDom();
+    const visibleProjectIndexes = () =>
+        dom.projects
+            .map((project, index) => (project.hidden ? null : index))
+            .filter((index) => index !== null);
 
     runMain({ document: dom.document });
-    dom.frontendButton.dispatchEvent(createEvent('click'));
 
-    assert.equal(dom.frontendProject.hidden, false);
-    assert.equal(dom.systemsProject.hidden, true);
-    assert.equal(dom.allButton.getAttribute('aria-pressed'), 'false');
-    assert.equal(dom.frontendButton.getAttribute('aria-pressed'), 'true');
-    assert.equal(dom.status.textContent, 'Showing 1 frontend project.');
+    const expectations = [
+        ['interfaces', [0, 5], 'Showing 2 interfaces projects.'],
+        ['systems', [1, 4, 6], 'Showing 3 systems projects.'],
+        ['games', [3, 4, 5], 'Showing 3 games projects.'],
+        ['algorithms', [2], 'Showing 1 algorithm project.'],
+        ['all', [0, 1, 2, 3, 4, 5, 6], 'Showing all 7 projects.'],
+    ];
 
-    dom.systemsButton.dispatchEvent(createEvent('click'));
-
-    assert.equal(dom.frontendProject.hidden, true);
-    assert.equal(dom.systemsProject.hidden, false);
-    assert.equal(dom.frontendButton.getAttribute('aria-pressed'), 'false');
-    assert.equal(dom.systemsButton.getAttribute('aria-pressed'), 'true');
-    assert.equal(dom.status.textContent, 'Showing 1 systems project.');
-
-    dom.allButton.dispatchEvent(createEvent('click'));
-
-    assert.equal(dom.frontendProject.hidden, false);
-    assert.equal(dom.systemsProject.hidden, false);
-    assert.equal(dom.allButton.getAttribute('aria-pressed'), 'true');
-    assert.equal(dom.status.textContent, 'Showing all 2 projects.');
+    for (const [filter, visibleIndexes, status] of expectations) {
+        dom.buttons[filter].dispatchEvent(createEvent('click'));
+        assert.deepEqual(visibleProjectIndexes(), visibleIndexes);
+        assert.equal(dom.buttons[filter].getAttribute('aria-pressed'), 'true');
+        assert.equal(dom.status.textContent, status);
+    }
 });
 
 test('empty contact form submission exposes required errors and focuses first field', () => {

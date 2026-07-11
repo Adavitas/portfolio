@@ -29,15 +29,86 @@ const cssFiles = [
 ];
 
 const expectedStylesheetHrefs = cssFiles.map((file) =>
-    file === 'css/reset.css' ? file : `${file}?v=20260710`,
+    file === 'css/reset.css' ? file : `${file}?v=20260711`,
 );
+
+const expectedProjects = [
+    {
+        panelId: 'case-portfolio',
+        standaloneSlug: 'portfolio',
+        title: 'Personal portfolio',
+        categories: 'interfaces',
+        preview: 'assets/images/portfolio-preview.svg',
+        caseLabel: 'Read portfolio case study',
+        sourceLabel: 'View portfolio source',
+        source: 'https://github.com/Adavitas/portfolio',
+    },
+    {
+        panelId: 'case-minishell',
+        standaloneSlug: 'minishell',
+        title: 'Minishell',
+        categories: 'systems',
+        preview: 'assets/images/minishell-preview.svg',
+        caseLabel: 'Read Minishell case study',
+        sourceLabel: 'View Minishell source',
+        source: 'https://github.com/Adavitas/minishell',
+    },
+    {
+        panelId: 'case-push-swap',
+        standaloneSlug: 'push-swap',
+        title: 'Push Swap',
+        categories: 'algorithms',
+        preview: 'assets/images/push-swap-preview.svg',
+        caseLabel: 'Read Push Swap case study',
+        sourceLabel: 'View Push Swap source',
+        source: 'https://github.com/Adavitas/push_swap',
+    },
+    {
+        panelId: 'case-so-long',
+        standaloneSlug: 'so-long',
+        title: 'so_long',
+        categories: 'games',
+        preview: 'assets/images/so-long-preview.svg',
+        caseLabel: 'Read so_long case study',
+        sourceLabel: 'View so_long source',
+        source: 'https://github.com/Adavitas/so_long',
+    },
+    {
+        panelId: 'case-cub3d',
+        standaloneSlug: 'cub3d',
+        title: 'cub3D',
+        categories: 'games systems',
+        preview: 'assets/images/cub3d-preview.jpg',
+        caseLabel: 'Read cub3D case study',
+        sourceLabel: 'View cub3D source',
+        source: 'https://github.com/Adavitas/cub3d',
+    },
+    {
+        panelId: 'case-movie-mania',
+        standaloneSlug: 'movie-mania',
+        title: 'Movie Mania',
+        categories: 'interfaces games',
+        preview: 'assets/images/movie-mania-preview.svg',
+        caseLabel: 'Read Movie Mania case study',
+        sourceLabel: 'View Movie Mania source',
+        source: 'https://github.com/Adavitas/movie_mania',
+    },
+    {
+        panelId: 'case-philosophers',
+        standaloneSlug: 'philosophers',
+        title: 'Philosophers',
+        categories: 'systems',
+        preview: 'assets/images/philosophers-preview.svg',
+        caseLabel: 'Read Philosophers case study',
+        sourceLabel: 'View Philosophers source',
+        source: 'https://github.com/Adavitas/philosophers',
+    },
+];
 
 const requiredAssets = [
     'assets/images/favicon.svg',
     'assets/images/portrait.jpeg',
-    'assets/images/portfolio-preview.svg',
-    'assets/images/minishell-preview.svg',
-    'assets/images/push-swap-preview.svg',
+    ...expectedProjects.map(({ preview }) => preview),
 ];
 
 const pageSources = new Map(
@@ -82,6 +153,11 @@ function getTags(source, tagName) {
 
 function stripTags(value) {
     return value.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
+function countWords(value) {
+    const text = stripTags(value);
+    return text ? text.split(/\s+/).length : 0;
 }
 
 function stripCssCommentsAndStrings(value) {
@@ -196,11 +272,8 @@ test('required pages exist', async () => {
         await assertFileExists(file);
     }
 
-    for (const deletedPage of [
-        'projects/portfolio.html',
-        'projects/minishell.html',
-        'projects/push-swap.html',
-    ]) {
+    for (const { standaloneSlug } of expectedProjects) {
+        const deletedPage = `projects/${standaloneSlug}.html`;
         await assert.rejects(
             access(path.join(rootDirectory, deletedPage)),
             { code: 'ENOENT' },
@@ -579,7 +652,7 @@ test('home time card exposes accent-aware format controls', () => {
 
     assert.match(
         source,
-        /<script\b(?=[^>]*src=["']js\/main\.js\?v=20260710["'])(?=[^>]*\bdefer\b)/i,
+        /<script\b(?=[^>]*src=["']js\/main\.js\?v=20260711["'])(?=[^>]*\bdefer\b)/i,
         'home page should load the current cache-busted main behavior',
     );
     assert.doesNotMatch(
@@ -666,32 +739,171 @@ test('home project card link labels remain specific and unique', () => {
 
     const links = [...galleryMatch[1].matchAll(/<a\b[^>]*>([\s\S]*?)<\/a\s*>/gi)];
     const linkTexts = links.map(([, text]) => stripTags(text));
-
-    assert.deepEqual(linkTexts, [
-        'Read portfolio case study',
-        'View portfolio source',
-        'Read Minishell case study',
-        'View Minishell source',
-        'Read Push Swap case study',
-        'View Push Swap source',
+    const expectedLinkTexts = expectedProjects.flatMap(
+        ({ caseLabel, sourceLabel }) => [caseLabel, sourceLabel],
+    );
+    const expectedLinkHrefs = expectedProjects.flatMap(({ panelId, source }) => [
+        `#${panelId}`,
+        source,
     ]);
+
+    assert.deepEqual(linkTexts, expectedLinkTexts);
     assert.equal(new Set(linkTexts).size, linkTexts.length);
 
     assert.deepEqual(
         links.map(([tag]) => getAttribute(tag, 'href')),
-        [
-            '#case-portfolio',
-            'https://github.com/Adavitas/portfolio',
-            '#case-minishell',
-            'https://github.com/Adavitas/minishell',
-            '#case-push-swap',
-            'https://github.com/Adavitas/push_swap',
-        ],
+        expectedLinkHrefs,
     );
     assert.equal(
         links.filter(([tag]) => getAttribute(tag, 'data-panel-link')).length,
-        3,
+        expectedProjects.length,
         'case-study project links should switch same-shell panels',
+    );
+});
+
+test('home project cards keep the verified seven-project mapping', () => {
+    const source = pageSources.get('index.html');
+    const cards = [
+        ...source.matchAll(
+            /(<article\b(?=[^>]*class=["'][^"']*\bproject-card\b)[^>]*>)([\s\S]*?)<\/article>/gi,
+        ),
+    ];
+
+    assert.equal(cards.length, expectedProjects.length);
+    assert.deepEqual(
+        [...source.matchAll(/data-project-filter=["']([^"']+)["']/gi)].map(
+            ([, filter]) => filter,
+        ),
+        ['all', 'interfaces', 'systems', 'games', 'algorithms'],
+    );
+    assert.match(source, /Showing all 7 projects\./);
+
+    cards.forEach(([, tag, body], index) => {
+        const project = expectedProjects[index];
+        const heading = body.match(/<h3\b[^>]*>([\s\S]*?)<\/h3>/i);
+        const description = body.match(/<p\b[^>]*>([\s\S]*?)<\/p>/i)?.[1];
+        const tagList =
+            body.match(
+                /<ul\b[^>]*class=["']tag-list["'][^>]*>([\s\S]*?)<\/ul>/i,
+            )?.[1] ?? '';
+        const tags = [
+            ...tagList.matchAll(/<li\b[^>]*>([\s\S]*?)<\/li>/gi),
+        ];
+        const image = getTags(body, 'img')[0];
+
+        assert.equal(
+            getAttribute(tag, 'data-project-categories'),
+            project.categories,
+        );
+        assert.equal(stripTags(heading?.[1] ?? ''), project.title);
+        assert.ok(
+            countWords(description) <= 22,
+            `${project.title} card copy is too long`,
+        );
+        assert.ok(
+            tags.length >= 2 && tags.length <= 4,
+            `${project.title} needs two to four card tags`,
+        );
+        assert.equal(getAttribute(image, 'src'), project.preview);
+        assert.equal(getAttribute(image, 'width'), '800');
+        assert.equal(getAttribute(image, 'height'), '450');
+        assert.equal(getAttribute(image, 'loading'), 'lazy');
+        assert.equal(getAttribute(image, 'decoding'), 'async');
+        assert.ok(getAttribute(image, 'alt')?.trim());
+    });
+});
+
+test('same-shell project panels keep the compact content contract', () => {
+    const source = pageSources.get('index.html');
+    const panelStarts = expectedProjects.map(({ panelId }) =>
+        source.indexOf(`id="${panelId}"`),
+    );
+    const certificatesStart = source.indexOf('id="certificates"');
+
+    expectedProjects.forEach(({ panelId, preview, source: sourceUrl }, index) => {
+        const panel = source.slice(
+            panelStarts[index],
+            panelStarts[index + 1] ?? certificatesStart,
+        );
+        const introduction = panel.match(
+            /<p\b[^>]*class=["']case-study-introduction["'][^>]*>([\s\S]*?)<\/p>/i,
+        )?.[1];
+        const sections = [
+            ...panel.matchAll(
+                /<section\b[^>]*class=["']case-study-section["'][^>]*>([\s\S]*?)<\/section>/gi,
+            ),
+        ].map(([, body]) => body);
+        const image = getTags(panel, 'img')[0];
+
+        assert.ok(introduction, `${panelId} needs a concise introduction`);
+        assert.equal(
+            sections.length,
+            2,
+            `${panelId} needs exactly two content sections`,
+        );
+        assert.match(sections[0], /<h3>\s*What it does\s*<\/h3>/i);
+        assert.match(sections[1], /<h3>\s*Key engineering\s*<\/h3>/i);
+
+        const whatItDoes = sections[0].match(/<p\b[^>]*>([\s\S]*?)<\/p>/i)?.[1];
+        const bullets = [
+            ...sections[1].matchAll(/<li\b[^>]*>([\s\S]*?)<\/li>/gi),
+        ].map(([, text]) => text);
+        const explanatoryCopy = [introduction, whatItDoes, ...bullets].join(' ');
+
+        assert.ok(
+            countWords(introduction) <= 35,
+            `${panelId} introduction is too long`,
+        );
+        assert.ok(
+            countWords(whatItDoes) >= 28 && countWords(whatItDoes) <= 42,
+            `${panelId} What it does copy should stay near 30–40 words`,
+        );
+        assert.equal(
+            bullets.length,
+            3,
+            `${panelId} needs three engineering bullets`,
+        );
+        bullets.forEach((bullet) => {
+            assert.ok(
+                countWords(bullet) <= 18,
+                `${panelId} has an oversized bullet`,
+            );
+        });
+        assert.ok(
+            countWords(explanatoryCopy) >= 100 &&
+                countWords(explanatoryCopy) <= 140,
+            `${panelId} explanatory copy should stay between 100 and 140 words`,
+        );
+        assert.match(
+            panel,
+            new RegExp(`src=["']${escapeRegex(preview)}["']`, 'i'),
+        );
+        assert.equal(getAttribute(image, 'width'), '800');
+        assert.equal(getAttribute(image, 'height'), '450');
+        assert.equal(getAttribute(image, 'loading'), 'lazy');
+        assert.equal(getAttribute(image, 'decoding'), 'async');
+        assert.match(
+            panel,
+            new RegExp(`href=["']${escapeRegex(sourceUrl)}["']`, 'i'),
+        );
+    });
+});
+
+test('project case panels keep the compact desktop layout', () => {
+    assert.match(
+        styleSource,
+        /\.case-study-hero img\s*{[\s\S]*?aspect-ratio:\s*16 \/ 9;[\s\S]*?max-height:\s*13rem;[\s\S]*?}/,
+        'project previews should keep a local 16:9 presentation',
+    );
+    assert.match(
+        styleSource,
+        /@media \(min-width: 900px\) {[\s\S]*?\.case-study\s*{[\s\S]*?grid-template-columns:\s*minmax\(0,\s*0\.82fr\) minmax\(0,\s*1\.18fr\);[\s\S]*?}/,
+        'desktop case copy should use a compact two-column reading layout',
+    );
+    assert.match(
+        styleSource,
+        /\.case-study-hero,\s*\n\s*\.case-panel-actions\s*{[\s\S]*?grid-column:\s*1 \/ -1;[\s\S]*?}/,
+        'case hero and actions should span both compact content columns',
     );
 });
 
@@ -739,9 +951,9 @@ test('accessibility references point to existing IDs', () => {
 
             const contactIndex = source.indexOf('id="contact"');
             const certificatesIndex = source.indexOf('id="certificates"');
-            const casePortfolioIndex = source.indexOf('id="case-portfolio"');
-            const caseMinishellIndex = source.indexOf('id="case-minishell"');
-            const casePushSwapIndex = source.indexOf('id="case-push-swap"');
+            const caseIndexes = expectedProjects.map(({ panelId }) =>
+                source.indexOf(`id="${panelId}"`),
+            );
             const sectionRailIndex = source.indexOf('class="section-rail"');
             const railSkillsCardIndex = source.indexOf('rail-skills-card');
             const creditCardIndex = source.indexOf('rail-credit-card');
@@ -751,20 +963,22 @@ test('accessibility references point to existing IDs', () => {
             );
             const timeCardIndex = source.indexOf('class="card time-card');
             const connectCardIndex = source.indexOf('class="card connect-card');
+            const orderedPanelIndexes = [
+                ...caseIndexes,
+                certificatesIndex,
+                contactIndex,
+                sectionRailIndex,
+                infoGridIndex,
+            ];
             assert.ok(
-                casePortfolioIndex < caseMinishellIndex &&
-                    caseMinishellIndex < casePushSwapIndex &&
-                    casePushSwapIndex < certificatesIndex &&
-                    certificatesIndex < contactIndex &&
-                    contactIndex < sectionRailIndex &&
-                    sectionRailIndex < infoGridIndex,
+                orderedPanelIndexes.every(
+                    (index, position) =>
+                        index >= 0 &&
+                        (position === 0 || orderedPanelIndexes[position - 1] < index),
+                ),
                 'home page order should be main content panels, controls rail, then persistent info cards',
             );
-            for (const section of [
-                'case-portfolio',
-                'case-minishell',
-                'case-push-swap',
-            ]) {
+            for (const { panelId: section } of expectedProjects) {
                 assert.match(
                     source,
                     new RegExp(
@@ -787,12 +1001,12 @@ test('accessibility references point to existing IDs', () => {
                     source,
                     /href=["']#projects["'][^>]*data-panel-link=["']projects["']/gi,
                 ),
-                3,
+                expectedProjects.length,
                 'each same-shell case study should include a Back to projects link',
             );
             assert.doesNotMatch(
                 source,
-                /href=["']projects\/(?:portfolio|minishell|push-swap)\.html["'][\s\S]*?>\s*Read /i,
+                /href=["']projects\/(?:portfolio|minishell|push-swap|so-long|cub3d|movie-mania|philosophers)\.html["'][\s\S]*?>\s*Read /i,
                 'home project cards should not visually navigate away for case studies',
             );
             assert.match(

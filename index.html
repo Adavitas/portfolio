@@ -34,13 +34,13 @@
     <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml" />
     <script src="js/theme-init.js"></script>
     <link rel="stylesheet" href="css/reset.css" />
-    <link rel="stylesheet" href="css/tokens.css?v=20260710" />
-    <link rel="stylesheet" href="css/base.css?v=20260710" />
-    <link rel="stylesheet" href="css/layout.css?v=20260710" />
-    <link rel="stylesheet" href="css/components.css?v=20260710" />
-    <link rel="stylesheet" href="css/sections.css?v=20260710" />
-    <link rel="stylesheet" href="css/responsive.css?v=20260710" />
-    <link rel="stylesheet" href="css/motion.css?v=20260710" />
+    <link rel="stylesheet" href="css/tokens.css?v=20260711" />
+    <link rel="stylesheet" href="css/base.css?v=20260711" />
+    <link rel="stylesheet" href="css/layout.css?v=20260711" />
+    <link rel="stylesheet" href="css/components.css?v=20260711" />
+    <link rel="stylesheet" href="css/sections.css?v=20260711" />
+    <link rel="stylesheet" href="css/responsive.css?v=20260711" />
+    <link rel="stylesheet" href="css/motion.css?v=20260711" />
   </head>
   <body>
     <div class="portfolio-shell">
@@ -113,10 +113,10 @@
               <button
                 class="project-filter-button"
                 type="button"
-                data-project-filter="frontend"
+                data-project-filter="interfaces"
                 aria-pressed="false"
               >
-                Frontend
+                Interfaces
               </button>
               <button
                 class="project-filter-button"
@@ -125,6 +125,14 @@
                 aria-pressed="false"
               >
                 Systems
+              </button>
+              <button
+                class="project-filter-button"
+                type="button"
+                data-project-filter="games"
+                aria-pressed="false"
+              >
+                Games
               </button>
               <button
                 class="project-filter-button"
@@ -140,30 +148,29 @@
               id="project-filter-status"
               aria-live="polite"
             >
-              Showing all 3 projects.
+              Showing all 7 projects.
             </p>
           </div>
 
           <div class="grid-gallery">
             <article
               class="card project-card featured-project card-spotlight"
-              data-project-categories="frontend accessibility javascript"
+              data-project-categories="interfaces"
               data-reveal
             >
               <img
                 src="assets/images/portfolio-preview.svg"
                 alt="Abstract preview of this portfolio's bento card layout"
                 width="800"
-                height="500"
+                height="450"
                 loading="lazy"
                 decoding="async"
               />
               <div class="project-copy">
                 <h3>Personal portfolio</h3>
                 <p>
-                  A responsive vanilla website with semantic HTML, an accessible
-                  menu and contact workflow, persistent themes, and motion-aware
-                  card reveals.
+                  A dependency-free portfolio with accessible panel navigation,
+                  project filters, persistent preferences, and responsive layout.
                 </p>
                 <ul class="tag-list">
                   <li>HTML</li>
@@ -187,23 +194,22 @@
 
             <article
               class="card project-card card-spotlight"
-              data-project-categories="systems c unix parsing"
+              data-project-categories="systems"
               data-reveal
             >
               <img
                 src="assets/images/minishell-preview.svg"
                 alt="Terminal illustration representing the Minishell project"
                 width="800"
-                height="500"
+                height="450"
                 loading="lazy"
                 decoding="async"
               />
               <div class="project-copy">
                 <h3>Minishell</h3>
                 <p>
-                  A Unix shell in C with pipelines, redirections, environment
-                  variables, built-in commands, signal handling, and an abstract
-                  syntax tree.
+                  A C shell implementing parsing, expansion, pipelines,
+                  redirections, built-ins, signals, and process execution.
                 </p>
                 <ul class="tag-list">
                   <li>C</li>
@@ -226,7 +232,7 @@
 
             <article
               class="card project-card card-spotlight"
-              data-project-categories="algorithms c data-structures"
+              data-project-categories="algorithms"
               data-reveal
               data-reveal-delay="short"
             >
@@ -234,16 +240,15 @@
                 src="assets/images/push-swap-preview.svg"
                 alt="Two numbered stacks representing the Push Swap sorting project"
                 width="800"
-                height="500"
+                height="450"
                 loading="lazy"
                 decoding="async"
               />
               <div class="project-copy">
                 <h3>Push Swap</h3>
                 <p>
-                  A constrained sorting project that ranks integers, moves them
-                  between two stacks, validates input, and reduces the number of
-                  operations.
+                  A C program that validates integers and generates legal
+                  two-stack operations to sort them.
                 </p>
                 <ul class="tag-list">
                   <li>C</li>
@@ -263,6 +268,164 @@
                 </div>
               </div>
             </article>
+
+            <article
+              class="card project-card card-spotlight"
+              data-project-categories="games"
+              data-reveal
+            >
+              <img
+                src="assets/images/so-long-preview.svg"
+                alt="Grid maze illustration with a player, collectibles, and an exit for so_long"
+                width="800"
+                height="450"
+                loading="lazy"
+                decoding="async"
+              />
+              <div class="project-copy">
+                <h3>so_long</h3>
+                <p>
+                  A MiniLibX grid game where players collect every item, then
+                  reach the exit through a validated map.
+                </p>
+                <ul class="tag-list">
+                  <li>C</li>
+                  <li>MiniLibX</li>
+                  <li>Flood fill</li>
+                </ul>
+                <div class="project-links">
+                  <a href="#case-so-long" data-panel-link="case-so-long"
+                    >Read so_long case study</a
+                  >
+                  <a
+                    href="https://github.com/Adavitas/so_long"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >View so_long source</a
+                  >
+                </div>
+              </div>
+            </article>
+
+            <article
+              class="card project-card card-spotlight"
+              data-project-categories="games systems"
+              data-reveal
+              data-reveal-delay="short"
+            >
+              <img
+                src="assets/images/cub3d-preview.jpg"
+                alt="cub3D gameplay showing a textured first-person maze, minimap, and wand"
+                width="800"
+                height="450"
+                loading="lazy"
+                decoding="async"
+              />
+              <div class="project-copy">
+                <h3>cub3D</h3>
+                <p>
+                  A C raycaster that turns validated 2D maps into textured
+                  first-person mazes with doors and lighting.
+                </p>
+                <ul class="tag-list">
+                  <li>C</li>
+                  <li>Raycasting</li>
+                  <li>MiniLibX</li>
+                </ul>
+                <div class="project-links">
+                  <a href="#case-cub3d" data-panel-link="case-cub3d"
+                    >Read cub3D case study</a
+                  >
+                  <a
+                    href="https://github.com/Adavitas/cub3d"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >View cub3D source</a
+                  >
+                </div>
+              </div>
+            </article>
+
+            <article
+              class="card project-card card-spotlight"
+              data-project-categories="interfaces games"
+              data-reveal
+            >
+              <img
+                src="assets/images/movie-mania-preview.svg"
+                alt="Movie trivia interface illustration with a timer and four answer choices"
+                width="800"
+                height="450"
+                loading="lazy"
+                decoding="async"
+              />
+              <div class="project-copy">
+                <h3>Movie Mania</h3>
+                <p>
+                  A Python movie-trivia game with timed rounds, randomized
+                  questions, lifelines, and a persistent leaderboard.
+                </p>
+                <ul class="tag-list">
+                  <li>Python</li>
+                  <li>tkinter</li>
+                  <li>Game UI</li>
+                </ul>
+                <div class="project-links">
+                  <a
+                    href="#case-movie-mania"
+                    data-panel-link="case-movie-mania"
+                    >Read Movie Mania case study</a
+                  >
+                  <a
+                    href="https://github.com/Adavitas/movie_mania"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >View Movie Mania source</a
+                  >
+                </div>
+              </div>
+            </article>
+
+            <article
+              class="card project-card card-spotlight"
+              data-project-categories="systems"
+              data-reveal
+              data-reveal-delay="short"
+            >
+              <img
+                src="assets/images/philosophers-preview.svg"
+                alt="Circular thread and fork diagram representing the Philosophers simulation"
+                width="800"
+                height="450"
+                loading="lazy"
+                decoding="async"
+              />
+              <div class="project-copy">
+                <h3>Philosophers</h3>
+                <p>
+                  A POSIX-thread simulation coordinating shared forks, meal
+                  timing, starvation detection, and clean shutdown conditions.
+                </p>
+                <ul class="tag-list">
+                  <li>C</li>
+                  <li>Threads</li>
+                  <li>Mutexes</li>
+                </ul>
+                <div class="project-links">
+                  <a
+                    href="#case-philosophers"
+                    data-panel-link="case-philosophers"
+                    >Read Philosophers case study</a
+                  >
+                  <a
+                    href="https://github.com/Adavitas/philosophers"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >View Philosophers source</a
+                  >
+                </div>
+              </div>
+            </article>
           </div>
         </section>
 
@@ -276,17 +439,18 @@
           <article class="case-study">
             <header class="case-study-hero">
               <div class="case-study-hero-copy">
-                <p class="eyebrow">Case study / Frontend</p>
-                <h2>Building a portfolio by learning the browser platform</h2>
+                <p class="eyebrow">Case study / Interfaces</p>
+                <h2>Personal portfolio</h2>
                 <p class="case-study-introduction">
-                  This portfolio began as a first complete web project and grew
-                  into a responsive, accessible interface built without a
-                  framework or runtime dependency.
+                  This dependency-free portfolio presents browser-interface and
+                  Unix-systems work through an accessible, responsive single-page
+                  shell built with semantic HTML, layered CSS, and carefully
+                  guarded JavaScript enhancements.
                 </p>
                 <dl class="case-study-meta">
                   <div>
-                    <dt>Role</dt>
-                    <dd>Design and development</dd>
+                    <dt>Type</dt>
+                    <dd>Single-page portfolio</dd>
                   </div>
                   <div>
                     <dt>Stack</dt>
@@ -294,7 +458,7 @@
                   </div>
                   <div>
                     <dt>Focus</dt>
-                    <dd>Accessibility and responsive design</dd>
+                    <dd>Accessibility and state</dd>
                   </div>
                 </dl>
               </div>
@@ -302,77 +466,41 @@
                 src="assets/images/portfolio-preview.svg"
                 alt="Abstract preview of this portfolio's bento card layout"
                 width="800"
-                height="500"
+                height="450"
                 loading="lazy"
                 decoding="async"
               />
             </header>
 
             <section class="case-study-section">
-              <p class="eyebrow">Summary</p>
-              <h3>A real project for learning fundamentals</h3>
+              <h3>What it does</h3>
               <p>
-                The site presents frontend and Unix systems work in a compact
-                bento layout. HTML owns the content, CSS owns the visual system,
-                and JavaScript adds focused behavior for sections, themes,
-                filters, clocks, forms, and reveals.
+                The page keeps its main sections and project cases in one
+                document. Hash navigation, filters, theme and accent preferences,
+                timezone formatting, and contact-draft validation remain usable
+                without runtime dependencies or a build step.
               </p>
             </section>
 
             <section class="case-study-section">
-              <p class="eyebrow">Problem</p>
-              <h3>Turn separate lessons into one maintainable website</h3>
-              <p>
-                Learning isolated tags and properties did not explain how a
-                whole interface fits together. The portfolio needed to connect
-                those lessons without hiding them behind a framework.
-              </p>
-            </section>
-
-            <section class="case-study-section">
-              <p class="eyebrow">Implementation decisions</p>
-              <h3>Browser-native structure first</h3>
+              <h3>Key engineering</h3>
               <ul class="case-study-section-list">
                 <li>
-                  Semantic sections and one page-level heading keep structure
-                  clear.
-                </li>
-                <li>CSS Grid controls the page shell and project gallery.</li>
-                <li>
-                  Custom properties keep dark, light, and accent themes
-                  centralized.
+                  Semantic landmarks, labelled controls, visible focus states,
+                  and reduced-motion behavior support keyboard and
+                  assistive-technology users.
                 </li>
                 <li>
-                  JavaScript features are guarded so optional missing markup
-                  does not break the page.
+                  Shared design tokens and responsibility-based stylesheets
+                  coordinate themes, layout, components, responsive breakpoints,
+                  and motion.
                 </li>
                 <li>
-                  The contact form prepares an email draft instead of pretending
-                  to send server data.
+                  Guarded enhancements preserve direct links and prevent an
+                  unavailable optional feature from blocking unrelated
+                  initialization.
                 </li>
               </ul>
-            </section>
-
-            <section class="case-study-section">
-              <p class="eyebrow">Accessibility and testing</p>
-              <h3>Enhanced behavior stays optional</h3>
-              <p>
-                The build keeps visible focus states, linked form labels and
-                errors, reduced-motion handling, and no-dependency Node checks.
-                Browser checks cover responsive layout, theme persistence,
-                filtering, form states, and section switching.
-              </p>
-            </section>
-
-            <section class="case-study-section">
-              <p class="eyebrow">Outcome and lessons</p>
-              <h3>Readable code matters as much as polish</h3>
-              <p>
-                The implementation made the boundaries between HTML, CSS, and
-                JavaScript concrete. Shared tokens made broad visual changes
-                safer, while focused tests made layout and interaction changes
-                easier to review.
-              </p>
             </section>
 
             <div class="case-panel-actions">
@@ -399,18 +527,18 @@
           <article class="case-study">
             <header class="case-study-hero">
               <div class="case-study-hero-copy">
-                <p class="eyebrow">Case study / Unix systems</p>
-                <h2>Building a shell from tokens to processes</h2>
+                <p class="eyebrow">Case study / Systems</p>
+                <h2>Minishell</h2>
                 <p class="case-study-introduction">
-                  Minishell is a collaborative C project that recreates a
-                  focused subset of shell behavior through parsing, process
-                  management, file descriptors, environment state, and signal
-                  handling.
+                  Minishell is a collaborative C implementation of a focused
+                  Unix shell, connecting tokenization and syntax trees to
+                  processes, file descriptors, environment expansion, built-ins,
+                  heredocs, and signal behavior.
                 </p>
                 <dl class="case-study-meta">
                   <div>
-                    <dt>Role</dt>
-                    <dd>Collaborative C development</dd>
+                    <dt>Type</dt>
+                    <dd>Collaborative Unix shell</dd>
                   </div>
                   <div>
                     <dt>Stack</dt>
@@ -418,7 +546,7 @@
                   </div>
                   <div>
                     <dt>Focus</dt>
-                    <dd>Parsing and process management</dd>
+                    <dd>Parsing and processes</dd>
                   </div>
                 </dl>
               </div>
@@ -426,78 +554,39 @@
                 src="assets/images/minishell-preview.svg"
                 alt="Terminal illustration representing the Minishell project"
                 width="800"
-                height="500"
+                height="450"
                 loading="lazy"
                 decoding="async"
               />
             </header>
 
             <section class="case-study-section">
-              <p class="eyebrow">Summary</p>
-              <h3>A focused shell built in C</h3>
+              <h3>What it does</h3>
               <p>
-                The project reads commands through Readline, records history,
-                turns input into structured syntax, and executes commands with
-                pipelines, redirections, heredocs, environment expansion,
-                built-ins, and external programs.
+                Readline input moves through lexical analysis, quote-aware
+                expansion, parsing, and execution. Commands can form pipelines,
+                redirect streams, update shell state through parent-run built-ins,
+                or launch external programs with inherited environments while
+                preserving exit statuses.
               </p>
             </section>
 
             <section class="case-study-section">
-              <p class="eyebrow">Problem</p>
-              <h3>Coordinate language rules with operating-system behavior</h3>
-              <p>
-                A shell has to interpret text and manage processes at the same
-                time. Quote handling, variable expansion, redirections, and
-                pipes all influence what should execute and which file
-                descriptors each process should receive.
-              </p>
-            </section>
-
-            <section class="case-study-section">
-              <p class="eyebrow">Implementation decisions</p>
-              <h3>A staged route from text to execution</h3>
+              <h3>Key engineering</h3>
               <ul class="case-study-section-list">
                 <li>
-                  Lexical analysis preserves quote context for later expansion.
+                  Token types retain quote context so variable expansion and the
+                  previous exit status occur at the correct stage.
                 </li>
                 <li>
-                  An abstract syntax tree represents commands, pipes, and
-                  redirections before execution.
+                  An abstract syntax tree fixes command, pipeline, and
+                  redirection order before process creation.
                 </li>
                 <li>
-                  Environment values and <code>$?</code> expand after parsing.
-                </li>
-                <li>
-                  Pipelines use <code>fork</code>, <code>execve</code>,
-                  <code>pipe</code>, <code>dup2</code>, and
-                  <code>waitpid</code>.
-                </li>
-                <li>
-                  Parent-process built-ins preserve shell state where needed.
+                  Centralized descriptor cleanup, syntax checks, heredoc
+                  handling, and signal paths define predictable failure behavior.
                 </li>
               </ul>
-            </section>
-
-            <section class="case-study-section">
-              <p class="eyebrow">Reliability and testing</p>
-              <h3>Define the supported shell clearly</h3>
-              <p>
-                Syntax checks run before execution, cleanup is routed through
-                token, AST, heredoc, environment, and descriptor helpers, and
-                testing focuses on quoting, expansion, pipelines, redirection
-                order, built-ins, exit statuses, heredocs, and signals.
-              </p>
-            </section>
-
-            <section class="case-study-section">
-              <p class="eyebrow">Outcome and lessons</p>
-              <h3>Parsing decisions become runtime behavior</h3>
-              <p>
-                Minishell connected data structures directly to operating-system
-                behavior. Token types shaped the AST, and the AST shaped which
-                processes and file descriptors existed at runtime.
-              </p>
             </section>
 
             <div class="case-panel-actions">
@@ -525,16 +614,17 @@
             <header class="case-study-hero">
               <div class="case-study-hero-copy">
                 <p class="eyebrow">Case study / Algorithms</p>
-                <h2>Sorting integers through two constrained stacks</h2>
+                <h2>Push Swap</h2>
                 <p class="case-study-introduction">
-                  Push Swap validates integers, represents them as linked-list
-                  stacks, and prints a legal sequence of stack operations that
-                  places the values in ascending order.
+                  Push Swap validates integer input, stores ranked values in
+                  linked-list stacks, and prints a legal instruction sequence
+                  that sorts stack A under a deliberately restricted operation
+                  set using C and Make.
                 </p>
                 <dl class="case-study-meta">
                   <div>
-                    <dt>Role</dt>
-                    <dd>Algorithm design and C development</dd>
+                    <dt>Type</dt>
+                    <dd>Constrained sorting program</dd>
                   </div>
                   <div>
                     <dt>Stack</dt>
@@ -550,79 +640,38 @@
                 src="assets/images/push-swap-preview.svg"
                 alt="Two numbered stacks representing the Push Swap sorting project"
                 width="800"
-                height="500"
+                height="450"
                 loading="lazy"
                 decoding="async"
               />
             </header>
 
             <section class="case-study-section">
-              <p class="eyebrow">Summary</p>
-              <h3>Sort by describing every allowed move</h3>
+              <h3>What it does</h3>
               <p>
-                The program receives integers and may only manipulate two stacks
-                with swap, push, rotate, and reverse-rotate operations. It
-                prints the instructions that produce the sorted state, and a
-                separate checker verifies the sequence.
+                The program can only swap, push, rotate, or reverse-rotate two
+                stacks. Dedicated small-input strategies handle short
+                permutations, while larger inputs move ranked chunks before
+                rebuilding the sorted primary stack in order.
               </p>
             </section>
 
             <section class="case-study-section">
-              <p class="eyebrow">Problem</p>
-              <h3>Plan a short legal route through restricted operations</h3>
-              <p>
-                A general sorting algorithm cannot move values arbitrarily here.
-                Every change must be expressed through valid stack operations,
-                so data representation and movement strategy directly affect the
-                generated instruction sequence.
-              </p>
-            </section>
-
-            <section class="case-study-section">
-              <p class="eyebrow">Implementation decisions</p>
-              <h3>Normalize first, then plan stack movement</h3>
+              <h3>Key engineering</h3>
               <ul class="case-study-section-list">
                 <li>
-                  Input validation rejects malformed, duplicate, and
-                  out-of-range integers.
+                  Validation rejects malformed numbers, duplicates, and values
+                  outside the signed integer range.
                 </li>
                 <li>
-                  Each linked-list node stores the original value and relative
-                  rank.
-                </li>
-                <li>Small inputs use dedicated direct strategies.</li>
-                <li>
-                  Larger inputs move rank chunks between stacks before
-                  rebuilding stack A.
+                  Relative ranks separate movement planning from each input
+                  value's original magnitude.
                 </li>
                 <li>
-                  The checker independently applies instructions and reports
-                  <code>OK</code> or <code>KO</code>.
+                  A companion checker applies instructions independently and
+                  reports whether the final state is sorted correctly.
                 </li>
               </ul>
-            </section>
-
-            <section class="case-study-section">
-              <p class="eyebrow">Validation and testing</p>
-              <h3>Verify the result, not just the generator</h3>
-              <p>
-                Testing covers sorted input, duplicate and malformed values,
-                small permutations, deterministic samples, unknown checker
-                instructions, and generated sequences piped into the checker.
-                The case study avoids benchmark or optimality claims without
-                measured evidence.
-              </p>
-            </section>
-
-            <section class="case-study-section">
-              <p class="eyebrow">Outcome and lessons</p>
-              <h3>Algorithm quality becomes visible</h3>
-              <p>
-                Push Swap made every planning decision observable as a stream of
-                legal operations. It reinforced that validation, representation,
-                and independent verification are part of the algorithm's public
-                contract.
-              </p>
             </section>
 
             <div class="case-panel-actions">
@@ -634,6 +683,343 @@
                 target="_blank"
                 rel="noopener noreferrer"
                 >View Push Swap source</a
+              >
+            </div>
+          </article>
+        </section>
+
+        <section
+          id="case-so-long"
+          class="card case-panel card-spotlight"
+          data-section-panel="case-so-long"
+          aria-label="so_long case study"
+          tabindex="-1"
+        >
+          <article class="case-study">
+            <header class="case-study-hero">
+              <div class="case-study-hero-copy">
+                <p class="eyebrow">Case study / Games</p>
+                <h2>so_long</h2>
+                <p class="case-study-introduction">
+                  so_long is a 2D MiniLibX game in C where the player crosses a
+                  map, collects every item, and unlocks the exit while each
+                  movement is counted.
+                </p>
+                <dl class="case-study-meta">
+                  <div>
+                    <dt>Type</dt>
+                    <dd>2D grid game</dd>
+                  </div>
+                  <div>
+                    <dt>Stack</dt>
+                    <dd>C, MiniLibX, X11</dd>
+                  </div>
+                  <div>
+                    <dt>Focus</dt>
+                    <dd>Parsing and reachability</dd>
+                  </div>
+                </dl>
+              </div>
+              <img
+                src="assets/images/so-long-preview.svg"
+                alt="Grid maze illustration with a player, collectibles, and an exit for so_long"
+                width="800"
+                height="450"
+                loading="lazy"
+                decoding="async"
+              />
+            </header>
+
+            <section class="case-study-section">
+              <h3>What it does</h3>
+              <p>
+                The program loads a rectangular <code>.ber</code> grid,
+                validates its symbols and enclosing walls, then renders 32-pixel
+                XPM tiles. Keyboard hooks move the player and redraw only the
+                changed cells after every step.
+              </p>
+            </section>
+
+            <section class="case-study-section">
+              <h3>Key engineering</h3>
+              <ul class="case-study-section-list">
+                <li>
+                  Flood fill runs on a duplicate map to prove every collectible
+                  and exit is reachable.
+                </li>
+                <li>
+                  Validation rejects malformed dimensions, unsupported tiles,
+                  missing entities, and maps larger than configured limits.
+                </li>
+                <li>
+                  Window, sprite, map, and movement paths share cleanup and
+                  explicit, safe error handling.
+                </li>
+              </ul>
+            </section>
+
+            <div class="case-panel-actions">
+              <a href="#projects" data-panel-link="projects"
+                >Back to projects</a
+              >
+              <a
+                href="https://github.com/Adavitas/so_long"
+                target="_blank"
+                rel="noopener noreferrer"
+                >View so_long source</a
+              >
+            </div>
+          </article>
+        </section>
+
+        <section
+          id="case-cub3d"
+          class="card case-panel card-spotlight"
+          data-section-panel="case-cub3d"
+          aria-label="cub3D case study"
+          tabindex="-1"
+        >
+          <article class="case-study">
+            <header class="case-study-hero">
+              <div class="case-study-hero-copy">
+                <p class="eyebrow">Case study / Games and systems</p>
+                <h2>cub3D</h2>
+                <p class="case-study-introduction">
+                  cub3D is a collaborative C graphics engine project that
+                  renders a textured first-person maze from a validated 2D map,
+                  with interactive doors, mouse look, and wand-driven lighting.
+                </p>
+                <dl class="case-study-meta">
+                  <div>
+                    <dt>Type</dt>
+                    <dd>Collaborative raycaster</dd>
+                  </div>
+                  <div>
+                    <dt>Stack</dt>
+                    <dd>C, MiniLibX, X11</dd>
+                  </div>
+                  <div>
+                    <dt>Focus</dt>
+                    <dd>Rendering and map parsing</dd>
+                  </div>
+                </dl>
+              </div>
+              <img
+                src="assets/images/cub3d-preview.jpg"
+                alt="cub3D gameplay showing a textured first-person maze, minimap, and wand"
+                width="800"
+                height="450"
+                loading="lazy"
+                decoding="async"
+              />
+            </header>
+
+            <section class="case-study-section">
+              <h3>What it does</h3>
+              <p>
+                For every screen column, the renderer performs DDA traversal,
+                calculates perpendicular wall distance, and samples a wall
+                slice. Separate passes add angle-based sky, floor casting, fog,
+                the minimap, and HUD effects.
+              </p>
+            </section>
+
+            <section class="case-study-section">
+              <h3>Key engineering</h3>
+              <ul class="case-study-section-list">
+                <li>
+                  The parser validates texture paths, RGB values, player
+                  orientation, wall enclosure, and door placement.
+                </li>
+                <li>
+                  Closed doors participate in both collision checks and ray hits
+                  until the player opens them.
+                </li>
+                <li>
+                  Animated wand state dynamically controls local lighting, glow,
+                  sparkles, and first-person sprite frames.
+                </li>
+              </ul>
+            </section>
+
+            <div class="case-panel-actions">
+              <a href="#projects" data-panel-link="projects"
+                >Back to projects</a
+              >
+              <a
+                href="https://github.com/Adavitas/cub3d"
+                target="_blank"
+                rel="noopener noreferrer"
+                >View cub3D source</a
+              >
+            </div>
+          </article>
+        </section>
+
+        <section
+          id="case-movie-mania"
+          class="card case-panel card-spotlight"
+          data-section-panel="case-movie-mania"
+          aria-label="Movie Mania case study"
+          tabindex="-1"
+        >
+          <article class="case-study">
+            <header class="case-study-hero">
+              <div class="case-study-hero-copy">
+                <p class="eyebrow">Case study / Interfaces and games</p>
+                <h2>Movie Mania</h2>
+                <p class="case-study-introduction">
+                  Movie Mania is a Python desktop trivia game for Stanford Code
+                  in Place 2025, combining timed movie questions, lifelines,
+                  animated feedback, and a custom tkinter canvas interface.
+                </p>
+                <dl class="case-study-meta">
+                  <div>
+                    <dt>Type</dt>
+                    <dd>Desktop trivia game</dd>
+                  </div>
+                  <div>
+                    <dt>Stack</dt>
+                    <dd>Python, tkinter, JSON</dd>
+                  </div>
+                  <div>
+                    <dt>Focus</dt>
+                    <dd>Event-driven game state</dd>
+                  </div>
+                </dl>
+              </div>
+              <img
+                src="assets/images/movie-mania-preview.svg"
+                alt="Movie trivia interface illustration with a timer and four answer choices"
+                width="800"
+                height="450"
+                loading="lazy"
+                decoding="async"
+              />
+            </header>
+
+            <section class="case-study-section">
+              <h3>What it does</h3>
+              <p>
+                Each round selects two easy, three medium, and three hard
+                questions from a 100-question bank. Players answer through
+                keyboard input while a monotonic deadline and timer display
+                enforce 30-second turns.
+              </p>
+            </section>
+
+            <section class="case-study-section">
+              <h3>Key engineering</h3>
+              <ul class="case-study-section-list">
+                <li>
+                  Question and option shuffling keeps correct answers and
+                  audience-poll data aligned across each randomized round.
+                </li>
+                <li>
+                  One-use 50/50, phone, and audience lifelines update the current
+                  interface without changing the question.
+                </li>
+                <li>
+                  Successful eight-answer runs persist timestamped scores to a
+                  validated JSON leaderboard after a complete round.
+                </li>
+              </ul>
+            </section>
+
+            <div class="case-panel-actions">
+              <a href="#projects" data-panel-link="projects"
+                >Back to projects</a
+              >
+              <a
+                href="https://github.com/Adavitas/movie_mania"
+                target="_blank"
+                rel="noopener noreferrer"
+                >View Movie Mania source</a
+              >
+            </div>
+          </article>
+        </section>
+
+        <section
+          id="case-philosophers"
+          class="card case-panel card-spotlight"
+          data-section-panel="case-philosophers"
+          aria-label="Philosophers case study"
+          tabindex="-1"
+        >
+          <article class="case-study">
+            <header class="case-study-hero">
+              <div class="case-study-hero-copy">
+                <p class="eyebrow">Case study / Systems</p>
+                <h2>Philosophers</h2>
+                <p class="case-study-introduction">
+                  Philosophers models the Dining Philosophers concurrency problem
+                  in C, running one POSIX thread per philosopher plus a monitor
+                  thread while mutexes coordinate shared forks, timestamps,
+                  output, meals, and simulation state.
+                </p>
+                <dl class="case-study-meta">
+                  <div>
+                    <dt>Type</dt>
+                    <dd>Concurrency simulation</dd>
+                  </div>
+                  <div>
+                    <dt>Stack</dt>
+                    <dd>C, POSIX threads, mutexes</dd>
+                  </div>
+                  <div>
+                    <dt>Focus</dt>
+                    <dd>Synchronization and timing</dd>
+                  </div>
+                </dl>
+              </div>
+              <img
+                src="assets/images/philosophers-preview.svg"
+                alt="Circular thread and fork diagram representing the Philosophers simulation"
+                width="800"
+                height="450"
+                loading="lazy"
+                decoding="async"
+              />
+            </header>
+
+            <section class="case-study-section">
+              <h3>What it does</h3>
+              <p>
+                Each philosopher cycles through eating, sleeping, and thinking
+                until the monitor detects starvation or every required meal is
+                complete. Millisecond timestamps make thread activity observable
+                while shared-state reads remain synchronized.
+              </p>
+            </section>
+
+            <section class="case-study-section">
+              <h3>Key engineering</h3>
+              <ul class="case-study-section-list">
+                <li>
+                  Odd and even philosophers acquire forks in opposite orders to
+                  break circular waiting.
+                </li>
+                <li>
+                  Even threads start staggered, and odd table sizes receive
+                  calculated think time.
+                </li>
+                <li>
+                  The monitor locks meal state before checking last-eat
+                  timestamps and completion counts for every philosopher.
+                </li>
+              </ul>
+            </section>
+
+            <div class="case-panel-actions">
+              <a href="#projects" data-panel-link="projects"
+                >Back to projects</a
+              >
+              <a
+                href="https://github.com/Adavitas/philosophers"
+                target="_blank"
+                rel="noopener noreferrer"
+                >View Philosophers source</a
               >
             </div>
           </article>
@@ -1001,6 +1387,6 @@
       </main>
     </div>
 
-    <script src="js/main.js?v=20260710" defer></script>
+    <script src="js/main.js?v=20260711" defer></script>
   </body>
 </html>
