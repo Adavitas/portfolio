@@ -13,12 +13,12 @@ body {
   background-image:
     radial-gradient(
       circle at 12% 8%,
-      rgb(154 219 200 / 20%),
+      var(--ambient-glow-strong),
       transparent 28rem
     ),
     radial-gradient(
       circle at 88% 22%,
-      rgb(154 219 200 / 10%),
+      var(--ambient-glow-soft),
       transparent 24rem
     ),
     linear-gradient(var(--border-color) 1px, transparent 1px),

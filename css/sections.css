@@ -158,7 +158,7 @@
   background:
     radial-gradient(
       circle at 80% 18%,
-      rgb(154 219 200 / 20%),
+      var(--ambient-glow-strong),
       transparent 20rem
     ),
     var(--surface-color);

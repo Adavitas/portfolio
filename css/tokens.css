@@ -37,6 +37,8 @@
   --section-panel-block-size: clamp(32rem, 72vh, 40rem);
   --persistent-info-card-block-size: 9rem;
   --shadow-color: rgb(0 0 0 / 28%);
+  --ambient-glow-strong: rgb(154 219 200 / 20%);
+  --ambient-glow-soft: rgb(154 219 200 / 10%);
 }
 
 :root[data-theme="light"] {
@@ -61,6 +63,8 @@
   --primary-focus-color: rgb(45 117 95 / 20%);
   --error-focus-color: rgb(180 35 24 / 20%);
   --shadow-color: rgb(34 55 47 / 12%);
+  --ambient-glow-strong: rgb(45 117 95 / 12%);
+  --ambient-glow-soft: rgb(45 117 95 / 6%);
 }
 
 :root[data-accent="amber"] {
@@ -68,6 +72,8 @@
   --primary-color-hover: #f0ca78;
   --accent-text-color: #171104;
   --primary-focus-color: rgb(228 185 91 / 24%);
+  --ambient-glow-strong: rgb(228 185 91 / 20%);
+  --ambient-glow-soft: rgb(228 185 91 / 10%);
 }
 
 :root[data-theme="light"][data-accent="amber"] {
@@ -75,6 +81,8 @@
   --primary-color-hover: #704b0d;
   --accent-text-color: #ffffff;
   --primary-focus-color: rgb(148 101 22 / 22%);
+  --ambient-glow-strong: rgb(148 101 22 / 12%);
+  --ambient-glow-soft: rgb(148 101 22 / 6%);
 }
 
 :root[data-accent="blue"] {
@@ -82,6 +90,8 @@
   --primary-color-hover: #b8dcff;
   --accent-text-color: #07111a;
   --primary-focus-color: rgb(143 199 255 / 24%);
+  --ambient-glow-strong: rgb(143 199 255 / 20%);
+  --ambient-glow-soft: rgb(143 199 255 / 10%);
 }
 
 :root[data-theme="light"][data-accent="blue"] {
@@ -89,6 +99,8 @@
   --primary-color-hover: #174f7d;
   --accent-text-color: #ffffff;
   --primary-focus-color: rgb(35 109 168 / 22%);
+  --ambient-glow-strong: rgb(35 109 168 / 12%);
+  --ambient-glow-soft: rgb(35 109 168 / 6%);
 }
 
 :root[data-accent="rose"] {
@@ -96,6 +108,8 @@
   --primary-color-hover: #ffc1cf;
   --accent-text-color: #1a0710;
   --primary-focus-color: rgb(240 164 184 / 24%);
+  --ambient-glow-strong: rgb(240 164 184 / 20%);
+  --ambient-glow-soft: rgb(240 164 184 / 10%);
 }
 
 :root[data-theme="light"][data-accent="rose"] {
@@ -103,4 +117,6 @@
   --primary-color-hover: #7d2a43;
   --accent-text-color: #ffffff;
   --primary-focus-color: rgb(168 61 92 / 22%);
+  --ambient-glow-strong: rgb(168 61 92 / 12%);
+  --ambient-glow-soft: rgb(168 61 92 / 6%);
 }
