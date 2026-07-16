@@ -51,7 +51,9 @@ portfolio/
 |   |-- main-behavior.test.mjs
 |   `-- site-contracts.test.mjs
 |-- .nojekyll
+|-- CONTRIBUTING.md
 |-- index.html
+|-- LICENSE
 |-- package.json
 `-- README.md
 ```
@@ -118,6 +120,19 @@ git diff
 GitHub Actions also runs `npm run check` on pushes and pull requests. The
 workflow is quality-only: it does not deploy, publish, require secrets, or write
 to the repository.
+
+## Contributing
+
+Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for local
+setup, development guidelines, testing expectations, and pull request guidance.
+
+## License
+
+The HTML, CSS, JavaScript, and supporting source code are available under the
+[MIT License](LICENSE).
+
+Personal photographs, biography and project copy, and personal branding are
+copyright © 2026 Aleksandre Davitashvili and are not licensed for reuse.
 
 ## Deployment Status
 
