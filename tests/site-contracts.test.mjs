@@ -645,6 +645,11 @@ test('card spotlight glow follows the selected accent token', () => {
         /\.card-spotlight:focus-within::before\b/,
         'card spotlight should not stay visible only because a clicked control keeps focus',
     );
+    assert.match(
+        styleSource,
+        /\.card-spotlight::before\s*{[\s\S]*?position:\s*sticky;[\s\S]*?top:\s*0;[\s\S]*?}/,
+        'spotlight overlay should use sticky positioning to stay inside the visible scrollport',
+    );
 });
 
 test('home time card exposes accent-aware format controls', () => {

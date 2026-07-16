@@ -1296,6 +1296,38 @@ test('fine-pointer spotlight tracks pointer position and clears it on leave', ()
     assert.equal(spotlightCard.style.getPropertyValue('--spotlight-y'), '');
 });
 
+test('spotlight coordinates stay correct when a scrollable panel is scrolled', () => {
+    const document = new MockDocument();
+    const spotlightCard = appendElement(document, 'article', {
+        className: 'card-spotlight',
+    });
+    spotlightCard.boundingClientRect = {
+        left: 0,
+        top: 0,
+        width: 400,
+        height: 200,
+    };
+    spotlightCard.scrollTop = 300;
+    const media = createMatchMediaController({ '(pointer: fine)': true });
+
+    runMain({ document, media });
+
+    spotlightCard.dispatchEvent(
+        createEvent('pointermove', { clientX: 200, clientY: 180 }),
+    );
+
+    assert.equal(
+        spotlightCard.style.getPropertyValue('--spotlight-x'),
+        '50%',
+        'x coordinate should use the visible width',
+    );
+    assert.equal(
+        spotlightCard.style.getPropertyValue('--spotlight-y'),
+        '90%',
+        'y coordinate should use the visible height, not the full scrollable content height',
+    );
+});
+
 test('coarse pointers do not install spotlight movement listeners', () => {
     const document = new MockDocument();
     const spotlightCard = appendElement(document, 'article', {
