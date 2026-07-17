@@ -647,8 +647,8 @@ test('card spotlight glow follows the selected accent token', () => {
     );
     assert.match(
         styleSource,
-        /\.card-spotlight::before\s*{[\s\S]*?position:\s*sticky;[\s\S]*?top:\s*0;[\s\S]*?}/,
-        'spotlight overlay should use sticky positioning to stay inside the visible scrollport',
+        /\.card-spotlight::before\s*{[\s\S]*?position:\s*absolute;[\s\S]*?inset:\s*0;[\s\S]*?}/,
+        'spotlight overlay should use absolute positioning with inset:0 to cover the full card',
     );
 });
 

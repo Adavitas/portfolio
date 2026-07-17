@@ -1296,18 +1296,17 @@ test('fine-pointer spotlight tracks pointer position and clears it on leave', ()
     assert.equal(spotlightCard.style.getPropertyValue('--spotlight-y'), '');
 });
 
-test('spotlight coordinates stay correct when a scrollable panel is scrolled', () => {
+test('spotlight coordinates are relative to the card viewport when a panel is scrolled', async () => {
     const document = new MockDocument();
     const spotlightCard = appendElement(document, 'article', {
         className: 'card-spotlight',
     });
     spotlightCard.boundingClientRect = {
         left: 0,
-        top: 0,
+        top: -300,
         width: 400,
-        height: 200,
+        height: 600,
     };
-    spotlightCard.scrollTop = 300;
     const media = createMatchMediaController({ '(pointer: fine)': true });
 
     runMain({ document, media });
@@ -1319,12 +1318,22 @@ test('spotlight coordinates stay correct when a scrollable panel is scrolled', (
     assert.equal(
         spotlightCard.style.getPropertyValue('--spotlight-x'),
         '50%',
-        'x coordinate should use the visible width',
+        'x coordinate should use the visible width of the full card rect',
     );
     assert.equal(
         spotlightCard.style.getPropertyValue('--spotlight-y'),
-        '90%',
-        'y coordinate should use the visible height, not the full scrollable content height',
+        '80%',
+        'y coordinate should be relative to the full card dimensions with getBoundingClientRect accounting for scroll',
+    );
+
+    const componentsCss = await readFile(
+        path.join(rootDirectory, 'css/components.css'),
+        'utf8',
+    );
+    assert.match(
+        componentsCss,
+        /\.card-spotlight::before\s*{[\s\S]*?position:\s*absolute;[\s\S]*?inset:\s*0;[\s\S]*?}/,
+        'spotlight overlay must use absolute positioning to cover the full card in and out of scrollable panels',
     );
 });
 
