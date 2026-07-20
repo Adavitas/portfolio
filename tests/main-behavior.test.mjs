@@ -248,6 +248,20 @@ class MockElement {
         return false;
     }
 
+    closest(selector) {
+        let element = this;
+
+        while (element) {
+            if (element.matches(selector)) {
+                return element;
+            }
+
+            element = element.parentElement;
+        }
+
+        return null;
+    }
+
     querySelectorAll(selector) {
         const matches = [];
 
@@ -1334,6 +1348,71 @@ test('spotlight coordinates are relative to the card viewport when a panel is sc
         componentsCss,
         /\.card-spotlight::before\s*{[\s\S]*?position:\s*absolute;[\s\S]*?inset:\s*0;[\s\S]*?}/,
         'spotlight overlay must use absolute positioning to cover the full card in and out of scrollable panels',
+    );
+});
+
+test('child card-spotlight inside a scrollable panel does not install its own pointer listener', () => {
+    const document = new MockDocument();
+    const panel = appendElement(document, 'section', {
+        className: 'card card-spotlight',
+        attributes: { 'data-section-panel': 'test' },
+    });
+    panel.boundingClientRect = {
+        left: 0,
+        top: 0,
+        width: 500,
+        height: 500,
+    };
+    const childCard = appendElement(document, 'article', {
+        className: 'card card-spotlight',
+    });
+    panel.append(childCard);
+    childCard.boundingClientRect = {
+        left: 0,
+        top: -300,
+        width: 400,
+        height: 300,
+    };
+    const media = createMatchMediaController({ '(pointer: fine)': true });
+
+    runMain({ document, media });
+
+    assert.equal(
+        childCard.eventListeners.has('pointermove'),
+        false,
+        'child card inside panel should not get its own pointermove listener',
+    );
+    assert.equal(
+        panel.eventListeners.has('pointermove'),
+        true,
+        'panel should still have a pointermove listener for delegating the spotlight',
+    );
+
+    // Dispatch pointermove on the panel and verify coordinates are relative
+    // to the panel's own bounding rect (visible scrollport), not the child.
+    panel.dispatchEvent(
+        createEvent('pointermove', { clientX: 250, clientY: 250 }),
+    );
+
+    assert.equal(
+        panel.style.getPropertyValue('--spotlight-x'),
+        '50%',
+        'panel spotlight x is % of panel width, not child',
+    );
+    assert.equal(
+        panel.style.getPropertyValue('--spotlight-y'),
+        '50%',
+        'panel spotlight y is % of panel height, not child',
+    );
+    assert.equal(
+        childCard.style.getPropertyValue('--spotlight-x'),
+        '',
+        'child card inherits the default spotlight position; its style is not set directly',
+    );
+    assert.equal(
+        childCard.style.getPropertyValue('--spotlight-y'),
+        '',
+        'child card inherits the default spotlight position; its style is not set directly',
     );
 });
 

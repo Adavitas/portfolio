@@ -327,6 +327,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (spotlightCards.length > 0 && finePointer.matches) {
         spotlightCards.forEach((card) => {
+            if (card.closest('[data-section-panel]') && !card.matches('[data-section-panel]')) {
+                return;
+            }
+
             card.addEventListener('pointermove', (event) => {
                 const rect = card.getBoundingClientRect();
                 const x = ((event.clientX - rect.left) / rect.width) * 100;

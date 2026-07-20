@@ -74,8 +74,16 @@
   transition: opacity 0.25s ease;
 }
 
+[data-section-panel].card-spotlight::before {
+  z-index: 2;
+}
+
 .js-enabled .card-spotlight:hover::before {
   opacity: 1;
+}
+
+[data-section-panel] .card-spotlight:hover::before {
+  opacity: 0;
 }
 
 .card > * {
