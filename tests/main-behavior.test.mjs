@@ -483,6 +483,10 @@ function runMain(options = {}) {
         encodeURIComponent,
     };
 
+    if (options.fetch) {
+        context.fetch = options.fetch;
+    }
+
     if (options.intersectionObserver) {
         window.IntersectionObserver =
             options.intersectionObserver.IntersectionObserver;
@@ -593,6 +597,41 @@ function createAccentDom(initialAccent = 'mint') {
         amberButton,
         blueButton,
         roseButton,
+    };
+}
+
+function createGithubActivityDom() {
+    const document = new MockDocument();
+    const activity = appendElement(document, 'section', {
+        attributes: {
+            'data-github-activity': '',
+            'data-github-username': 'Adavitas',
+        },
+    });
+    const status = appendElement(
+        document,
+        'p',
+        { id: 'github-activity-status' },
+        activity,
+    );
+    const grid = appendElement(
+        document,
+        'div',
+        {
+            id: 'github-activity-grid',
+            className: 'github-activity-grid is-loading',
+            attributes: {
+                'aria-busy': 'true',
+            },
+        },
+        activity,
+    );
+
+    return {
+        activity,
+        document,
+        grid,
+        status,
     };
 }
 
@@ -995,6 +1034,66 @@ test('accent swatches update data-accent, pressed state, and storage', () => {
     assert.equal(storage.valueFor('portfolio-accent'), 'rose');
     assert.equal(blueButton.getAttribute('aria-pressed'), 'false');
     assert.equal(roseButton.getAttribute('aria-pressed'), 'true');
+});
+
+test('GitHub activity renders contribution levels and an accessible summary', async () => {
+    const { document, grid, status } = createGithubActivityDom();
+    let requestedUrl = '';
+
+    runMain({
+        document,
+        fetch: async (url) => {
+            requestedUrl = url;
+
+            return {
+                ok: true,
+                async json() {
+                    return {
+                        contributions: [
+                            [
+                                { date: '2026-07-19', count: 0, intensity: '0' },
+                                { date: '2026-07-20', count: 1, intensity: '1' },
+                                { date: '2026-07-21', count: 5, intensity: '4' },
+                            ],
+                        ],
+                    };
+                },
+            };
+        },
+    });
+
+    await new Promise((resolve) => setImmediate(resolve));
+
+    assert.equal(
+        requestedUrl,
+        'https://gh-calendar.rschristian.dev/user/Adavitas',
+    );
+    assert.equal(grid.children.length, 3);
+    assert.deepEqual(
+        grid.children.map((day) => day.dataset.level),
+        ['0', '1', '4'],
+    );
+    assert.equal(grid.classList.contains('is-loading'), false);
+    assert.equal(grid.getAttribute('aria-busy'), null);
+    assert.equal(status.textContent, '6 contributions in the last year');
+    assert.match(grid.getAttribute('aria-label'), /6 GitHub contributions/);
+    assert.match(grid.children[2].title, /5 contributions on Jul 21, 2026/);
+});
+
+test('GitHub activity keeps a clear fallback when the live request fails', async () => {
+    const { document, grid, status } = createGithubActivityDom();
+
+    runMain({
+        document,
+        fetch: async () => ({ ok: false }),
+    });
+
+    await new Promise((resolve) => setImmediate(resolve));
+
+    assert.equal(grid.classList.contains('is-loading'), false);
+    assert.equal(grid.classList.contains('is-unavailable'), true);
+    assert.equal(grid.getAttribute('aria-busy'), null);
+    assert.equal(status.textContent, 'Live activity is temporarily unavailable');
 });
 
 test('home section switcher shows only the selected main panel', () => {

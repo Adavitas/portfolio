@@ -69,7 +69,8 @@
   .case-panel-actions a,
   .project-links a::after,
   .status-pulse::after,
-  .card-spotlight::before {
+  .card-spotlight::before,
+  .github-activity-grid.is-loading {
     transition: none;
     animation: none;
   }

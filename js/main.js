@@ -128,6 +128,121 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // GitHub Contribution Activity
+    const githubActivity = document.querySelector('[data-github-activity]');
+    const githubActivityGrid = document.getElementById('github-activity-grid');
+    const githubActivityStatus = document.getElementById(
+        'github-activity-status',
+    );
+
+    if (
+        githubActivity &&
+        githubActivityGrid &&
+        githubActivityStatus &&
+        typeof fetch === 'function'
+    ) {
+        const githubUsername =
+            githubActivity.dataset.githubUsername?.trim() || 'Adavitas';
+        const activityEndpoint =
+            `https://gh-calendar.rschristian.dev/user/` +
+            encodeURIComponent(githubUsername);
+        const dateFormatter = new Intl.DateTimeFormat('en-US', {
+            day: 'numeric',
+            month: 'short',
+            year: 'numeric',
+            timeZone: 'UTC',
+        });
+
+        function normalizeActivityDay(day) {
+            if (!day || !/^\d{4}-\d{2}-\d{2}$/.test(day.date ?? '')) {
+                return null;
+            }
+
+            const count = Number.parseInt(day.count, 10);
+            const intensity = Number.parseInt(day.intensity, 10);
+
+            return {
+                date: day.date,
+                count: Number.isFinite(count) ? Math.max(0, count) : 0,
+                intensity: Number.isFinite(intensity)
+                    ? Math.min(4, Math.max(0, intensity))
+                    : 0,
+            };
+        }
+
+        function renderGithubActivity(data) {
+            if (!Array.isArray(data?.contributions)) {
+                throw new Error('Invalid GitHub activity response');
+            }
+
+            const activityDays = data.contributions
+                .slice(-53)
+                .flatMap((week) => (Array.isArray(week) ? week.slice(0, 7) : []))
+                .map(normalizeActivityDay)
+                .filter(Boolean);
+
+            if (activityDays.length === 0) {
+                throw new Error('GitHub activity response is empty');
+            }
+
+            const dayCells = activityDays.map((day) => {
+                const dayCell = document.createElement('span');
+                const contributionWord =
+                    day.count === 1 ? 'contribution' : 'contributions';
+
+                dayCell.className = 'github-activity-day';
+                dayCell.dataset.level = String(day.intensity);
+                dayCell.setAttribute('aria-hidden', 'true');
+                dayCell.title = `${day.count} ${contributionWord} on ${dateFormatter.format(
+                    new Date(`${day.date}T12:00:00Z`),
+                )}`;
+
+                return dayCell;
+            });
+            const contributionTotal = activityDays.reduce(
+                (total, day) => total + day.count,
+                0,
+            );
+            const formattedTotal = new Intl.NumberFormat('en-US').format(
+                contributionTotal,
+            );
+
+            githubActivityGrid.textContent = '';
+            githubActivityGrid.append(...dayCells);
+            githubActivityGrid.classList.remove('is-loading', 'is-unavailable');
+            githubActivityGrid.removeAttribute('aria-busy');
+            githubActivityGrid.setAttribute(
+                'aria-label',
+                `${formattedTotal} GitHub contributions in the last year. Each dot represents one day.`,
+            );
+            githubActivityStatus.textContent =
+                `${formattedTotal} contributions in the last year`;
+        }
+
+        function showGithubActivityError() {
+            githubActivityGrid.classList.remove('is-loading');
+            githubActivityGrid.classList.add('is-unavailable');
+            githubActivityGrid.removeAttribute('aria-busy');
+            githubActivityGrid.setAttribute(
+                'aria-label',
+                'Live GitHub contribution activity is temporarily unavailable.',
+            );
+            githubActivityStatus.textContent =
+                'Live activity is temporarily unavailable';
+        }
+
+        fetch(activityEndpoint)
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('GitHub activity request failed');
+                }
+
+                return response.json();
+            })
+            .then(renderGithubActivity)
+            .catch(showGithubActivityError);
+    }
+
     // Home Section Switcher
     const sectionLinks = document.querySelectorAll('[data-section-link]');
     const panelLinks = document.querySelectorAll('[data-panel-link]');
