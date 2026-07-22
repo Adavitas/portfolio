@@ -10,7 +10,7 @@ systems work.
 - Responsive bento-style CSS Grid layout
 - Accessible section switching
 - Persistent light and dark themes
-- Contact-form validation that prepares an email draft
+- Direct email CTA with persistent GitHub and LinkedIn profile links
 - One-time card reveals using `IntersectionObserver`
 - Reduced-motion support
 - Visible focus states
@@ -143,10 +143,9 @@ from the `/portfolio/` project path, and `.nojekyll` prevents an unnecessary
 Jekyll build if deployment is approved later.
 
 Before any future deployment, repeat the local quality checks and the manual
-mobile, keyboard, link, theme, form, reduced-motion, and browser checks.
+mobile, keyboard, link, theme, reduced-motion, and browser checks.
 
-## Contact
+## Profiles
 
 - [GitHub](https://github.com/Adavitas)
 - [LinkedIn](https://www.linkedin.com/in/aleksandre-davitashvili-01b339362/)
-- [Email](mailto:leqso.davitashvili.st@gmail.com)

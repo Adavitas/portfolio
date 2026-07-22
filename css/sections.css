@@ -81,7 +81,7 @@
 
 .section-switcher ul {
   display: grid;
-  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.05fr) minmax(0, 1.45fr) minmax(0, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(0.25rem, 1.1vw, 0.45rem);
   margin: 0;
   padding: 0;
@@ -533,7 +533,7 @@
   line-height: 1;
 }
 
-.connect-card {
+.profile-card {
   display: grid;
   align-content: center;
   gap: 0.65rem;
@@ -572,27 +572,6 @@
 
 .info-appearance-card .accent-swatch::before {
   width: 0.75rem;
-}
-
-.contact-card {
-  width: 100%;
-  text-align: center;
-}
-
-.contact-card address {
-  margin-top: 1rem;
-  font-style: normal;
-  overflow-wrap: anywhere;
-}
-
-.contact-card address a {
-  color: var(--primary-color);
-  text-underline-offset: 0.25rem;
-}
-
-.contact-card address a:focus-visible {
-  outline: 3px solid var(--focus-outline-color);
-  outline-offset: 3px;
 }
 
 .case-study {

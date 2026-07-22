@@ -538,8 +538,8 @@
               <p>
                 The page keeps its main sections and project cases in one
                 document. Hash navigation, filters, theme and accent preferences,
-                timezone formatting, and contact-draft validation remain usable
-                without runtime dependencies or a build step.
+                and timezone formatting remain usable without runtime
+                dependencies or a build step.
               </p>
             </section>
 
@@ -1130,104 +1130,6 @@
           </div>
         </section>
 
-        <section
-          id="contact"
-          class="card contact-card card-spotlight"
-          data-section-panel="contact"
-          aria-label="Contact"
-          data-reveal
-          tabindex="-1"
-        >
-          <h2>Let's work together</h2>
-          <p>
-            Have a project, learning suggestion, or opportunity? Send me a
-            message or contact me directly by email.
-          </p>
-
-          <address>
-            <a href="mailto:leqso.davitashvili.st@gmail.com"
-              >leqso.davitashvili.st@gmail.com</a
-            >
-          </address>
-
-          <p class="form-note" id="form-note" hidden>
-            This form prepares an email draft. You will review and send it from
-            your email application.
-          </p>
-
-          <noscript>
-            <p class="form-note">
-              JavaScript is unavailable. Use the email address above to contact
-              me directly.
-            </p>
-          </noscript>
-
-          <form id="contact-form" aria-describedby="form-note" hidden>
-            <div class="form-field">
-              <label for="name">Name</label>
-              <input
-                id="name"
-                name="name"
-                type="text"
-                autocomplete="name"
-                minlength="2"
-                maxlength="80"
-                aria-describedby="name-help name-error"
-                required
-              />
-              <p class="form-help" id="name-help">
-                Enter at least two characters.
-              </p>
-              <p class="form-error" id="name-error"></p>
-            </div>
-
-            <div class="form-field">
-              <label for="email">Email</label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                autocomplete="email"
-                maxlength="254"
-                aria-describedby="email-help email-error"
-                required
-              />
-              <p class="form-help" id="email-help">
-                Use an address such as name@example.com.
-              </p>
-              <p class="form-error" id="email-error"></p>
-            </div>
-
-            <div class="form-field">
-              <label for="message">Message</label>
-              <textarea
-                id="message"
-                name="message"
-                rows="6"
-                minlength="20"
-                maxlength="2000"
-                aria-describedby="message-help message-error"
-                required
-              ></textarea>
-              <p class="form-help" id="message-help">
-                Explain your idea in at least 20 characters.
-              </p>
-              <p class="form-error" id="message-error"></p>
-            </div>
-
-            <button type="submit">Prepare email</button>
-            <p
-              class="form-status"
-              id="form-status"
-              aria-live="polite"
-              aria-atomic="true"
-            ></p>
-            <a class="email-draft-link" id="email-draft-link" hidden
-              >Open email draft</a
-            >
-          </form>
-        </section>
-
         <aside class="section-rail" aria-label="Portfolio controls">
           <nav
             class="section-switcher card-spotlight"
@@ -1246,9 +1148,6 @@
                 <a href="#certificates" data-section-link="certificates"
                   >Certificates</a
                 >
-              </li>
-              <li>
-                <a href="#contact" data-section-link="contact">Contact</a>
               </li>
             </ul>
           </nav>
@@ -1418,18 +1317,18 @@
           </section>
 
           <section
-            class="card connect-card card-spotlight"
-            aria-label="Contact and profile links"
+            class="card profile-card card-spotlight"
+            aria-label="Email and profile links"
             data-reveal
             data-reveal-delay="short"
           >
             <a
-              class="connect-primary-link"
+              class="profile-primary-link"
               href="mailto:leqso.davitashvili.st@gmail.com?subject=Portfolio%20enquiry"
             >
               Let's work together
             </a>
-            <div class="connect-links">
+            <div class="profile-links">
               <a
                 href="https://github.com/Adavitas"
                 target="_blank"

@@ -454,13 +454,8 @@ test('home section panels share one outer layout contract', () => {
 
     assert.match(
         styleSource,
-        /#contact-form\s*{[\s\S]*?width:\s*min\(100%,\s*44rem\);[\s\S]*?margin:\s*1\.5rem auto 0;/,
-        'contact form should stay readable inside the full-width contact panel',
-    );
-    assert.match(
-        styleSource,
-        /\.projects-card,\s*\n\s*\.certificates-card,\s*\n\s*\.case-panel,\s*\n\s*\.contact-card\s*{[\s\S]*?order:\s*2;[\s\S]*?}/,
-        'Projects, Certificates, case studies, and Contact should share the same main-panel order',
+        /\.projects-card,\s*\n\s*\.certificates-card,\s*\n\s*\.case-panel\s*{[\s\S]*?order:\s*2;[\s\S]*?}/,
+        'Projects, Certificates, and case studies should share the same main-panel order',
     );
     assert.match(
         styleSource,
@@ -474,7 +469,7 @@ test('home section panels share one outer layout contract', () => {
     );
     assert.match(
         styleSource,
-        /\.section-switcher ul\s*{[\s\S]*?display:\s*grid;[\s\S]*?grid-template-columns:\s*minmax\(0,\s*0\.85fr\)\s*minmax\(0,\s*1\.05fr\)\s*minmax\(0,\s*1\.45fr\)\s*minmax\(0,\s*1fr\);[\s\S]*?}/,
+        /\.section-switcher ul\s*{[\s\S]*?display:\s*grid;[\s\S]*?grid-template-columns:\s*repeat\(3,\s*minmax\(0,\s*1fr\)\);[\s\S]*?}/,
         'mobile and tablet section controls should stay on one adaptive row',
     );
     assert.match(
@@ -484,7 +479,7 @@ test('home section panels share one outer layout contract', () => {
     );
     assert.match(
         styleSource,
-        /@media \(min-width: 900px\) {[\s\S]*?\.section-switcher ul\s*{[\s\S]*?grid-template-columns:\s*1fr;[\s\S]*?\.intro-card,\s*\n\s*\.projects-card,\s*\n\s*\.certificates-card,\s*\n\s*\.case-panel,\s*\n\s*\.contact-card,\s*\n\s*\.info-grid\s*{[\s\S]*?grid-column:\s*1 \/ 13;/,
+        /@media \(min-width: 900px\) {[\s\S]*?\.section-switcher ul\s*{[\s\S]*?grid-template-columns:\s*1fr;[\s\S]*?\.intro-card,\s*\n\s*\.projects-card,\s*\n\s*\.certificates-card,\s*\n\s*\.case-panel,\s*\n\s*\.info-grid\s*{[\s\S]*?grid-column:\s*1 \/ 13;/,
         'Certificates and case studies should share the same desktop width as the other main panels',
     );
     assert.doesNotMatch(
@@ -518,7 +513,7 @@ test('home persistent info cards stay compact below the active panel', () => {
     assert.match(
         styleSource,
         /--persistent-info-card-block-size:\s*9rem;/,
-        'copyright, Now, appearance, Time, and contact-link cards should share one compact height token',
+        'copyright, Now, appearance, Time, and profile cards should share one compact height token',
     );
 
     const infoGridRule = styleSource.match(/\.info-grid\s*{([\s\S]*?)\n}/);
@@ -552,7 +547,7 @@ test('home persistent info cards stay compact below the active panel', () => {
     assert.match(
         styleSource,
         /\.rail-credit-card,\s*\n\s*\.info-grid > \.card\s*{[\s\S]*?block-size:\s*var\(--persistent-info-card-block-size\);[\s\S]*?}/,
-        'copyright, Now, appearance, Time, and contact-link cards should share the same desktop height',
+        'copyright, Now, appearance, Time, and profile cards should share the same desktop height',
     );
     assert.match(
         styleSource,
@@ -561,8 +556,8 @@ test('home persistent info cards stay compact below the active panel', () => {
     );
     assert.match(
         styleSource,
-        /#now,\s*\n\s*\.info-appearance-card,\s*\n\s*\.time-card,\s*\n\s*\.connect-card\s*{[\s\S]*?grid-column:\s*span 1;[\s\S]*?}/,
-        'desktop Now, appearance, Time, and contact-link cards should each use one equal track',
+        /#now,\s*\n\s*\.info-appearance-card,\s*\n\s*\.time-card,\s*\n\s*\.profile-card\s*{[\s\S]*?grid-column:\s*span 1;[\s\S]*?}/,
+        'desktop Now, appearance, Time, and profile cards should each use one equal track',
     );
     assert.match(
         styleSource,
@@ -930,7 +925,6 @@ test('accessibility references point to existing IDs', () => {
                 about: 'hero',
                 projects: 'projects',
                 certificates: 'certificates',
-                contact: 'contact',
             };
 
             for (const [section, fragment] of Object.entries(sectionFragments)) {
@@ -949,7 +943,6 @@ test('accessibility references point to existing IDs', () => {
                 );
             }
 
-            const contactIndex = source.indexOf('id="contact"');
             const certificatesIndex = source.indexOf('id="certificates"');
             const caseIndexes = expectedProjects.map(({ panelId }) =>
                 source.indexOf(`id="${panelId}"`),
@@ -962,11 +955,10 @@ test('accessibility references point to existing IDs', () => {
                 'info-appearance-card',
             );
             const timeCardIndex = source.indexOf('class="card time-card');
-            const connectCardIndex = source.indexOf('class="card connect-card');
+            const profileCardIndex = source.indexOf('class="card profile-card');
             const orderedPanelIndexes = [
                 ...caseIndexes,
                 certificatesIndex,
-                contactIndex,
                 sectionRailIndex,
                 infoGridIndex,
             ];
@@ -1027,7 +1019,7 @@ test('accessibility references point to existing IDs', () => {
             assert.ok(
                 infoGridIndex < infoAppearanceCardIndex &&
                     infoAppearanceCardIndex < timeCardIndex &&
-                    timeCardIndex < connectCardIndex,
+                    timeCardIndex < profileCardIndex,
                 'home page info grid should place appearance controls between Now and the compact time card',
             );
             assert.match(source, /class=["'][^"']*\brail-skills-card\b/i);
@@ -1076,8 +1068,8 @@ test('accessibility references point to existing IDs', () => {
             const appearanceTag = source.match(
                 /<section\b(?=[^>]*class=["'][^"']*\binfo-appearance-card\b)[^>]*>/i,
             )?.[0];
-            const connectTag = source.match(
-                /<section\b(?=[^>]*class=["'][^"']*\bconnect-card\b)[^>]*>/i,
+            const profileTag = source.match(
+                /<section\b(?=[^>]*class=["'][^"']*\bprofile-card\b)[^>]*>/i,
             )?.[0];
 
             assert.ok(nowTag, 'home page needs a persistent Now card');
@@ -1086,11 +1078,11 @@ test('accessibility references point to existing IDs', () => {
                 'home page needs a persistent appearance controls card',
             );
             assert.ok(timeTag, 'home page needs a persistent Time card');
-            assert.ok(connectTag, 'home page needs a persistent contact-links card');
+            assert.ok(profileTag, 'home page needs a persistent profile-links card');
             assert.doesNotMatch(nowTag, /\bdata-section-panel\b/i);
             assert.doesNotMatch(appearanceTag, /\bdata-section-panel\b/i);
             assert.doesNotMatch(timeTag, /\bdata-section-panel\b/i);
-            assert.doesNotMatch(connectTag, /\bdata-section-panel\b/i);
+            assert.doesNotMatch(profileTag, /\bdata-section-panel\b/i);
             assert.match(
                 appearanceTag,
                 /\baria-label=["']Appearance controls["']/i,
@@ -1099,37 +1091,14 @@ test('accessibility references point to existing IDs', () => {
             assert.doesNotMatch(timeTag, /\baria-labelledby\b/i);
             assert.doesNotMatch(source, /<h2\b[^>]*>\s*Time zones\s*<\/h2>/i);
             assert.doesNotMatch(source, /\bhero-actions\b|\bcall-to-action\b/);
-            assert.match(source, /class=["']connect-primary-link["']/i);
+            assert.match(
+                source,
+                /<a\b(?=[^>]*class=["']profile-primary-link["'])(?=[^>]*href=["']mailto:leqso\.davitashvili\.st@gmail\.com\?subject=Portfolio%20enquiry["'])[^>]*>\s*Let's work together\s*<\/a>/i,
+                'profile card should keep the direct email call to action',
+            );
+            assert.match(source, /class=["']profile-links["']/i);
         }
     }
-});
-
-test('home form labels target real controls', () => {
-    const source = pageSources.get('index.html');
-    const idSet = getIdSet('index.html');
-
-    for (const tag of getTags(source, 'label')) {
-        const controlId = getAttribute(tag, 'for');
-
-        assert.ok(controlId, 'every form label needs a for attribute');
-        assert.ok(idSet.has(controlId), `label points to missing #${controlId}`);
-    }
-
-    assert.match(
-        source,
-        /<p\b(?=[^>]*id=["']form-note["'])(?=[^>]*\bhidden\b)/i,
-        'enhanced form guidance should stay hidden until JavaScript initializes it',
-    );
-    assert.match(
-        source,
-        /<form\b(?=[^>]*id=["']contact-form["'])(?=[^>]*\bhidden\b)/i,
-        'the enhanced contact form should not submit inertly without JavaScript',
-    );
-    assert.match(
-        source,
-        /<noscript>[\s\S]*?Use the email address above[\s\S]*?<\/noscript>/i,
-        'contact should provide a no-JavaScript fallback',
-    );
 });
 
 test('informative images have non-empty alternative text', () => {

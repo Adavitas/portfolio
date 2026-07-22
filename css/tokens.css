@@ -12,14 +12,9 @@
   --primary-color: #9adbc8;
   --primary-color-hover: #b8eadb;
   --accent-text-color: #08110e;
-  --error-color: #ff9a9a;
-  --success-color: #82d9a7;
-  --input-bg-color: #ffffff;
-  --input-text-color: #1a1a1a;
   --input-border-color: #cccccc;
   --focus-outline-color: #f7f7f7;
   --primary-focus-color: rgb(154 219 200 / 22%);
-  --error-focus-color: rgb(255 154 154 / 25%);
   --font-family:
     "Aptos", "SF Pro Display", "Segoe UI", system-ui, -apple-system, sans-serif;
   --mono-family:
@@ -54,14 +49,9 @@
   --primary-color: #2d755f;
   --primary-color-hover: #205643;
   --accent-text-color: #ffffff;
-  --error-color: #b42318;
-  --success-color: #166534;
-  --input-bg-color: #ffffff;
-  --input-text-color: #182126;
   --input-border-color: #9cabb3;
   --focus-outline-color: #182126;
   --primary-focus-color: rgb(45 117 95 / 20%);
-  --error-focus-color: rgb(180 35 24 / 20%);
   --shadow-color: rgb(34 55 47 / 12%);
   --ambient-glow-strong: rgb(45 117 95 / 12%);
   --ambient-glow-soft: rgb(45 117 95 / 6%);

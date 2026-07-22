@@ -635,53 +635,6 @@ function createGithubActivityDom() {
     };
 }
 
-function createContactDom() {
-    const document = new MockDocument();
-    const contactForm = appendElement(document, 'form', { id: 'contact-form' });
-    contactForm.hidden = true;
-    const nameInput = appendElement(document, 'input', { id: 'name' }, contactForm);
-    const emailInput = appendElement(
-        document,
-        'input',
-        { id: 'email' },
-        contactForm,
-    );
-    const messageInput = appendElement(
-        document,
-        'textarea',
-        { id: 'message' },
-        contactForm,
-    );
-    const nameError = appendElement(document, 'p', { id: 'name-error' });
-    const emailError = appendElement(document, 'p', { id: 'email-error' });
-    const messageError = appendElement(document, 'p', { id: 'message-error' });
-    const formNote = appendElement(document, 'p', { id: 'form-note' });
-    formNote.hidden = true;
-    const formStatus = appendElement(document, 'p', {
-        id: 'form-status',
-        className: 'form-status',
-    });
-    const emailDraftLink = appendElement(document, 'a', {
-        id: 'email-draft-link',
-        className: 'email-draft-link',
-    });
-    emailDraftLink.hidden = true;
-
-    return {
-        document,
-        contactForm,
-        nameInput,
-        emailInput,
-        messageInput,
-        nameError,
-        emailError,
-        messageError,
-        formNote,
-        formStatus,
-        emailDraftLink,
-    };
-}
-
 function createRevealDom(count) {
     const document = new MockDocument();
     const revealElements = Array.from({ length: count }, () =>
@@ -770,14 +723,6 @@ function createSectionSwitcherDom() {
     });
     certificatesLink.textContent = 'Certificates';
 
-    const contactLink = appendElement(document, 'a', {
-        attributes: {
-            href: '#contact',
-            'data-section-link': 'contact',
-        },
-    });
-    contactLink.textContent = 'Contact';
-
     const casePortfolioLink = appendElement(document, 'a', {
         attributes: {
             href: '#case-portfolio',
@@ -815,13 +760,6 @@ function createSectionSwitcherDom() {
         },
     });
 
-    const contactPanel = appendElement(document, 'div', {
-        attributes: {
-            'data-section-panel': 'contact',
-        },
-    });
-    appendElement(document, 'section', { id: 'contact' }, contactPanel);
-
     const casePortfolioPanel = appendElement(document, 'section', {
         id: 'case-portfolio',
         attributes: {
@@ -834,13 +772,11 @@ function createSectionSwitcherDom() {
         aboutLink,
         projectsLink,
         certificatesLink,
-        contactLink,
         casePortfolioLink,
         backToProjectsLink,
         aboutPanel,
         projectsPanel,
         certificatesPanel,
-        contactPanel,
         casePortfolioPanel,
     };
 }
@@ -1104,7 +1040,6 @@ test('home section switcher shows only the selected main panel', () => {
     assert.equal(dom.aboutPanel.hidden, true);
     assert.equal(dom.projectsPanel.hidden, false);
     assert.equal(dom.certificatesPanel.hidden, true);
-    assert.equal(dom.contactPanel.hidden, true);
     assert.equal(dom.casePortfolioPanel.hidden, true);
     assert.equal(dom.aboutLink.getAttribute('aria-current'), null);
     assert.equal(dom.projectsLink.getAttribute('aria-current'), 'page');
@@ -1116,7 +1051,6 @@ test('home section switcher shows only the selected main panel', () => {
     assert.equal(dom.aboutPanel.hidden, true);
     assert.equal(dom.projectsPanel.hidden, true);
     assert.equal(dom.certificatesPanel.hidden, true);
-    assert.equal(dom.contactPanel.hidden, true);
     assert.equal(dom.casePortfolioPanel.hidden, false);
     assert.equal(dom.projectsLink.getAttribute('aria-current'), null);
     assert.equal(dom.document.documentElement.dataset.activeSection, 'case-portfolio');
@@ -1136,7 +1070,6 @@ test('home section switcher shows only the selected main panel', () => {
     assert.equal(dom.aboutPanel.hidden, true);
     assert.equal(dom.projectsPanel.hidden, true);
     assert.equal(dom.certificatesPanel.hidden, false);
-    assert.equal(dom.contactPanel.hidden, true);
     assert.equal(dom.casePortfolioPanel.hidden, true);
     assert.equal(dom.projectsLink.getAttribute('aria-current'), null);
     assert.equal(dom.certificatesLink.getAttribute('aria-current'), 'page');
@@ -1145,23 +1078,6 @@ test('home section switcher shows only the selected main panel', () => {
         'certificates',
     );
     assert.equal(dom.certificatesPanel.scrollIntoViewCalls.length, 1);
-
-    const clickEvent = createEvent('click');
-    dom.contactLink.dispatchEvent(clickEvent);
-
-    assert.equal(clickEvent.defaultPrevented, true);
-    assert.equal(dom.aboutPanel.hidden, true);
-    assert.equal(dom.projectsPanel.hidden, true);
-    assert.equal(dom.certificatesPanel.hidden, true);
-    assert.equal(dom.contactPanel.hidden, false);
-    assert.equal(dom.casePortfolioPanel.hidden, true);
-    assert.equal(dom.projectsLink.getAttribute('aria-current'), null);
-    assert.equal(dom.certificatesLink.getAttribute('aria-current'), null);
-    assert.equal(dom.contactLink.getAttribute('aria-current'), 'page');
-    assert.equal(dom.document.documentElement.dataset.activeSection, 'contact');
-    assert.equal(dom.contactPanel.scrollIntoViewCalls.length, 1);
-    assert.equal(dom.contactPanel.scrollIntoViewCalls[0].block, 'start');
-    assert.equal(dom.contactPanel.scrollIntoViewCalls[0].behavior, 'smooth');
 });
 
 test('home case-study hashes can load directly and respond to browser history', () => {
@@ -1240,106 +1156,6 @@ test('project filter toggles cards, button state, and live status', () => {
         assert.equal(dom.buttons[filter].getAttribute('aria-pressed'), 'true');
         assert.equal(dom.status.textContent, status);
     }
-});
-
-test('empty contact form submission exposes required errors and focuses first field', () => {
-    const dom = createContactDom();
-
-    runMain({ document: dom.document });
-
-    assert.equal(dom.formNote.hidden, false);
-    assert.equal(dom.contactForm.hidden, false);
-
-    dom.contactForm.dispatchEvent(createEvent('submit'));
-
-    assert.equal(dom.contactForm.noValidate, true);
-    assert.equal(dom.nameError.textContent, 'Enter a name with at least two characters.');
-    assert.equal(dom.emailError.textContent, 'Enter your email address.');
-    assert.equal(
-        dom.messageError.textContent,
-        'Write a message with at least 20 characters.',
-    );
-    assert.equal(dom.formStatus.textContent, 'Please correct the highlighted fields.');
-    assert.equal(dom.formStatus.classList.contains('is-error'), true);
-    assert.equal(dom.document.activeElement, dom.nameInput);
-});
-
-test('contact form rejects malformed email addresses', () => {
-    const dom = createContactDom();
-    dom.nameInput.value = 'Ada';
-    dom.emailInput.value = 'not-an-email';
-    dom.emailInput.validity.valid = false;
-    dom.messageInput.value = 'This message is long enough.';
-
-    runMain({ document: dom.document });
-    dom.contactForm.dispatchEvent(createEvent('submit'));
-
-    assert.equal(
-        dom.emailError.textContent,
-        'Enter an email address in the format name@example.com.',
-    );
-    assert.equal(dom.document.activeElement, dom.emailInput);
-});
-
-test('contact form treats whitespace as empty content', () => {
-    const dom = createContactDom();
-    dom.nameInput.value = '   ';
-    dom.emailInput.value = '   ';
-    dom.messageInput.value = '                    ';
-
-    runMain({ document: dom.document });
-    dom.contactForm.dispatchEvent(createEvent('submit'));
-
-    assert.equal(dom.nameError.textContent, 'Enter a name with at least two characters.');
-    assert.equal(dom.emailError.textContent, 'Enter your email address.');
-    assert.equal(
-        dom.messageError.textContent,
-        'Write a message with at least 20 characters.',
-    );
-});
-
-test('valid contact form data creates an encoded mailto draft', () => {
-    const dom = createContactDom();
-    dom.nameInput.value = 'Ada Lovelace';
-    dom.emailInput.value = 'ada@example.com';
-    dom.emailInput.validity.valid = true;
-    dom.messageInput.value = 'I would like to discuss a portfolio opportunity.';
-
-    runMain({ document: dom.document });
-    dom.contactForm.dispatchEvent(createEvent('submit'));
-
-    assert.equal(dom.emailDraftLink.hidden, false);
-    assert.match(
-        dom.emailDraftLink.href,
-        /^mailto:leqso\.davitashvili\.st@gmail\.com\?subject=Portfolio%20enquiry%20from%20Ada%20Lovelace&body=/,
-    );
-    assert.match(dom.emailDraftLink.href, /Email%3A%20ada%40example\.com/);
-    assert.match(dom.formStatus.textContent, /ready/i);
-    assert.doesNotMatch(dom.formStatus.textContent, /\bsent\b/i);
-    assert.equal(dom.formStatus.classList.contains('is-success'), true);
-    assert.equal(dom.document.activeElement, dom.emailDraftLink);
-});
-
-test('editing a contact field clears stale draft state', () => {
-    const dom = createContactDom();
-    dom.formStatus.classList.add('persistent-status-hook');
-    dom.nameInput.value = 'Ada Lovelace';
-    dom.emailInput.value = 'ada@example.com';
-    dom.messageInput.value = 'I would like to discuss a portfolio opportunity.';
-
-    runMain({ document: dom.document });
-    dom.contactForm.dispatchEvent(createEvent('submit'));
-
-    assert.equal(dom.emailDraftLink.hidden, false);
-
-    dom.messageInput.dispatchEvent(createEvent('input'));
-
-    assert.equal(dom.formStatus.textContent, '');
-    assert.equal(dom.formStatus.classList.contains('form-status'), true);
-    assert.equal(dom.formStatus.classList.contains('persistent-status-hook'), true);
-    assert.equal(dom.formStatus.classList.contains('is-success'), false);
-    assert.equal(dom.emailDraftLink.hidden, true);
-    assert.equal(dom.emailDraftLink.getAttribute('href'), null);
 });
 
 test('card reveals observe targets and disconnect after the final reveal', () => {

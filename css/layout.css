@@ -25,8 +25,7 @@
 
 .projects-card,
 .certificates-card,
-.case-panel,
-.contact-card {
+.case-panel {
   order: 2;
 }
 
