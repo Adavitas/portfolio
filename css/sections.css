@@ -12,6 +12,120 @@
   isolation: isolate;
 }
 
+.rail-avatar-card {
+  display: grid;
+  min-block-size: 0;
+  width: 100%;
+  place-items: center;
+  padding: clamp(0.55rem, 1.2vw, 0.8rem);
+  order: 3;
+  background:
+    radial-gradient(
+      circle at 50% 42%,
+      var(--ambient-glow-strong),
+      transparent 72%
+    ),
+    var(--surface-color);
+}
+
+.avatar-wrap {
+  display: grid;
+  min-block-size: 0;
+  width: 100%;
+  height: 100%;
+  place-items: center;
+}
+
+.avatar {
+  display: block;
+  width: min(100%, 13rem);
+  max-height: 100%;
+  overflow: visible;
+  color: var(--text-color);
+}
+
+.av-face-idle,
+.av-face-works,
+.av-face-hire,
+.av-coffee,
+.av-laptop,
+.av-paper {
+  transition:
+    transform 260ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity 160ms ease;
+}
+
+.av-coffee {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: none;
+}
+
+.av-laptop {
+  opacity: 0;
+  transform: translate(-26px, 22px);
+  pointer-events: none;
+}
+
+.av-paper {
+  opacity: 0;
+  transform: translate(8px, 26px);
+  pointer-events: none;
+}
+
+.av-face-works,
+.av-face-hire {
+  opacity: 0;
+}
+
+.avatar.st-works .av-coffee {
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+.avatar.st-works .av-laptop {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+.avatar.st-works .av-face-idle {
+  opacity: 0;
+}
+
+.avatar.st-works .av-face-works {
+  opacity: 1;
+}
+
+.avatar.st-works .av-torso,
+.avatar.st-works .av-face {
+  -webkit-mask: url("#av-mask-laptop");
+  mask: url("#av-mask-laptop");
+}
+
+.avatar.st-hire .av-coffee {
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+.avatar.st-hire .av-paper {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+.avatar.st-hire .av-face-idle {
+  opacity: 0;
+}
+
+.avatar.st-hire .av-face-hire {
+  opacity: 1;
+}
+
+.avatar.st-hire .av-torso,
+.avatar.st-hire .av-face {
+  -webkit-mask: url("#av-mask-paper");
+  mask: url("#av-mask-paper");
+}
+
 .rail-skills-card {
   display: grid;
   align-content: stretch;
@@ -19,7 +133,7 @@
   gap: 0.75rem;
   width: 100%;
   padding: 0.85rem;
-  order: 3;
+  order: 4;
 }
 
 .rail-skills-card h2 {
@@ -56,7 +170,7 @@
 .rail-credit-card {
   width: 100%;
   padding: 0.75rem;
-  order: 4;
+  order: 5;
 }
 
 .rail-credit-card p {

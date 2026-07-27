@@ -243,6 +243,122 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch(showGithubActivityError);
     }
 
+    // Interactive Section Avatar
+    const avatar = document.getElementById('avatar');
+    const avatarStateTriggers = document.querySelectorAll(
+        '[data-avatar-state]',
+    );
+    const avatarStateClasses = ['st-works', 'st-hire'];
+    const allowedAvatarStates = new Set(['about', 'works', 'hire']);
+    let selectedAvatarState = 'about';
+
+    function applyAvatarState(state) {
+        if (!avatar) {
+            return;
+        }
+
+        const nextState = allowedAvatarStates.has(state) ? state : 'about';
+
+        avatarStateClasses.forEach((className) => {
+            avatar.classList.toggle(
+                className,
+                className === `st-${nextState}`,
+            );
+        });
+    }
+
+    function selectAvatarState(state) {
+        selectedAvatarState = allowedAvatarStates.has(state) ? state : 'about';
+        applyAvatarState(selectedAvatarState);
+    }
+
+    function getAvatarStateForSection(section) {
+        if (section === 'certificates') {
+            return 'hire';
+        }
+
+        if (section === 'projects' || section.startsWith('case-')) {
+            return 'works';
+        }
+
+        return 'about';
+    }
+
+    if (avatar) {
+        const pupilGroups = avatar.querySelectorAll('.av-pupils');
+        const prefersReducedAvatarMotion = window.matchMedia(
+            '(prefers-reduced-motion: reduce)',
+        ).matches;
+        const scheduleAnimationFrame =
+            typeof window.requestAnimationFrame === 'function'
+                ? window.requestAnimationFrame.bind(window)
+                : null;
+
+        if (
+            pupilGroups.length > 0 &&
+            !prefersReducedAvatarMotion &&
+            scheduleAnimationFrame
+        ) {
+            let targetX = 0;
+            let targetY = 0;
+            let eyeX = 0;
+            let eyeY = 0;
+            const pupilEase = 0.14;
+
+            document.addEventListener('pointermove', (event) => {
+                const avatarBounds = avatar.getBoundingClientRect();
+                const avatarCenterX =
+                    avatarBounds.left + avatarBounds.width / 2;
+                const avatarEyeY =
+                    avatarBounds.top + avatarBounds.height * 0.47;
+                const distanceX = event.clientX - avatarCenterX;
+                const distanceY = event.clientY - avatarEyeY;
+                const distance =
+                    Math.hypot(distanceX, distanceY) || 1;
+                const reach = Math.min(distance / 60, 1) * 5;
+
+                targetX = (distanceX / distance) * reach;
+                targetY = (distanceY / distance) * reach;
+            });
+
+            function animatePupils() {
+                eyeX += (targetX - eyeX) * pupilEase;
+                eyeY += (targetY - eyeY) * pupilEase;
+
+                const pupilTransform = `translate(${eyeX.toFixed(
+                    2,
+                )}px, ${eyeY.toFixed(2)}px)`;
+
+                pupilGroups.forEach((pupilGroup) => {
+                    pupilGroup.style.transform = pupilTransform;
+                });
+
+                scheduleAnimationFrame(animatePupils);
+            }
+
+            scheduleAnimationFrame(animatePupils);
+        }
+
+        avatarStateTriggers.forEach((trigger) => {
+            const previewState = trigger.dataset.avatarState;
+
+            trigger.addEventListener('mouseenter', () => {
+                applyAvatarState(previewState);
+            });
+            trigger.addEventListener('mouseleave', () => {
+                applyAvatarState(selectedAvatarState);
+            });
+            trigger.addEventListener('focus', () => {
+                applyAvatarState(previewState);
+            });
+            trigger.addEventListener('blur', () => {
+                applyAvatarState(selectedAvatarState);
+            });
+        });
+
+        applyAvatarState(selectedAvatarState);
+    }
+
     // Home Section Switcher
     const sectionLinks = document.querySelectorAll('[data-section-link]');
     const panelLinks = document.querySelectorAll('[data-panel-link]');
@@ -284,6 +400,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             document.documentElement.dataset.activeSection = activeSection;
+            selectAvatarState(getAvatarStateForSection(activeSection));
 
             return (
                 [...sectionPanels].find(

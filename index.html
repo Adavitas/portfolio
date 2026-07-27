@@ -34,13 +34,13 @@
     <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml" />
     <script src="js/theme-init.js"></script>
     <link rel="stylesheet" href="css/reset.css" />
-    <link rel="stylesheet" href="css/tokens.css?v=20260722" />
-    <link rel="stylesheet" href="css/base.css?v=20260722" />
-    <link rel="stylesheet" href="css/layout.css?v=20260722" />
-    <link rel="stylesheet" href="css/components.css?v=20260722" />
-    <link rel="stylesheet" href="css/sections.css?v=20260722" />
-    <link rel="stylesheet" href="css/responsive.css?v=20260722" />
-    <link rel="stylesheet" href="css/motion.css?v=20260722" />
+    <link rel="stylesheet" href="css/tokens.css?v=20260726" />
+    <link rel="stylesheet" href="css/base.css?v=20260726" />
+    <link rel="stylesheet" href="css/layout.css?v=20260726" />
+    <link rel="stylesheet" href="css/components.css?v=20260726" />
+    <link rel="stylesheet" href="css/sections.css?v=20260726" />
+    <link rel="stylesheet" href="css/responsive.css?v=20260726" />
+    <link rel="stylesheet" href="css/motion.css?v=20260726" />
   </head>
   <body>
     <div class="portfolio-shell">
@@ -1137,20 +1137,360 @@
           >
             <ul>
               <li>
-                <a href="#hero" data-section-link="about" aria-current="page"
+                <a
+                  href="#hero"
+                  data-section-link="about"
+                  data-avatar-state="about"
+                  aria-current="page"
                   >About</a
                 >
               </li>
               <li>
-                <a href="#projects" data-section-link="projects">Projects</a>
+                <a
+                  href="#projects"
+                  data-section-link="projects"
+                  data-avatar-state="works"
+                  >Projects</a
+                >
               </li>
               <li>
-                <a href="#certificates" data-section-link="certificates"
+                <a
+                  href="#certificates"
+                  data-section-link="certificates"
+                  data-avatar-state="hire"
                   >Certificates</a
                 >
               </li>
             </ul>
           </nav>
+
+          <section
+            class="card rail-avatar-card card-spotlight"
+            aria-label="Interactive portrait"
+          >
+            <div class="avatar-wrap">
+              <svg
+                id="avatar"
+                class="avatar"
+                viewBox="0 0 260 260"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-label="Hand-drawn portrait of Aleksandre reacting to the selected portfolio section"
+                role="img"
+              >
+                <defs>
+                  <mask
+                    id="av-mask-laptop"
+                    maskUnits="userSpaceOnUse"
+                    x="-20"
+                    y="-20"
+                    width="300"
+                    height="300"
+                  >
+                    <rect
+                      x="-20"
+                      y="-20"
+                      width="300"
+                      height="300"
+                      fill="#fff"
+                    />
+                    <g transform="translate(0, 8)" fill="#000">
+                      <path
+                        d="M28 170 q-2 -6 5 -7 l92 -8 q7 -1 8 6 l6 56 q1 7 -6 7 l-98 2 q-7 0 -8 -7 Z"
+                      />
+                      <path d="M35 226 h122 q7 0 8 6 l1 4 h-136 Z" />
+                    </g>
+                  </mask>
+                  <mask
+                    id="av-mask-paper"
+                    maskUnits="userSpaceOnUse"
+                    x="-20"
+                    y="-20"
+                    width="300"
+                    height="300"
+                  >
+                    <rect
+                      x="-20"
+                      y="-20"
+                      width="300"
+                      height="300"
+                      fill="#fff"
+                    />
+                    <g transform="translate(0, 26)" fill="#000">
+                      <path d="M158 118 l64 -10 q4 -1 5 3 l10 74 -6 1 Z" />
+                      <path d="M156 122 l68 -6 q4 0 4 4 l6 76 -6 1 Z" />
+                      <path
+                        d="M152 126 q0 -4 4 -4 l66 -2 q4 0 4 4 l4 82 q0 4 -4 4 l-66 2 q-4 0 -4 -4 Z"
+                      />
+                    </g>
+                  </mask>
+                </defs>
+
+                <path
+                  class="av-torso"
+                  d="M28 252
+                     q2 -44 34 -62 q20 -12 42 -14
+                     M232 252
+                     q-2 -44 -34 -62 q-20 -12 -42 -14"
+                />
+
+                <path
+                  class="av-face"
+                  d="M80 96
+                     q-6 22 0 44 q8 30 50 32 q42 -2 50 -32 q6 -22 0 -44"
+                />
+                <path d="M78 112 q-9 2 -7 12 q2 9 9 8" />
+                <path d="M182 112 q9 2 7 12 q-2 9 -9 8" />
+
+                <g class="av-hair" stroke-width="2.8">
+                  <ellipse
+                    cx="94"
+                    cy="62"
+                    rx="13"
+                    ry="10"
+                    transform="rotate(-24 94 62)"
+                  />
+                  <ellipse
+                    cx="118"
+                    cy="48"
+                    rx="14"
+                    ry="10"
+                    transform="rotate(12 118 48)"
+                  />
+                  <ellipse
+                    cx="146"
+                    cy="52"
+                    rx="13"
+                    ry="10"
+                    transform="rotate(-14 146 52)"
+                  />
+                  <ellipse
+                    cx="168"
+                    cy="66"
+                    rx="12"
+                    ry="9"
+                    transform="rotate(28 168 66)"
+                  />
+                  <ellipse
+                    cx="80"
+                    cy="82"
+                    rx="11"
+                    ry="9"
+                    transform="rotate(40 80 82)"
+                  />
+                  <ellipse
+                    cx="104"
+                    cy="76"
+                    rx="12"
+                    ry="9"
+                    transform="rotate(-30 104 76)"
+                  />
+                  <ellipse
+                    cx="130"
+                    cy="70"
+                    rx="13"
+                    ry="9"
+                    transform="rotate(18 130 70)"
+                  />
+                  <ellipse
+                    cx="156"
+                    cy="78"
+                    rx="11"
+                    ry="8"
+                    transform="rotate(-38 156 78)"
+                  />
+                  <ellipse
+                    cx="176"
+                    cy="90"
+                    rx="9"
+                    ry="7"
+                    transform="rotate(20 176 90)"
+                  />
+                  <ellipse
+                    cx="86"
+                    cy="98"
+                    rx="8"
+                    ry="6"
+                    transform="rotate(-16 86 98)"
+                  />
+                  <ellipse
+                    cx="112"
+                    cy="90"
+                    rx="9"
+                    ry="7"
+                    transform="rotate(34 112 90)"
+                  />
+                  <ellipse
+                    cx="140"
+                    cy="88"
+                    rx="10"
+                    ry="7"
+                    transform="rotate(-22 140 88)"
+                  />
+                  <ellipse
+                    cx="162"
+                    cy="96"
+                    rx="7"
+                    ry="6"
+                    transform="rotate(12 162 96)"
+                  />
+                  <path d="M74 70 q4 -12 14 -12" />
+                  <path d="M182 76 q6 -8 2 -16" />
+                </g>
+
+                <path class="av-nose" d="M128 124 q-4 8 2 12" />
+
+                <g class="av-face-idle">
+                  <path d="M97 112 q8 -5 17 -1" />
+                  <path d="M146 111 q9 -4 17 2" />
+                  <g class="av-pupils">
+                    <ellipse
+                      cx="106"
+                      cy="123"
+                      rx="3.2"
+                      ry="4.2"
+                      fill="currentColor"
+                      stroke="none"
+                    />
+                    <ellipse
+                      cx="154"
+                      cy="123"
+                      rx="3.2"
+                      ry="4.2"
+                      fill="currentColor"
+                      stroke="none"
+                    />
+                  </g>
+                  <path d="M116 152 q13 9 26 0" />
+                </g>
+
+                <g class="av-face-works">
+                  <path d="M94 108 q10 -6 20 -2" stroke-width="4.5" />
+                  <path d="M146 106 q10 -4 20 2" stroke-width="4.5" />
+                  <g class="av-pupils">
+                    <ellipse
+                      cx="106"
+                      cy="123"
+                      rx="3.4"
+                      ry="4.6"
+                      fill="currentColor"
+                      stroke="none"
+                    />
+                    <ellipse
+                      cx="154"
+                      cy="123"
+                      rx="3.4"
+                      ry="4.6"
+                      fill="currentColor"
+                      stroke="none"
+                    />
+                  </g>
+                  <path d="M124 150 q6 -3 12 0" />
+                  <path d="M126 156 q5 3 9 0" />
+                </g>
+
+                <g class="av-face-hire">
+                  <path d="M96 112 q9 -5 18 -1" />
+                  <path d="M146 111 q9 -4 18 1" />
+                  <g class="av-pupils">
+                    <ellipse
+                      cx="105"
+                      cy="122"
+                      rx="3.4"
+                      ry="4.4"
+                      fill="currentColor"
+                      stroke="none"
+                    />
+                    <ellipse
+                      cx="155"
+                      cy="122"
+                      rx="3.4"
+                      ry="4.4"
+                      fill="currentColor"
+                      stroke="none"
+                    />
+                  </g>
+                  <path d="M112 148 q14 12 30 1 q-4 8 -15 8 q-11 0 -15 -9 Z" />
+                </g>
+
+                <g class="av-coffee">
+                  <g class="av-steam" stroke-width="2.6">
+                    <path
+                      class="av-steam-1"
+                      d="M118 172 q-4 -8 1 -14 q4 -6 0 -12"
+                    />
+                    <path
+                      class="av-steam-2"
+                      d="M130 168 q-5 -9 1 -16 q5 -7 1 -14"
+                    />
+                    <path
+                      class="av-steam-3"
+                      d="M142 172 q-4 -8 1 -14 q4 -6 0 -12"
+                    />
+                  </g>
+                  <path
+                    d="M100 186 q0 -5 6 -5 h48 q6 0 6 5 q0 22 -30 22 q-30 0 -30 -22 Z"
+                  />
+                  <ellipse cx="130" cy="184" rx="27" ry="5.5" />
+                  <path d="M160 190 q14 -4 14 6 q0 10 -16 8" />
+                  <path d="M92 214 q38 12 76 0" />
+                  <path d="M96 219 q34 9 68 0" />
+                  <path d="M46 252 q4 -30 30 -38 q14 -5 24 2" />
+                  <path d="M96 214 q-12 -4 -18 4 q-4 6 2 10 q8 5 18 1" />
+                  <path d="M84 222 q6 -1 10 2" />
+                  <path d="M84 228 q6 -1 10 1" />
+                  <path d="M214 252 q-4 -30 -28 -40" />
+                  <path d="M186 212 q-8 -8 -16 -4 q4 -6 12 -6 q-6 -4 -14 -2" />
+                  <path d="M170 210 q8 0 12 6" />
+                </g>
+
+                <g class="av-laptop">
+                  <g transform="translate(0, 8)">
+                    <path
+                      d="M28 170 q-2 -6 5 -7 l92 -8 q7 -1 8 6 l6 56 q1 7 -6 7 l-98 2 q-7 0 -8 -7 Z"
+                    />
+                    <path d="M35 226 h122 q7 0 8 6 l1 4 h-136 Z" />
+                    <path
+                      class="av-mark"
+                      d="M95 182
+                         q-9 3 -12 9
+                         q-2 -5 -8 -4
+                         q-8 2 -8 12
+                         q0 11 12 12
+                         q13 1 14 -12
+                         q1 -9 -6 -13"
+                      stroke-width="2.8"
+                    />
+                    <path d="M212 244 q-2 -36 -34 -44 q-16 -4 -28 6" />
+                    <path d="M150 210 q-10 6 -6 12" />
+                  </g>
+                </g>
+
+                <g class="av-paper">
+                  <g class="av-paper-inner">
+                    <g transform="translate(0, 26)">
+                      <path d="M158 118 l64 -10 q4 -1 5 3 l10 74 -6 1" />
+                      <path d="M156 122 l68 -6 q4 0 4 4 l6 76 -6 1" />
+                      <path
+                        d="M152 126 q0 -4 4 -4 l66 -2 q4 0 4 4 l4 82 q0 4 -4 4 l-66 2 q-4 0 -4 -4 Z"
+                      />
+                      <path
+                        d="M176 122 q-1 -9 6 -9 q7 0 7 8 l1 14 q0 5 -4 5 q-4 0 -4 -5 l-1 -10"
+                        stroke-width="2.4"
+                      />
+                    </g>
+                    <path d="M48 252 q2 -34 30 -44 q20 -8 52 -6" />
+                    <path d="M130 202 q10 -4 16 0 q5 4 3 9 q-2 5 -8 5" />
+                    <path d="M134 208 q7 -2 11 1" />
+                    <path d="M134 214 q6 -1 10 1" />
+                  </g>
+                </g>
+              </svg>
+            </div>
+          </section>
 
           <section
             class="card rail-skills-card card-spotlight"
@@ -1347,6 +1687,6 @@
       </main>
     </div>
 
-    <script src="js/main.js?v=20260722" defer></script>
+    <script src="js/main.js?v=20260726" defer></script>
   </body>
 </html>

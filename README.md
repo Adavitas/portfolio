@@ -9,6 +9,8 @@ systems work.
 - Semantic single-page structure
 - Responsive bento-style CSS Grid layout
 - Accessible section switching
+- Interactive line-art avatar that reacts to section previews and selections
+- Cursor-following eyes with a reduced-motion fallback
 - Persistent light and dark themes
 - Direct email CTA with persistent GitHub and LinkedIn profile links
 - One-time card reveals using `IntersectionObserver`
@@ -73,6 +75,27 @@ http://localhost:8000/
 ```
 
 The site has no installation step because it uses browser-native technologies.
+
+## Interactive Avatar
+
+The side rail includes a transparent, stroke-only SVG avatar implemented
+directly in the portfolio source. Its pose follows the active portfolio
+section:
+
+- About uses the coffee pose.
+- Projects and project case studies use the laptop pose.
+- Certificates uses the paper-stack pose.
+
+Hovering or focusing a section control previews its pose. Leaving the control
+returns the avatar to the active section, while its pupils smoothly follow the
+pointer. SVG masks keep body lines from showing through the laptop and papers
+without adding background-colored fills. The animation and eye tracking respect
+`prefers-reduced-motion`.
+
+On desktop, the rail gives the avatar and Skills and tools cards equal shares of
+the space that previously belonged to the skills card. The avatar sits above
+the compact skills card; the same order is preserved in the stacked small-screen
+layout.
 
 ## Quality Checks
 

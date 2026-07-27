@@ -29,7 +29,7 @@ const cssFiles = [
 ];
 
 const expectedStylesheetHrefs = cssFiles.map((file) =>
-    file === 'css/reset.css' ? file : `${file}?v=20260722`,
+    file === 'css/reset.css' ? file : `${file}?v=20260726`,
 );
 
 const expectedProjects = [
@@ -464,8 +464,8 @@ test('home section panels share one outer layout contract', () => {
     );
     assert.match(
         styleSource,
-        /@media \(max-width: 899px\) {[\s\S]*?\.section-switcher\s*{[\s\S]*?order:\s*1;[\s\S]*?\.rail-skills-card\s*{[\s\S]*?order:\s*3;[\s\S]*?\.rail-credit-card\s*{[\s\S]*?order:\s*4;[\s\S]*?}/,
-        'small screens should order section controls before panels, then skills, persistent info, and credits',
+        /@media \(max-width: 899px\) {[\s\S]*?\.section-switcher\s*{[\s\S]*?order:\s*1;[\s\S]*?\.rail-avatar-card\s*{[\s\S]*?order:\s*3;[\s\S]*?\.rail-skills-card\s*{[\s\S]*?order:\s*4;[\s\S]*?\.info-grid\s*{[\s\S]*?order:\s*5;[\s\S]*?\.rail-credit-card\s*{[\s\S]*?order:\s*6;[\s\S]*?}/,
+        'small screens should order section controls before panels, then avatar, skills, persistent info, and credits',
     );
     assert.match(
         styleSource,
@@ -540,8 +540,8 @@ test('home persistent info cards stay compact below the active panel', () => {
     );
     assert.match(
         desktopRailRule[1],
-        /grid-template-rows:\s*auto minmax\(0,\s*1fr\) var\(\s*--persistent-info-card-block-size\s*\);/,
-        'desktop rail should keep sections and appearance above a fixed-height credit row',
+        /grid-template-rows:\s*auto minmax\(0,\s*1fr\) minmax\(0,\s*1fr\)\s*var\(\s*--persistent-info-card-block-size\s*\);/,
+        'desktop rail should split its flexible space equally between avatar and skills above a fixed-height credit row',
     );
 
     assert.match(
@@ -571,7 +571,7 @@ test('home persistent info cards stay compact below the active panel', () => {
     );
     assert.match(
         styleSource,
-        /@media \(max-width: 899px\) {[\s\S]*?\.section-rail\s*{[\s\S]*?display:\s*contents;[\s\S]*?\.rail-credit-card\s*{[\s\S]*?order:\s*4;[\s\S]*?}/,
+        /@media \(max-width: 899px\) {[\s\S]*?\.section-rail\s*{[\s\S]*?display:\s*contents;[\s\S]*?\.info-grid\s*{[\s\S]*?order:\s*5;[\s\S]*?\.rail-credit-card\s*{[\s\S]*?order:\s*6;[\s\S]*?}/,
         'small screens should place the credits card after persistent info cards',
     );
     assert.match(
@@ -647,7 +647,7 @@ test('home time card exposes accent-aware format controls', () => {
 
     assert.match(
         source,
-        /<script\b(?=[^>]*src=["']js\/main\.js\?v=20260722["'])(?=[^>]*\bdefer\b)/i,
+        /<script\b(?=[^>]*src=["']js\/main\.js\?v=20260726["'])(?=[^>]*\bdefer\b)/i,
         'home page should load the current cache-busted main behavior',
     );
     assert.doesNotMatch(
@@ -948,6 +948,7 @@ test('accessibility references point to existing IDs', () => {
                 source.indexOf(`id="${panelId}"`),
             );
             const sectionRailIndex = source.indexOf('class="section-rail"');
+            const railAvatarCardIndex = source.indexOf('rail-avatar-card');
             const railSkillsCardIndex = source.indexOf('rail-skills-card');
             const creditCardIndex = source.indexOf('rail-credit-card');
             const infoGridIndex = source.indexOf('class="info-grid"');
@@ -1012,9 +1013,11 @@ test('accessibility references point to existing IDs', () => {
                 'Certificates panel should link to the Stanford Code in Place certificate proof',
             );
             assert.ok(
-                railSkillsCardIndex < creditCardIndex &&
+                sectionRailIndex < railAvatarCardIndex &&
+                    railAvatarCardIndex < railSkillsCardIndex &&
+                    railSkillsCardIndex < creditCardIndex &&
                     creditCardIndex < infoGridIndex,
-                'home page credits should sit below skills in the rail',
+                'home rail should place the avatar above skills and credits',
             );
             assert.ok(
                 infoGridIndex < infoAppearanceCardIndex &&
@@ -1023,6 +1026,22 @@ test('accessibility references point to existing IDs', () => {
                 'home page info grid should place appearance controls between Now and the compact time card',
             );
             assert.match(source, /class=["'][^"']*\brail-skills-card\b/i);
+            assert.match(source, /class=["'][^"']*\brail-avatar-card\b/i);
+            assert.match(
+                source,
+                /<svg\b(?=[^>]*id=["']avatar["'])(?=[^>]*class=["'][^"']*\bavatar\b)(?=[^>]*viewBox=["']0 0 260 260["'])(?=[^>]*fill=["']none["'])/i,
+                'rail avatar should preserve the transparent 260 by 260 stroke-only SVG contract',
+            );
+            assert.match(
+                source,
+                /data-avatar-state=["']about["'][\s\S]*data-avatar-state=["']works["'][\s\S]*data-avatar-state=["']hire["']/i,
+                'section switcher should expose all three avatar states',
+            );
+            assert.match(
+                source,
+                /id=["']av-mask-laptop["'][\s\S]*id=["']av-mask-paper["']/i,
+                'avatar should retain laptop and paper occlusion masks',
+            );
             assert.match(
                 source,
                 /<li>\s*C\+\+\s*<\/li>[\s\S]*<li>\s*Python\s*<\/li>/i,
