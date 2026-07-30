@@ -29,7 +29,7 @@ const cssFiles = [
 ];
 
 const expectedStylesheetHrefs = cssFiles.map((file) =>
-    file === 'css/reset.css' ? file : `${file}?v=20260726`,
+    file === 'css/reset.css' ? file : `${file}?v=20260730-2`,
 );
 
 const expectedProjects = [
@@ -506,6 +506,24 @@ test('home section panels share one outer layout contract', () => {
         styleSource,
         /\bfooter\b/i,
         'removed standalone page footer styles should not remain in CSS',
+    );
+});
+
+test('interactive avatar stays still while its internal details can animate', () => {
+    assert.doesNotMatch(
+        styleSource,
+        /@keyframes\s+avatar-float\b|\.avatar\s*{[^}]*animation\s*:/,
+        'avatar root should not bob or float vertically',
+    );
+    assert.match(
+        styleSource,
+        /@keyframes\s+avatar-steam\b/,
+        'coffee steam may keep its independent internal animation',
+    );
+    assert.match(
+        styleSource,
+        /\.avatar\s*{[^}]*translate:\s*0 -0\.5rem;/,
+        'avatar should keep its static upward optical offset',
     );
 });
 

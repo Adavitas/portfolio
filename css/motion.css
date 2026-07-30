@@ -7,10 +7,6 @@
   --reveal-delay: 90ms;
 }
 
-.avatar {
-  animation: avatar-float 5s ease-in-out infinite;
-}
-
 .av-steam path {
   opacity: 0;
 }
@@ -25,17 +21,6 @@
 
 .av-steam-3 {
   animation: avatar-steam 2.6s ease-in-out 1.7s infinite;
-}
-
-@keyframes avatar-float {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-6px);
-  }
 }
 
 @keyframes avatar-steam {
@@ -102,7 +87,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .avatar,
   .av-steam path {
     animation: none;
   }

@@ -42,6 +42,7 @@
   max-height: 100%;
   overflow: visible;
   color: var(--text-color);
+  translate: 0 -0.5rem;
 }
 
 .av-face-idle,
