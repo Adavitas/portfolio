@@ -34,13 +34,13 @@
     <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml" />
     <script src="js/theme-init.js"></script>
     <link rel="stylesheet" href="css/reset.css" />
-    <link rel="stylesheet" href="css/tokens.css?v=20260730-2" />
-    <link rel="stylesheet" href="css/base.css?v=20260730-2" />
-    <link rel="stylesheet" href="css/layout.css?v=20260730-2" />
-    <link rel="stylesheet" href="css/components.css?v=20260730-2" />
-    <link rel="stylesheet" href="css/sections.css?v=20260730-2" />
-    <link rel="stylesheet" href="css/responsive.css?v=20260730-2" />
-    <link rel="stylesheet" href="css/motion.css?v=20260730-2" />
+    <link rel="stylesheet" href="css/tokens.css?v=20260910" />
+    <link rel="stylesheet" href="css/base.css?v=20260910" />
+    <link rel="stylesheet" href="css/layout.css?v=20260910" />
+    <link rel="stylesheet" href="css/components.css?v=20260910" />
+    <link rel="stylesheet" href="css/sections.css?v=20260910" />
+    <link rel="stylesheet" href="css/responsive.css?v=20260910" />
+    <link rel="stylesheet" href="css/motion.css?v=20260910" />
   </head>
   <body>
     <div class="portfolio-shell">
@@ -1088,7 +1088,7 @@
 
         <section
           id="certificates"
-          class="card certificates-card card-spotlight"
+          class="certificates-card"
           data-section-panel="certificates"
           aria-label="Certificates"
           data-reveal
@@ -1098,34 +1098,125 @@
             <p class="eyebrow">Certificates</p>
             <h2>Learning proof I can point to.</h2>
             <p>
-              This section collects verified course and learning certificates.
-              Each entry links to the original proof instead of only listing a
-              title.
+              Explore the courses behind my practice.
             </p>
           </div>
 
           <div class="certificate-list">
             <article class="certificate-item">
-              <div class="certificate-copy">
-                <p class="eyebrow">Stanford Code in Place</p>
-                <h3>Code in Place certificate</h3>
-                <p>
-                  A Stanford University introductory coding course focused on
-                  programming fundamentals and problem solving.
-                </p>
-                <ul class="tag-list">
-                  <li>Programming fundamentals</li>
-                  <li>Python</li>
-                  <li>Course certificate</li>
-                </ul>
+              <h3 class="certificate-heading">
+                <button type="button" class="certificate-toggle" aria-expanded="true" aria-controls="certificate-01" id="certificate-toggle-01" disabled>
+                  <span class="certificate-number">01</span>
+                  <span class="certificate-label">Code in Place</span>
+                  <span class="certificate-indicator" aria-hidden="true">↗</span>
+                </button>
+              </h3>
+              <div class="certificate-detail" id="certificate-01" role="region" aria-labelledby="certificate-toggle-01">
+                <div class="certificate-copy">
+                  <p class="eyebrow">Stanford Code in Place</p>
+                  <p class="certificate-title">Code in Place certificate</p>
+                  <p>
+                    A Stanford University introductory coding course focused on
+                    programming fundamentals and problem solving.
+                  </p>
+                  <ul class="tag-list">
+                    <li>Programming fundamentals</li>
+                    <li>Python</li>
+                    <li>Course certificate</li>
+                  </ul>
+                </div>
+                <a
+                  class="certificate-link"
+                  href="https://codeinplace.stanford.edu/cip5/certificate/ic8whm"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >View certificate</a
+                >
               </div>
-              <a
-                class="certificate-link"
-                href="https://codeinplace.stanford.edu/cip5/certificate/ic8whm"
-                target="_blank"
-                rel="noopener noreferrer"
-                >View certificate</a
-              >
+            </article>
+            <article class="certificate-item">
+              <h3 class="certificate-heading">
+                <button type="button" class="certificate-toggle" aria-expanded="true" aria-controls="certificate-02" id="certificate-toggle-02" disabled>
+                  <span class="certificate-number">02</span>
+                  <span class="certificate-label">Coming soon</span>
+                  <span class="certificate-indicator" aria-hidden="true">↗</span>
+                </button>
+              </h3>
+              <div class="certificate-detail" id="certificate-02" role="region" aria-labelledby="certificate-toggle-02">
+                <p class="eyebrow">Future learning</p>
+                <p class="certificate-title">Coming soon</p>
+                <p>A new certificate will be added here as my learning continues.</p>
+              </div>
+            </article>
+            <article class="certificate-item">
+              <h3 class="certificate-heading">
+                <button type="button" class="certificate-toggle" aria-expanded="true" aria-controls="certificate-03" id="certificate-toggle-03" disabled>
+                  <span class="certificate-number">03</span>
+                  <span class="certificate-label">Coming soon</span>
+                  <span class="certificate-indicator" aria-hidden="true">↗</span>
+                </button>
+              </h3>
+              <div class="certificate-detail" id="certificate-03" role="region" aria-labelledby="certificate-toggle-03">
+                <p class="eyebrow">Future learning</p>
+                <p class="certificate-title">Coming soon</p>
+                <p>A new certificate will be added here as my learning continues.</p>
+              </div>
+            </article>
+            <article class="certificate-item">
+              <h3 class="certificate-heading">
+                <button type="button" class="certificate-toggle" aria-expanded="true" aria-controls="certificate-04" id="certificate-toggle-04" disabled>
+                  <span class="certificate-number">04</span>
+                  <span class="certificate-label">Coming soon</span>
+                  <span class="certificate-indicator" aria-hidden="true">↗</span>
+                </button>
+              </h3>
+              <div class="certificate-detail" id="certificate-04" role="region" aria-labelledby="certificate-toggle-04">
+                <p class="eyebrow">Future learning</p>
+                <p class="certificate-title">Coming soon</p>
+                <p>A new certificate will be added here as my learning continues.</p>
+              </div>
+            </article>
+            <article class="certificate-item">
+              <h3 class="certificate-heading">
+                <button type="button" class="certificate-toggle" aria-expanded="true" aria-controls="certificate-05" id="certificate-toggle-05" disabled>
+                  <span class="certificate-number">05</span>
+                  <span class="certificate-label">Coming soon</span>
+                  <span class="certificate-indicator" aria-hidden="true">↗</span>
+                </button>
+              </h3>
+              <div class="certificate-detail" id="certificate-05" role="region" aria-labelledby="certificate-toggle-05">
+                <p class="eyebrow">Future learning</p>
+                <p class="certificate-title">Coming soon</p>
+                <p>A new certificate will be added here as my learning continues.</p>
+              </div>
+            </article>
+            <article class="certificate-item">
+              <h3 class="certificate-heading">
+                <button type="button" class="certificate-toggle" aria-expanded="true" aria-controls="certificate-06" id="certificate-toggle-06" disabled>
+                  <span class="certificate-number">06</span>
+                  <span class="certificate-label">Coming soon</span>
+                  <span class="certificate-indicator" aria-hidden="true">↗</span>
+                </button>
+              </h3>
+              <div class="certificate-detail" id="certificate-06" role="region" aria-labelledby="certificate-toggle-06">
+                <p class="eyebrow">Future learning</p>
+                <p class="certificate-title">Coming soon</p>
+                <p>A new certificate will be added here as my learning continues.</p>
+              </div>
+            </article>
+            <article class="certificate-item">
+              <h3 class="certificate-heading">
+                <button type="button" class="certificate-toggle" aria-expanded="true" aria-controls="certificate-07" id="certificate-toggle-07" disabled>
+                  <span class="certificate-number">07</span>
+                  <span class="certificate-label">Coming soon</span>
+                  <span class="certificate-indicator" aria-hidden="true">↗</span>
+                </button>
+              </h3>
+              <div class="certificate-detail" id="certificate-07" role="region" aria-labelledby="certificate-toggle-07">
+                <p class="eyebrow">Future learning</p>
+                <p class="certificate-title">Coming soon</p>
+                <p>A new certificate will be added here as my learning continues.</p>
+              </div>
             </article>
           </div>
         </section>
@@ -1687,6 +1778,6 @@
       </main>
     </div>
 
-    <script src="js/main.js?v=20260726" defer></script>
+    <script src="js/main.js?v=20260910" defer></script>
   </body>
 </html>

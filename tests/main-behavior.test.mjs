@@ -1032,6 +1032,41 @@ test('GitHub activity keeps a clear fallback when the live request fails', async
     assert.equal(status.textContent, 'Live activity is temporarily unavailable');
 });
 
+test('certificate accordion keeps one panel open and supports keyboard navigation', () => {
+    const document = new MockDocument();
+    const list = appendElement(document, 'div', { className: 'certificate-list' });
+    const buttons = [];
+    const details = [];
+    for (let index = 0; index < 7; index++) {
+        buttons.push(appendElement(document, 'button', {
+            className: 'certificate-toggle',
+            attributes: { 'aria-controls': `proof-${index}`, 'aria-expanded': 'true' },
+        }, list));
+        details.push(appendElement(document, 'div', { id: `proof-${index}` }));
+    }
+    runMain({ document });
+    function assertSelection(selected) {
+        buttons.forEach((button, index) => {
+            assert.equal(button.getAttribute('aria-expanded'), String(index === selected));
+            assert.equal(details[index].hidden, index !== selected);
+            assert.equal(button.disabled, false);
+        });
+    }
+    assertSelection(0);
+    buttons[3].dispatchEvent(createEvent('click'));
+    assertSelection(3);
+    buttons[3].dispatchEvent(createEvent('click'));
+    assertSelection(3);
+    buttons[3].dispatchEvent(createEvent('keydown', { key: 'End' }));
+    assertSelection(6);
+    buttons[6].dispatchEvent(createEvent('keydown', { key: 'ArrowRight' }));
+    assertSelection(0);
+    buttons[0].dispatchEvent(createEvent('keydown', { key: 'ArrowLeft' }));
+    assertSelection(6);
+    buttons[6].dispatchEvent(createEvent('keydown', { key: 'Home' }));
+    assertSelection(0);
+});
+
 test('home section switcher shows only the selected main panel', () => {
     const dom = createSectionSwitcherDom();
 

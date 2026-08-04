@@ -3,6 +3,40 @@
 document.documentElement.classList.add('js-enabled');
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Certificate accordion: retain readable content if enhancement is unavailable.
+    const certificateList = document.querySelector('.certificate-list');
+    const certificateButtons = Array.from(document.querySelectorAll('.certificate-toggle'));
+    const certificateDetails = certificateButtons.map((button) =>
+        document.getElementById(button.getAttribute('aria-controls')),
+    );
+    if (certificateList && certificateButtons.length && certificateDetails.every(Boolean)) {
+        function selectCertificate(index) {
+            certificateButtons.forEach((button, itemIndex) => {
+                const expanded = itemIndex === index;
+                button.setAttribute('aria-expanded', String(expanded));
+                certificateDetails[itemIndex].hidden = !expanded;
+            });
+        }
+        certificateButtons.forEach((button, index) => {
+            button.disabled = false;
+            button.addEventListener('click', () => selectCertificate(index));
+            button.addEventListener('keydown', (event) => {
+                let next = index;
+                if (event.key === 'ArrowRight' || event.key === 'ArrowDown') next++;
+                else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') next--;
+                else if (event.key === 'Home') next = 0;
+                else if (event.key === 'End') next = certificateButtons.length - 1;
+                else return;
+                event.preventDefault();
+                next = (next + certificateButtons.length) % certificateButtons.length;
+                selectCertificate(next);
+                certificateButtons[next].focus();
+            });
+        });
+        selectCertificate(0);
+        certificateList.classList.add('is-ready');
+    }
+
     const accentStorageKey = 'portfolio-accent';
     const allowedAccents = ['mint', 'amber', 'blue', 'rose'];
 
