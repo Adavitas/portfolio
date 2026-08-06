@@ -29,7 +29,7 @@ const cssFiles = [
 ];
 
 const expectedStylesheetHrefs = cssFiles.map((file) =>
-    file === 'css/reset.css' ? file : `${file}?v=20260910-2`,
+    file === 'css/reset.css' ? file : `${file}?v=20260910-3`,
 );
 
 const expectedProjects = [
@@ -107,7 +107,6 @@ const expectedProjects = [
 
 const requiredAssets = [
     'assets/images/favicon.svg',
-    'assets/images/portrait.jpeg',
     ...expectedProjects.map(({ preview }) => preview),
 ];
 

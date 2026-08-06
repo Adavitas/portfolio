@@ -269,19 +269,15 @@
   grid-column: 1 / -1;
   order: 2;
   display: grid;
-  padding: clamp(0.85rem, 1.6vw, 1.1rem);
-  background:
-    radial-gradient(
-      circle at 80% 18%,
-      var(--ambient-glow-strong),
-      transparent 20rem
-    ),
-    var(--surface-color);
+  grid-template-rows: minmax(0, 1fr);
 }
 
 .intro-layout {
   display: grid;
-  gap: clamp(0.75rem, 1.5vw, 1rem);
+  grid-template-rows: minmax(min-content, 1fr) auto;
+  gap: var(--grid-gap);
+  min-width: 0;
+  min-height: 0;
 }
 
 .intro-copy,
@@ -293,6 +289,14 @@
   display: grid;
   gap: 0.5rem;
   align-content: start;
+  padding: clamp(0.85rem, 1.6vw, 1.1rem);
+  background:
+    radial-gradient(
+      circle at 80% 18%,
+      var(--ambient-glow-strong),
+      transparent 20rem
+    ),
+    var(--surface-color);
 }
 
 .intro-copy > p {
@@ -331,9 +335,7 @@
   display: grid;
   gap: 0.75rem;
   min-width: 0;
-  margin-top: clamp(0.35rem, 1vw, 0.75rem);
-  padding-top: clamp(0.85rem, 1.8vw, 1.2rem);
-  border-top: 1px solid var(--border-color);
+  padding: clamp(0.85rem, 1.6vw, 1.1rem);
 }
 
 .github-activity-header,
