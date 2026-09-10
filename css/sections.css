@@ -467,60 +467,6 @@
   outline-offset: 3px;
 }
 
-.project-card img {
-  aspect-ratio: 16 / 9;
-  height: auto;
-  align-self: start;
-}
-
-.grid-gallery {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: clamp(0.85rem, 1.5vw, 1.1rem);
-  margin-top: 0.9rem;
-}
-
-.project-card {
-  display: grid;
-  grid-template-rows: auto 1fr;
-  min-height: 100%;
-  padding: 1rem;
-  background-color: var(--surface-color-soft);
-  transition:
-    border-color 0.25s ease,
-    transform 0.25s ease,
-    box-shadow 0.25s ease;
-}
-
-.project-card:hover,
-.project-card:focus-within {
-  border-color: var(--primary-color);
-  transform: translateY(-0.25rem);
-  box-shadow: 0 1.75rem 5rem var(--shadow-color);
-}
-
-.project-copy {
-  display: grid;
-  grid-template-rows: auto 1fr auto auto;
-  gap: 0.55rem;
-  padding-top: 0.7rem;
-}
-
-.project-copy p {
-  font-size: 0.94rem;
-  line-height: 1.5;
-}
-
-.project-copy .tag-list {
-  gap: 0.35rem;
-  margin-block: 0.35rem;
-}
-
-.project-copy .tag-list li {
-  padding: 0.28rem 0.55rem;
-  font-size: 0.8rem;
-}
-
 .certificates-card {
   display: grid;
   grid-template-rows: minmax(0, 1fr);
@@ -628,7 +574,63 @@
   display: grid;
   align-content: start;
   padding: clamp(1rem, 2vw, 1.5rem);
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
 }
+
+.projects-card {
+  display: grid;
+  grid-auto-rows: max-content;
+  gap: var(--grid-gap);
+  min-width: 0;
+}
+
+.projects-card.is-ready {
+  grid-template-rows: auto minmax(0, 1fr);
+}
+
+.project-selector {
+  display: flex;
+  overflow-x: auto;
+  min-width: 0;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-inner);
+  background: var(--surface-color);
+  scrollbar-width: thin;
+  scrollbar-color: var(--strong-border-color) transparent;
+  overscroll-behavior-inline: contain;
+}
+
+.project-choice {
+  position: relative;
+  flex: 0 0 auto;
+  display: grid;
+  gap: 0.35rem;
+  min-width: 10rem;
+  padding: 1rem 1.2rem;
+  border-right: 1px solid var(--border-color);
+  border-bottom: 3px solid transparent;
+  color: var(--muted-text-color);
+  text-decoration: none;
+}
+
+.project-choice:last-child { border-right: 0; }
+.project-choice-name { font-weight: 600; white-space: nowrap; }
+.project-choice-stack { font-size: 0.75rem; white-space: nowrap; }
+.project-choice:hover { background: var(--surface-color-soft); color: var(--text-color); }
+.project-choice[aria-current] {
+  color: var(--primary-color);
+  border-bottom-color: var(--primary-color);
+  background: var(--surface-color-soft);
+}
+.project-choice:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: -5px;
+}
+
+.projects-card .case-panel { grid-column: 1; }
 
 .case-study-hero h2 {
   max-width: 18ch;
@@ -761,10 +763,6 @@
 .case-study-hero {
   display: grid;
   gap: 1rem;
-  padding: 1rem;
-  border: 1px solid var(--strong-border-color);
-  border-radius: var(--radius-card);
-  background-color: var(--surface-color-soft);
 }
 
 .case-study-hero-copy {

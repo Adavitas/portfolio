@@ -395,10 +395,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Home Section Switcher
     const sectionLinks = document.querySelectorAll('[data-section-link]');
-    const panelLinks = document.querySelectorAll('[data-panel-link]');
     const sectionPanels = document.querySelectorAll('[data-section-panel]');
+    const projectLinks = [...document.querySelectorAll('[data-project-link]')];
+    const projectPanels = [...document.querySelectorAll('[data-project-panel]')];
+    const projectIds = new Set(projectPanels.map((panel) => panel.dataset.projectPanel));
+    let selectedProject = projectPanels[0]?.dataset.projectPanel;
 
     if (sectionLinks.length > 0 && sectionPanels.length > 0) {
+        document.getElementById('projects')?.classList.add('is-ready');
         const defaultSection = 'about';
         const sections = new Set(
             [...sectionPanels]
@@ -413,11 +417,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 return 'about';
             }
 
-            return sections.has(hash) ? hash : defaultSection;
+            return sections.has(hash) || projectIds.has(hash) ? hash : defaultSection;
         }
 
         function setActiveSection(section) {
+            if (projectIds.has(section)) {
+                selectedProject = section;
+                section = 'projects';
+            }
             const activeSection = sections.has(section) ? section : defaultSection;
+
+            projectPanels.forEach((panel) => {
+                panel.hidden = activeSection !== 'projects' || panel.dataset.projectPanel !== selectedProject;
+            });
+            projectLinks.forEach((link) => {
+                if (link.dataset.projectLink === selectedProject) {
+                    link.setAttribute('aria-current', 'true');
+                } else {
+                    link.removeAttribute('aria-current');
+                }
+            });
 
             sectionPanels.forEach((panel) => {
                 panel.hidden = panel.dataset.sectionPanel !== activeSection;
@@ -502,7 +521,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         function bindPanelLink(link) {
             link.addEventListener('click', (event) => {
-                const section = link.dataset.sectionLink ?? link.dataset.panelLink;
+                const section = link.dataset.sectionLink;
 
                 if (!sections.has(section)) {
                     return;
@@ -525,8 +544,29 @@ document.addEventListener('DOMContentLoaded', () => {
             bindPanelLink(link);
         });
 
-        panelLinks.forEach((link) => {
-            bindPanelLink(link);
+        projectLinks.forEach((link, index) => {
+            link.addEventListener('click', (event) => {
+                if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+                const project = link.dataset.projectLink;
+                if (!projectIds.has(project)) return;
+                event.preventDefault();
+                pushHash(link.getAttribute('href'));
+                showSection(project);
+                const panel = projectPanels.find((item) => item.dataset.projectPanel === project);
+                if (panel) panel.scrollTop = 0;
+                link.scrollIntoView?.({ block: 'nearest', inline: 'nearest', behavior: 'auto' });
+            });
+            // Arrow keys move focus; Enter selects, just like clicking a name.
+            link.addEventListener('keydown', (event) => {
+                let next = index;
+                if (event.key === 'ArrowRight') next++;
+                else if (event.key === 'ArrowLeft') next--;
+                else if (event.key === 'Home') next = 0;
+                else if (event.key === 'End') next = projectLinks.length - 1;
+                else return;
+                event.preventDefault();
+                projectLinks[(next + projectLinks.length) % projectLinks.length].focus();
+            });
         });
 
         if (window.addEventListener) {
@@ -607,85 +647,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 card.style.removeProperty('--spotlight-y');
             });
         });
-    }
-
-    // Project Filter
-    const projectFilterButtons = document.querySelectorAll(
-        '.project-filter-button',
-    );
-    const projectCards = document.querySelectorAll('.project-card');
-    const projectFilterStatus = document.getElementById(
-        'project-filter-status',
-    );
-
-    if (
-        projectFilterButtons.length > 0 &&
-        projectCards.length > 0 &&
-        projectFilterStatus
-    ) {
-        function projectMatchesFilter(projectCard, filter) {
-            if (filter === 'all') {
-                return true;
-            }
-
-            const categories = (
-                projectCard.dataset.projectCategories ?? ''
-            ).split(/\s+/);
-
-            return categories.includes(filter);
-        }
-
-        function getFilterLabel(filterButton, isSingular) {
-            const label = filterButton.textContent.trim().toLowerCase();
-            return isSingular ? label.replace(/s$/, '') : label;
-        }
-
-        function updateProjectFilter(activeButton) {
-            const activeFilter = activeButton.dataset.projectFilter ?? 'all';
-            let visibleProjects = 0;
-
-            projectFilterButtons.forEach((button) => {
-                const isActive = button === activeButton;
-                button.setAttribute('aria-pressed', String(isActive));
-            });
-
-            projectCards.forEach((projectCard) => {
-                const shouldShow = projectMatchesFilter(
-                    projectCard,
-                    activeFilter,
-                );
-
-                projectCard.hidden = !shouldShow;
-
-                if (shouldShow) {
-                    visibleProjects += 1;
-                }
-            });
-
-            const projectWord = visibleProjects === 1 ? 'project' : 'projects';
-            const filterLabel = getFilterLabel(
-                activeButton,
-                visibleProjects === 1,
-            );
-
-            projectFilterStatus.textContent =
-                activeFilter === 'all'
-                    ? `Showing all ${visibleProjects} ${projectWord}.`
-                    : `Showing ${visibleProjects} ${filterLabel} ${projectWord}.`;
-        }
-
-        projectFilterButtons.forEach((button) => {
-            button.addEventListener('click', () => {
-                updateProjectFilter(button);
-            });
-        });
-
-        const initialActiveButton =
-            [...projectFilterButtons].find(
-                (button) => button.getAttribute('aria-pressed') === 'true',
-            ) ?? projectFilterButtons[0];
-
-        updateProjectFilter(initialActiveButton);
     }
 
     // Dynamic Timezone Display

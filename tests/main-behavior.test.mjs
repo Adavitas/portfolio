@@ -649,53 +649,6 @@ function createRevealDom(count) {
     };
 }
 
-function createProjectFilterDom() {
-    const document = new MockDocument();
-    const status = appendElement(document, 'p', { id: 'project-filter-status' });
-    const filterLabels = {
-        all: 'All',
-        interfaces: 'Interfaces',
-        systems: 'Systems',
-        games: 'Games',
-        algorithms: 'Algorithms',
-    };
-    const buttons = Object.fromEntries(
-        Object.entries(filterLabels).map(([filter, label]) => {
-            const button = appendElement(document, 'button', {
-                className: 'project-filter-button',
-                attributes: {
-                    'aria-pressed': filter === 'all' ? 'true' : 'false',
-                    'data-project-filter': filter,
-                },
-            });
-            button.textContent = label;
-            return [filter, button];
-        }),
-    );
-    const projectCategories = [
-        'interfaces',
-        'systems',
-        'algorithms',
-        'games',
-        'games systems',
-        'interfaces games',
-        'systems',
-    ];
-    const projects = projectCategories.map((categories) =>
-        appendElement(document, 'article', {
-            className: 'project-card',
-            attributes: { 'data-project-categories': categories },
-        }),
-    );
-
-    return {
-        document,
-        status,
-        buttons,
-        projects,
-    };
-}
-
 function createSectionSwitcherDom() {
     const document = new MockDocument();
     const aboutLink = appendElement(document, 'a', {
@@ -726,18 +679,10 @@ function createSectionSwitcherDom() {
     const casePortfolioLink = appendElement(document, 'a', {
         attributes: {
             href: '#case-portfolio',
-            'data-panel-link': 'case-portfolio',
+            'data-project-link': 'case-portfolio',
         },
     });
     casePortfolioLink.textContent = 'Read portfolio case study';
-
-    const backToProjectsLink = appendElement(document, 'a', {
-        attributes: {
-            href: '#projects',
-            'data-panel-link': 'projects',
-        },
-    });
-    backToProjectsLink.textContent = 'Back to projects';
 
     const aboutPanel = appendElement(document, 'section', {
         id: 'hero',
@@ -763,9 +708,16 @@ function createSectionSwitcherDom() {
     const casePortfolioPanel = appendElement(document, 'section', {
         id: 'case-portfolio',
         attributes: {
-            'data-section-panel': 'case-portfolio',
+            'data-project-panel': 'case-portfolio',
         },
+    }, projectsPanel);
+
+    const caseMinishellLink = appendElement(document, 'a', {
+        attributes: { href: '#case-minishell', 'data-project-link': 'case-minishell' },
     });
+    const caseMinishellPanel = appendElement(document, 'section', {
+        id: 'case-minishell', attributes: { 'data-project-panel': 'case-minishell' },
+    }, projectsPanel);
 
     return {
         document,
@@ -773,7 +725,8 @@ function createSectionSwitcherDom() {
         projectsLink,
         certificatesLink,
         casePortfolioLink,
-        backToProjectsLink,
+        caseMinishellLink,
+        caseMinishellPanel,
         aboutPanel,
         projectsPanel,
         certificatesPanel,
@@ -1067,76 +1020,65 @@ test('certificate accordion keeps one panel open and supports keyboard navigatio
     assertSelection(0);
 });
 
-test('home section switcher shows only the selected main panel', () => {
+test('project selection opens full content and persists across section changes', () => {
     const dom = createSectionSwitcherDom();
-
     runMain({ document: dom.document, locationHash: '#projects' });
-
     assert.equal(dom.aboutPanel.hidden, true);
     assert.equal(dom.projectsPanel.hidden, false);
-    assert.equal(dom.certificatesPanel.hidden, true);
-    assert.equal(dom.casePortfolioPanel.hidden, true);
-    assert.equal(dom.aboutLink.getAttribute('aria-current'), null);
-    assert.equal(dom.projectsLink.getAttribute('aria-current'), 'page');
-    assert.equal(dom.document.documentElement.dataset.activeSection, 'projects');
-    assert.equal(dom.projectsPanel.scrollIntoViewCalls.length, 0);
-
-    dom.casePortfolioLink.dispatchEvent(createEvent('click'));
-
-    assert.equal(dom.aboutPanel.hidden, true);
-    assert.equal(dom.projectsPanel.hidden, true);
     assert.equal(dom.certificatesPanel.hidden, true);
     assert.equal(dom.casePortfolioPanel.hidden, false);
-    assert.equal(dom.projectsLink.getAttribute('aria-current'), null);
-    assert.equal(dom.document.documentElement.dataset.activeSection, 'case-portfolio');
-    assert.equal(dom.document.activeElement, dom.casePortfolioPanel);
-    assert.equal(dom.casePortfolioPanel.scrollIntoViewCalls.length, 1);
-    assert.equal(dom.casePortfolioPanel.scrollTop, 0);
-
-    dom.backToProjectsLink.dispatchEvent(createEvent('click'));
-
+    assert.equal(dom.caseMinishellPanel.hidden, true);
+    assert.equal(dom.casePortfolioLink.getAttribute('aria-current'), 'true');
+    dom.caseMinishellPanel.scrollTop = 100;
+    dom.caseMinishellLink.dispatchEvent(createEvent('click'));
     assert.equal(dom.projectsPanel.hidden, false);
     assert.equal(dom.casePortfolioPanel.hidden, true);
+    assert.equal(dom.caseMinishellPanel.hidden, false);
+    assert.equal(dom.caseMinishellPanel.scrollTop, 0);
+    assert.equal(dom.caseMinishellLink.getAttribute('aria-current'), 'true');
+    assert.equal(dom.casePortfolioLink.getAttribute('aria-current'), null);
     assert.equal(dom.projectsLink.getAttribute('aria-current'), 'page');
     assert.equal(dom.document.documentElement.dataset.activeSection, 'projects');
-
     dom.certificatesLink.dispatchEvent(createEvent('click'));
-
-    assert.equal(dom.aboutPanel.hidden, true);
     assert.equal(dom.projectsPanel.hidden, true);
+    assert.equal(dom.caseMinishellPanel.hidden, true);
     assert.equal(dom.certificatesPanel.hidden, false);
-    assert.equal(dom.casePortfolioPanel.hidden, true);
-    assert.equal(dom.projectsLink.getAttribute('aria-current'), null);
-    assert.equal(dom.certificatesLink.getAttribute('aria-current'), 'page');
-    assert.equal(
-        dom.document.documentElement.dataset.activeSection,
-        'certificates',
-    );
-    assert.equal(dom.certificatesPanel.scrollIntoViewCalls.length, 1);
+    dom.projectsLink.dispatchEvent(createEvent('click'));
+    assert.equal(dom.caseMinishellPanel.hidden, false);
+    assert.equal(dom.certificatesPanel.hidden, true);
 });
 
-test('home case-study hashes can load directly and respond to browser history', () => {
+test('project hashes load directly and browser history restores the selected project', () => {
     const dom = createSectionSwitcherDom();
-    const run = runMain({
-        document: dom.document,
-        locationHash: '#case-portfolio',
-    });
-
-    assert.equal(dom.casePortfolioPanel.hidden, false);
-    assert.equal(dom.projectsPanel.hidden, true);
-    assert.equal(dom.projectsLink.getAttribute('aria-current'), null);
-    assert.equal(
-        dom.document.documentElement.dataset.activeSection,
-        'case-portfolio',
-    );
-
-    run.window.location.hash = '#projects';
-    run.window.dispatchEvent(createEvent('hashchange'));
-
-    assert.equal(dom.casePortfolioPanel.hidden, true);
+    const run = runMain({ document: dom.document, locationHash: '#case-minishell' });
+    assert.equal(dom.caseMinishellPanel.hidden, false);
     assert.equal(dom.projectsPanel.hidden, false);
     assert.equal(dom.projectsLink.getAttribute('aria-current'), 'page');
-    assert.equal(dom.document.activeElement, dom.projectsPanel);
+    run.window.location.hash = '#case-portfolio';
+    run.window.dispatchEvent(createEvent('hashchange'));
+    assert.equal(dom.casePortfolioPanel.hidden, false);
+    assert.equal(dom.caseMinishellPanel.hidden, true);
+    assert.equal(dom.casePortfolioLink.getAttribute('aria-current'), 'true');
+    run.window.location.hash = '#unknown-project';
+    run.window.dispatchEvent(createEvent('hashchange'));
+    assert.equal(dom.aboutPanel.hidden, false);
+    assert.equal(dom.projectsPanel.hidden, true);
+});
+
+test('project keyboard navigation moves focus without changing selection', () => {
+    const dom = createSectionSwitcherDom();
+    const run = runMain({ document: dom.document, locationHash: '#projects' });
+    dom.casePortfolioLink.dispatchEvent(createEvent('keydown', { key: 'End' }));
+    assert.equal(dom.document.activeElement, dom.caseMinishellLink);
+    assert.equal(dom.casePortfolioPanel.hidden, false);
+    assert.deepEqual(run.historyPushes, []);
+    dom.caseMinishellLink.dispatchEvent(createEvent('keydown', { key: 'ArrowRight' }));
+    assert.equal(dom.document.activeElement, dom.casePortfolioLink);
+    dom.casePortfolioLink.dispatchEvent(createEvent('keydown', { key: 'ArrowLeft' }));
+    assert.equal(dom.document.activeElement, dom.caseMinishellLink);
+    dom.caseMinishellLink.dispatchEvent(createEvent('click', { ctrlKey: true }));
+    assert.deepEqual(run.historyPushes, []);
+    assert.equal(dom.casePortfolioPanel.hidden, false);
 });
 
 test('section links do not add duplicate entries for the current hash', () => {
@@ -1166,31 +1108,6 @@ test('home section switcher respects reduced motion when scrolling clicked panel
     assert.equal(dom.projectsPanel.scrollIntoViewCalls.length, 1);
     assert.equal(dom.projectsPanel.scrollIntoViewCalls[0].block, 'start');
     assert.equal(dom.projectsPanel.scrollIntoViewCalls[0].behavior, 'auto');
-});
-
-test('project filter toggles cards, button state, and live status', () => {
-    const dom = createProjectFilterDom();
-    const visibleProjectIndexes = () =>
-        dom.projects
-            .map((project, index) => (project.hidden ? null : index))
-            .filter((index) => index !== null);
-
-    runMain({ document: dom.document });
-
-    const expectations = [
-        ['interfaces', [0, 5], 'Showing 2 interfaces projects.'],
-        ['systems', [1, 4, 6], 'Showing 3 systems projects.'],
-        ['games', [3, 4, 5], 'Showing 3 games projects.'],
-        ['algorithms', [2], 'Showing 1 algorithm project.'],
-        ['all', [0, 1, 2, 3, 4, 5, 6], 'Showing all 7 projects.'],
-    ];
-
-    for (const [filter, visibleIndexes, status] of expectations) {
-        dom.buttons[filter].dispatchEvent(createEvent('click'));
-        assert.deepEqual(visibleProjectIndexes(), visibleIndexes);
-        assert.equal(dom.buttons[filter].getAttribute('aria-pressed'), 'true');
-        assert.equal(dom.status.textContent, status);
-    }
 });
 
 test('card reveals observe targets and disconnect after the final reveal', () => {

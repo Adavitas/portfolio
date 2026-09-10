@@ -29,7 +29,7 @@ const cssFiles = [
 ];
 
 const expectedStylesheetHrefs = cssFiles.map((file) =>
-    file === 'css/reset.css' ? file : `${file}?v=20260910-3`,
+    file === 'css/reset.css' ? file : `${file}?v=20260910-4`,
 );
 
 const expectedProjects = [
@@ -664,7 +664,7 @@ test('home time card exposes accent-aware format controls', () => {
 
     assert.match(
         source,
-        /<script\b(?=[^>]*src=["']js\/main\.js\?v=20260910-2["'])(?=[^>]*\bdefer\b)/i,
+        /<script\b(?=[^>]*src=["']js\/main\.js\?v=20260910-4["'])(?=[^>]*\bdefer\b)/i,
         'home page should load the current cache-busted main behavior',
     );
     assert.doesNotMatch(
@@ -742,87 +742,20 @@ test('external blank links use noopener and noreferrer', () => {
     }
 });
 
-test('home project card link labels remain specific and unique', () => {
+test('project selector opens all seven full case studies directly', () => {
     const source = pageSources.get('index.html');
-    const galleryMatch = source.match(
-        /<div class=["']grid-gallery["']>([\s\S]*?)<\/section>/i,
-    );
-    assert.ok(galleryMatch, 'home page should have a project gallery');
-
-    const links = [...galleryMatch[1].matchAll(/<a\b[^>]*>([\s\S]*?)<\/a\s*>/gi)];
-    const linkTexts = links.map(([, text]) => stripTags(text));
-    const expectedLinkTexts = expectedProjects.flatMap(
-        ({ caseLabel, sourceLabel }) => [caseLabel, sourceLabel],
-    );
-    const expectedLinkHrefs = expectedProjects.flatMap(({ panelId, source }) => [
-        `#${panelId}`,
-        source,
-    ]);
-
-    assert.deepEqual(linkTexts, expectedLinkTexts);
-    assert.equal(new Set(linkTexts).size, linkTexts.length);
-
-    assert.deepEqual(
-        links.map(([tag]) => getAttribute(tag, 'href')),
-        expectedLinkHrefs,
-    );
-    assert.equal(
-        links.filter(([tag]) => getAttribute(tag, 'data-panel-link')).length,
-        expectedProjects.length,
-        'case-study project links should switch same-shell panels',
-    );
-});
-
-test('home project cards keep the verified seven-project mapping', () => {
-    const source = pageSources.get('index.html');
-    const cards = [
-        ...source.matchAll(
-            /(<article\b(?=[^>]*class=["'][^"']*\bproject-card\b)[^>]*>)([\s\S]*?)<\/article>/gi,
-        ),
-    ];
-
-    assert.equal(cards.length, expectedProjects.length);
-    assert.deepEqual(
-        [...source.matchAll(/data-project-filter=["']([^"']+)["']/gi)].map(
-            ([, filter]) => filter,
-        ),
-        ['all', 'interfaces', 'systems', 'games', 'algorithms'],
-    );
-    assert.match(source, /Showing all 7 projects\./);
-
-    cards.forEach(([, tag, body], index) => {
-        const project = expectedProjects[index];
-        const heading = body.match(/<h3\b[^>]*>([\s\S]*?)<\/h3>/i);
-        const description = body.match(/<p\b[^>]*>([\s\S]*?)<\/p>/i)?.[1];
-        const tagList =
-            body.match(
-                /<ul\b[^>]*class=["']tag-list["'][^>]*>([\s\S]*?)<\/ul>/i,
-            )?.[1] ?? '';
-        const tags = [
-            ...tagList.matchAll(/<li\b[^>]*>([\s\S]*?)<\/li>/gi),
-        ];
-        const image = getTags(body, 'img')[0];
-
-        assert.equal(
-            getAttribute(tag, 'data-project-categories'),
-            project.categories,
-        );
-        assert.equal(stripTags(heading?.[1] ?? ''), project.title);
-        assert.ok(
-            countWords(description) <= 22,
-            `${project.title} card copy is too long`,
-        );
-        assert.ok(
-            tags.length >= 2 && tags.length <= 4,
-            `${project.title} needs two to four card tags`,
-        );
-        assert.equal(getAttribute(image, 'src'), project.preview);
-        assert.equal(getAttribute(image, 'width'), '800');
-        assert.equal(getAttribute(image, 'height'), '450');
-        assert.equal(getAttribute(image, 'loading'), 'lazy');
-        assert.equal(getAttribute(image, 'decoding'), 'async');
-        assert.ok(getAttribute(image, 'alt')?.trim());
+    const selector = source.match(/<nav class="project-selector"[^>]*>([\s\S]*?)<\/nav>/)?.[1];
+    assert.ok(selector);
+    const links = getTags(selector, 'a');
+    assert.equal(links.length, expectedProjects.length);
+    expectedProjects.forEach((project, index) => {
+        assert.equal(getAttribute(links[index], 'href'), `#${project.panelId}`);
+        assert.equal(getAttribute(links[index], 'data-project-link'), project.panelId);
+        assert.equal(getAttribute(links[index], 'aria-controls'), project.panelId);
+        assert.ok(selector.includes(project.title));
     });
+    assert.doesNotMatch(source, /class="grid-gallery"|data-project-filter|Back to projects/);
+    assert.match(styleSource, /\.project-selector\s*{[^}]*overflow-x:\s*auto/);
 });
 
 test('same-shell project panels keep the compact content contract', () => {
@@ -992,7 +925,7 @@ test('accessibility references point to existing IDs', () => {
                 assert.match(
                     source,
                     new RegExp(
-                        `<section\\b(?=[^>]*id=["']${section}["'])(?=[^>]*class=["'][^"']*\\bcase-panel\\b)(?=[^>]*data-section-panel=["']${section}["'])`,
+                        `<section\\b(?=[^>]*id=["']${section}["'])(?=[^>]*class=["'][^"']*\\bcase-panel\\b)(?=[^>]*data-project-panel=["']${section}["'])`,
                         'i',
                     ),
                     `home page needs a same-shell ${section} case-study panel`,
@@ -1000,7 +933,7 @@ test('accessibility references point to existing IDs', () => {
                 assert.match(
                     source,
                     new RegExp(
-                        `href=["']#${section}["'][^>]*data-panel-link=["']${section}["']`,
+                        `href=["']#${section}["'][^>]*data-project-link=["']${section}["']`,
                         'i',
                     ),
                     `home page needs a same-shell link for #${section}`,
@@ -1011,8 +944,8 @@ test('accessibility references point to existing IDs', () => {
                     source,
                     /href=["']#projects["'][^>]*data-panel-link=["']projects["']/gi,
                 ),
-                expectedProjects.length,
-                'each same-shell case study should include a Back to projects link',
+                0,
+                'full project views replace the intermediate gallery and back links',
             );
             assert.doesNotMatch(
                 source,
