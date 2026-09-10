@@ -521,19 +521,8 @@
 
 .certificates-card {
   display: grid;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: minmax(0, 1fr);
   min-width: 0;
-  gap: clamp(1rem, 2vw, 1.5rem);
-}
-
-.certificates-header {
-  display: grid;
-  gap: 0.55rem;
-  padding: 0.5rem 0.25rem;
-}
-
-.certificates-header p:last-child {
-  max-width: 62ch;
 }
 
 .certificate-list {

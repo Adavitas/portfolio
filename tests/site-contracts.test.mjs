@@ -29,7 +29,7 @@ const cssFiles = [
 ];
 
 const expectedStylesheetHrefs = cssFiles.map((file) =>
-    file === 'css/reset.css' ? file : `${file}?v=20260910`,
+    file === 'css/reset.css' ? file : `${file}?v=20260910-2`,
 );
 
 const expectedProjects = [
@@ -665,7 +665,7 @@ test('home time card exposes accent-aware format controls', () => {
 
     assert.match(
         source,
-        /<script\b(?=[^>]*src=["']js\/main\.js\?v=20260910["'])(?=[^>]*\bdefer\b)/i,
+        /<script\b(?=[^>]*src=["']js\/main\.js\?v=20260910-2["'])(?=[^>]*\bdefer\b)/i,
         'home page should load the current cache-busted main behavior',
     );
     assert.doesNotMatch(

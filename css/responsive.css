@@ -40,18 +40,19 @@
 
 @media (min-width: 700px) {
   .certificate-list.is-ready {
+    --certificate-bar-width: clamp(3rem, 4vw, 3.5rem);
     display: flex;
     min-height: 0;
   }
 
   .is-ready .certificate-item {
-    flex: 0 0 2.75rem;
+    flex: 0 0 var(--certificate-bar-width);
     display: flex;
     flex-direction: column;
   }
 
   .is-ready .certificate-item:has([aria-expanded="true"]) {
-    flex: 1 0 2.75rem;
+    flex: 1 0 var(--certificate-bar-width);
   }
 
   .is-ready .certificate-toggle {
@@ -79,6 +80,12 @@
 
   .is-ready .certificate-detail {
     flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+  }
+
+  .is-ready .certificate-detail > * {
+    flex-shrink: 0;
   }
 
   .portfolio-grid {

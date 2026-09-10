@@ -1037,7 +1037,7 @@ test('certificate accordion keeps one panel open and supports keyboard navigatio
     const list = appendElement(document, 'div', { className: 'certificate-list' });
     const buttons = [];
     const details = [];
-    for (let index = 0; index < 7; index++) {
+    for (let index = 0; index < 8; index++) {
         buttons.push(appendElement(document, 'button', {
             className: 'certificate-toggle',
             attributes: { 'aria-controls': `proof-${index}`, 'aria-expanded': 'true' },
@@ -1058,12 +1058,12 @@ test('certificate accordion keeps one panel open and supports keyboard navigatio
     buttons[3].dispatchEvent(createEvent('click'));
     assertSelection(3);
     buttons[3].dispatchEvent(createEvent('keydown', { key: 'End' }));
-    assertSelection(6);
-    buttons[6].dispatchEvent(createEvent('keydown', { key: 'ArrowRight' }));
+    assertSelection(7);
+    buttons[7].dispatchEvent(createEvent('keydown', { key: 'ArrowRight' }));
     assertSelection(0);
     buttons[0].dispatchEvent(createEvent('keydown', { key: 'ArrowLeft' }));
-    assertSelection(6);
-    buttons[6].dispatchEvent(createEvent('keydown', { key: 'Home' }));
+    assertSelection(7);
+    buttons[7].dispatchEvent(createEvent('keydown', { key: 'Home' }));
     assertSelection(0);
 });
 
