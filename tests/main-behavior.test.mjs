@@ -635,53 +635,6 @@ function createGithubActivityDom() {
     };
 }
 
-function createContactDom() {
-    const document = new MockDocument();
-    const contactForm = appendElement(document, 'form', { id: 'contact-form' });
-    contactForm.hidden = true;
-    const nameInput = appendElement(document, 'input', { id: 'name' }, contactForm);
-    const emailInput = appendElement(
-        document,
-        'input',
-        { id: 'email' },
-        contactForm,
-    );
-    const messageInput = appendElement(
-        document,
-        'textarea',
-        { id: 'message' },
-        contactForm,
-    );
-    const nameError = appendElement(document, 'p', { id: 'name-error' });
-    const emailError = appendElement(document, 'p', { id: 'email-error' });
-    const messageError = appendElement(document, 'p', { id: 'message-error' });
-    const formNote = appendElement(document, 'p', { id: 'form-note' });
-    formNote.hidden = true;
-    const formStatus = appendElement(document, 'p', {
-        id: 'form-status',
-        className: 'form-status',
-    });
-    const emailDraftLink = appendElement(document, 'a', {
-        id: 'email-draft-link',
-        className: 'email-draft-link',
-    });
-    emailDraftLink.hidden = true;
-
-    return {
-        document,
-        contactForm,
-        nameInput,
-        emailInput,
-        messageInput,
-        nameError,
-        emailError,
-        messageError,
-        formNote,
-        formStatus,
-        emailDraftLink,
-    };
-}
-
 function createRevealDom(count) {
     const document = new MockDocument();
     const revealElements = Array.from({ length: count }, () =>
@@ -693,53 +646,6 @@ function createRevealDom(count) {
     return {
         document,
         revealElements,
-    };
-}
-
-function createProjectFilterDom() {
-    const document = new MockDocument();
-    const status = appendElement(document, 'p', { id: 'project-filter-status' });
-    const filterLabels = {
-        all: 'All',
-        interfaces: 'Interfaces',
-        systems: 'Systems',
-        games: 'Games',
-        algorithms: 'Algorithms',
-    };
-    const buttons = Object.fromEntries(
-        Object.entries(filterLabels).map(([filter, label]) => {
-            const button = appendElement(document, 'button', {
-                className: 'project-filter-button',
-                attributes: {
-                    'aria-pressed': filter === 'all' ? 'true' : 'false',
-                    'data-project-filter': filter,
-                },
-            });
-            button.textContent = label;
-            return [filter, button];
-        }),
-    );
-    const projectCategories = [
-        'interfaces',
-        'systems',
-        'algorithms',
-        'games',
-        'games systems',
-        'interfaces games',
-        'systems',
-    ];
-    const projects = projectCategories.map((categories) =>
-        appendElement(document, 'article', {
-            className: 'project-card',
-            attributes: { 'data-project-categories': categories },
-        }),
-    );
-
-    return {
-        document,
-        status,
-        buttons,
-        projects,
     };
 }
 
@@ -770,29 +676,13 @@ function createSectionSwitcherDom() {
     });
     certificatesLink.textContent = 'Certificates';
 
-    const contactLink = appendElement(document, 'a', {
-        attributes: {
-            href: '#contact',
-            'data-section-link': 'contact',
-        },
-    });
-    contactLink.textContent = 'Contact';
-
     const casePortfolioLink = appendElement(document, 'a', {
         attributes: {
             href: '#case-portfolio',
-            'data-panel-link': 'case-portfolio',
+            'data-project-link': 'case-portfolio',
         },
     });
     casePortfolioLink.textContent = 'Read portfolio case study';
-
-    const backToProjectsLink = appendElement(document, 'a', {
-        attributes: {
-            href: '#projects',
-            'data-panel-link': 'projects',
-        },
-    });
-    backToProjectsLink.textContent = 'Back to projects';
 
     const aboutPanel = appendElement(document, 'section', {
         id: 'hero',
@@ -815,32 +705,31 @@ function createSectionSwitcherDom() {
         },
     });
 
-    const contactPanel = appendElement(document, 'div', {
-        attributes: {
-            'data-section-panel': 'contact',
-        },
-    });
-    appendElement(document, 'section', { id: 'contact' }, contactPanel);
-
     const casePortfolioPanel = appendElement(document, 'section', {
         id: 'case-portfolio',
         attributes: {
-            'data-section-panel': 'case-portfolio',
+            'data-project-panel': 'case-portfolio',
         },
+    }, projectsPanel);
+
+    const caseMinishellLink = appendElement(document, 'a', {
+        attributes: { href: '#case-minishell', 'data-project-link': 'case-minishell' },
     });
+    const caseMinishellPanel = appendElement(document, 'section', {
+        id: 'case-minishell', attributes: { 'data-project-panel': 'case-minishell' },
+    }, projectsPanel);
 
     return {
         document,
         aboutLink,
         projectsLink,
         certificatesLink,
-        contactLink,
         casePortfolioLink,
-        backToProjectsLink,
+        caseMinishellLink,
+        caseMinishellPanel,
         aboutPanel,
         projectsPanel,
         certificatesPanel,
-        contactPanel,
         casePortfolioPanel,
     };
 }
@@ -1096,96 +985,100 @@ test('GitHub activity keeps a clear fallback when the live request fails', async
     assert.equal(status.textContent, 'Live activity is temporarily unavailable');
 });
 
-test('home section switcher shows only the selected main panel', () => {
-    const dom = createSectionSwitcherDom();
-
-    runMain({ document: dom.document, locationHash: '#projects' });
-
-    assert.equal(dom.aboutPanel.hidden, true);
-    assert.equal(dom.projectsPanel.hidden, false);
-    assert.equal(dom.certificatesPanel.hidden, true);
-    assert.equal(dom.contactPanel.hidden, true);
-    assert.equal(dom.casePortfolioPanel.hidden, true);
-    assert.equal(dom.aboutLink.getAttribute('aria-current'), null);
-    assert.equal(dom.projectsLink.getAttribute('aria-current'), 'page');
-    assert.equal(dom.document.documentElement.dataset.activeSection, 'projects');
-    assert.equal(dom.projectsPanel.scrollIntoViewCalls.length, 0);
-
-    dom.casePortfolioLink.dispatchEvent(createEvent('click'));
-
-    assert.equal(dom.aboutPanel.hidden, true);
-    assert.equal(dom.projectsPanel.hidden, true);
-    assert.equal(dom.certificatesPanel.hidden, true);
-    assert.equal(dom.contactPanel.hidden, true);
-    assert.equal(dom.casePortfolioPanel.hidden, false);
-    assert.equal(dom.projectsLink.getAttribute('aria-current'), null);
-    assert.equal(dom.document.documentElement.dataset.activeSection, 'case-portfolio');
-    assert.equal(dom.document.activeElement, dom.casePortfolioPanel);
-    assert.equal(dom.casePortfolioPanel.scrollIntoViewCalls.length, 1);
-    assert.equal(dom.casePortfolioPanel.scrollTop, 0);
-
-    dom.backToProjectsLink.dispatchEvent(createEvent('click'));
-
-    assert.equal(dom.projectsPanel.hidden, false);
-    assert.equal(dom.casePortfolioPanel.hidden, true);
-    assert.equal(dom.projectsLink.getAttribute('aria-current'), 'page');
-    assert.equal(dom.document.documentElement.dataset.activeSection, 'projects');
-
-    dom.certificatesLink.dispatchEvent(createEvent('click'));
-
-    assert.equal(dom.aboutPanel.hidden, true);
-    assert.equal(dom.projectsPanel.hidden, true);
-    assert.equal(dom.certificatesPanel.hidden, false);
-    assert.equal(dom.contactPanel.hidden, true);
-    assert.equal(dom.casePortfolioPanel.hidden, true);
-    assert.equal(dom.projectsLink.getAttribute('aria-current'), null);
-    assert.equal(dom.certificatesLink.getAttribute('aria-current'), 'page');
-    assert.equal(
-        dom.document.documentElement.dataset.activeSection,
-        'certificates',
-    );
-    assert.equal(dom.certificatesPanel.scrollIntoViewCalls.length, 1);
-
-    const clickEvent = createEvent('click');
-    dom.contactLink.dispatchEvent(clickEvent);
-
-    assert.equal(clickEvent.defaultPrevented, true);
-    assert.equal(dom.aboutPanel.hidden, true);
-    assert.equal(dom.projectsPanel.hidden, true);
-    assert.equal(dom.certificatesPanel.hidden, true);
-    assert.equal(dom.contactPanel.hidden, false);
-    assert.equal(dom.casePortfolioPanel.hidden, true);
-    assert.equal(dom.projectsLink.getAttribute('aria-current'), null);
-    assert.equal(dom.certificatesLink.getAttribute('aria-current'), null);
-    assert.equal(dom.contactLink.getAttribute('aria-current'), 'page');
-    assert.equal(dom.document.documentElement.dataset.activeSection, 'contact');
-    assert.equal(dom.contactPanel.scrollIntoViewCalls.length, 1);
-    assert.equal(dom.contactPanel.scrollIntoViewCalls[0].block, 'start');
-    assert.equal(dom.contactPanel.scrollIntoViewCalls[0].behavior, 'smooth');
+test('certificate accordion keeps one panel open and supports keyboard navigation', () => {
+    const document = new MockDocument();
+    const list = appendElement(document, 'div', { className: 'certificate-list' });
+    const buttons = [];
+    const details = [];
+    for (let index = 0; index < 8; index++) {
+        buttons.push(appendElement(document, 'button', {
+            className: 'certificate-toggle',
+            attributes: { 'aria-controls': `proof-${index}`, 'aria-expanded': 'true' },
+        }, list));
+        details.push(appendElement(document, 'div', { id: `proof-${index}` }));
+    }
+    runMain({ document });
+    function assertSelection(selected) {
+        buttons.forEach((button, index) => {
+            assert.equal(button.getAttribute('aria-expanded'), String(index === selected));
+            assert.equal(details[index].hidden, index !== selected);
+            assert.equal(button.disabled, false);
+        });
+    }
+    assertSelection(0);
+    buttons[3].dispatchEvent(createEvent('click'));
+    assertSelection(3);
+    buttons[3].dispatchEvent(createEvent('click'));
+    assertSelection(3);
+    buttons[3].dispatchEvent(createEvent('keydown', { key: 'End' }));
+    assertSelection(7);
+    buttons[7].dispatchEvent(createEvent('keydown', { key: 'ArrowRight' }));
+    assertSelection(0);
+    buttons[0].dispatchEvent(createEvent('keydown', { key: 'ArrowLeft' }));
+    assertSelection(7);
+    buttons[7].dispatchEvent(createEvent('keydown', { key: 'Home' }));
+    assertSelection(0);
 });
 
-test('home case-study hashes can load directly and respond to browser history', () => {
+test('project selection opens full content and persists across section changes', () => {
     const dom = createSectionSwitcherDom();
-    const run = runMain({
-        document: dom.document,
-        locationHash: '#case-portfolio',
-    });
-
+    runMain({ document: dom.document, locationHash: '#projects' });
+    assert.equal(dom.aboutPanel.hidden, true);
+    assert.equal(dom.projectsPanel.hidden, false);
+    assert.equal(dom.certificatesPanel.hidden, true);
     assert.equal(dom.casePortfolioPanel.hidden, false);
-    assert.equal(dom.projectsPanel.hidden, true);
-    assert.equal(dom.projectsLink.getAttribute('aria-current'), null);
-    assert.equal(
-        dom.document.documentElement.dataset.activeSection,
-        'case-portfolio',
-    );
-
-    run.window.location.hash = '#projects';
-    run.window.dispatchEvent(createEvent('hashchange'));
-
+    assert.equal(dom.caseMinishellPanel.hidden, true);
+    assert.equal(dom.casePortfolioLink.getAttribute('aria-current'), 'true');
+    dom.caseMinishellPanel.scrollTop = 100;
+    dom.caseMinishellLink.dispatchEvent(createEvent('click'));
+    assert.equal(dom.projectsPanel.hidden, false);
     assert.equal(dom.casePortfolioPanel.hidden, true);
+    assert.equal(dom.caseMinishellPanel.hidden, false);
+    assert.equal(dom.caseMinishellPanel.scrollTop, 0);
+    assert.equal(dom.caseMinishellLink.getAttribute('aria-current'), 'true');
+    assert.equal(dom.casePortfolioLink.getAttribute('aria-current'), null);
+    assert.equal(dom.projectsLink.getAttribute('aria-current'), 'page');
+    assert.equal(dom.document.documentElement.dataset.activeSection, 'projects');
+    dom.certificatesLink.dispatchEvent(createEvent('click'));
+    assert.equal(dom.projectsPanel.hidden, true);
+    assert.equal(dom.caseMinishellPanel.hidden, true);
+    assert.equal(dom.certificatesPanel.hidden, false);
+    dom.projectsLink.dispatchEvent(createEvent('click'));
+    assert.equal(dom.caseMinishellPanel.hidden, false);
+    assert.equal(dom.certificatesPanel.hidden, true);
+});
+
+test('project hashes load directly and browser history restores the selected project', () => {
+    const dom = createSectionSwitcherDom();
+    const run = runMain({ document: dom.document, locationHash: '#case-minishell' });
+    assert.equal(dom.caseMinishellPanel.hidden, false);
     assert.equal(dom.projectsPanel.hidden, false);
     assert.equal(dom.projectsLink.getAttribute('aria-current'), 'page');
-    assert.equal(dom.document.activeElement, dom.projectsPanel);
+    run.window.location.hash = '#case-portfolio';
+    run.window.dispatchEvent(createEvent('hashchange'));
+    assert.equal(dom.casePortfolioPanel.hidden, false);
+    assert.equal(dom.caseMinishellPanel.hidden, true);
+    assert.equal(dom.casePortfolioLink.getAttribute('aria-current'), 'true');
+    run.window.location.hash = '#unknown-project';
+    run.window.dispatchEvent(createEvent('hashchange'));
+    assert.equal(dom.aboutPanel.hidden, false);
+    assert.equal(dom.projectsPanel.hidden, true);
+});
+
+test('project keyboard navigation moves focus without changing selection', () => {
+    const dom = createSectionSwitcherDom();
+    const run = runMain({ document: dom.document, locationHash: '#projects' });
+    dom.casePortfolioLink.dispatchEvent(createEvent('keydown', { key: 'End' }));
+    assert.equal(dom.document.activeElement, dom.caseMinishellLink);
+    assert.equal(dom.casePortfolioPanel.hidden, false);
+    assert.deepEqual(run.historyPushes, []);
+    dom.caseMinishellLink.dispatchEvent(createEvent('keydown', { key: 'ArrowRight' }));
+    assert.equal(dom.document.activeElement, dom.casePortfolioLink);
+    dom.casePortfolioLink.dispatchEvent(createEvent('keydown', { key: 'ArrowLeft' }));
+    assert.equal(dom.document.activeElement, dom.caseMinishellLink);
+    dom.caseMinishellLink.dispatchEvent(createEvent('click', { ctrlKey: true }));
+    assert.deepEqual(run.historyPushes, []);
+    assert.equal(dom.casePortfolioPanel.hidden, false);
 });
 
 test('section links do not add duplicate entries for the current hash', () => {
@@ -1215,131 +1108,6 @@ test('home section switcher respects reduced motion when scrolling clicked panel
     assert.equal(dom.projectsPanel.scrollIntoViewCalls.length, 1);
     assert.equal(dom.projectsPanel.scrollIntoViewCalls[0].block, 'start');
     assert.equal(dom.projectsPanel.scrollIntoViewCalls[0].behavior, 'auto');
-});
-
-test('project filter toggles cards, button state, and live status', () => {
-    const dom = createProjectFilterDom();
-    const visibleProjectIndexes = () =>
-        dom.projects
-            .map((project, index) => (project.hidden ? null : index))
-            .filter((index) => index !== null);
-
-    runMain({ document: dom.document });
-
-    const expectations = [
-        ['interfaces', [0, 5], 'Showing 2 interfaces projects.'],
-        ['systems', [1, 4, 6], 'Showing 3 systems projects.'],
-        ['games', [3, 4, 5], 'Showing 3 games projects.'],
-        ['algorithms', [2], 'Showing 1 algorithm project.'],
-        ['all', [0, 1, 2, 3, 4, 5, 6], 'Showing all 7 projects.'],
-    ];
-
-    for (const [filter, visibleIndexes, status] of expectations) {
-        dom.buttons[filter].dispatchEvent(createEvent('click'));
-        assert.deepEqual(visibleProjectIndexes(), visibleIndexes);
-        assert.equal(dom.buttons[filter].getAttribute('aria-pressed'), 'true');
-        assert.equal(dom.status.textContent, status);
-    }
-});
-
-test('empty contact form submission exposes required errors and focuses first field', () => {
-    const dom = createContactDom();
-
-    runMain({ document: dom.document });
-
-    assert.equal(dom.formNote.hidden, false);
-    assert.equal(dom.contactForm.hidden, false);
-
-    dom.contactForm.dispatchEvent(createEvent('submit'));
-
-    assert.equal(dom.contactForm.noValidate, true);
-    assert.equal(dom.nameError.textContent, 'Enter a name with at least two characters.');
-    assert.equal(dom.emailError.textContent, 'Enter your email address.');
-    assert.equal(
-        dom.messageError.textContent,
-        'Write a message with at least 20 characters.',
-    );
-    assert.equal(dom.formStatus.textContent, 'Please correct the highlighted fields.');
-    assert.equal(dom.formStatus.classList.contains('is-error'), true);
-    assert.equal(dom.document.activeElement, dom.nameInput);
-});
-
-test('contact form rejects malformed email addresses', () => {
-    const dom = createContactDom();
-    dom.nameInput.value = 'Ada';
-    dom.emailInput.value = 'not-an-email';
-    dom.emailInput.validity.valid = false;
-    dom.messageInput.value = 'This message is long enough.';
-
-    runMain({ document: dom.document });
-    dom.contactForm.dispatchEvent(createEvent('submit'));
-
-    assert.equal(
-        dom.emailError.textContent,
-        'Enter an email address in the format name@example.com.',
-    );
-    assert.equal(dom.document.activeElement, dom.emailInput);
-});
-
-test('contact form treats whitespace as empty content', () => {
-    const dom = createContactDom();
-    dom.nameInput.value = '   ';
-    dom.emailInput.value = '   ';
-    dom.messageInput.value = '                    ';
-
-    runMain({ document: dom.document });
-    dom.contactForm.dispatchEvent(createEvent('submit'));
-
-    assert.equal(dom.nameError.textContent, 'Enter a name with at least two characters.');
-    assert.equal(dom.emailError.textContent, 'Enter your email address.');
-    assert.equal(
-        dom.messageError.textContent,
-        'Write a message with at least 20 characters.',
-    );
-});
-
-test('valid contact form data creates an encoded mailto draft', () => {
-    const dom = createContactDom();
-    dom.nameInput.value = 'Ada Lovelace';
-    dom.emailInput.value = 'ada@example.com';
-    dom.emailInput.validity.valid = true;
-    dom.messageInput.value = 'I would like to discuss a portfolio opportunity.';
-
-    runMain({ document: dom.document });
-    dom.contactForm.dispatchEvent(createEvent('submit'));
-
-    assert.equal(dom.emailDraftLink.hidden, false);
-    assert.match(
-        dom.emailDraftLink.href,
-        /^mailto:leqso\.davitashvili\.st@gmail\.com\?subject=Portfolio%20enquiry%20from%20Ada%20Lovelace&body=/,
-    );
-    assert.match(dom.emailDraftLink.href, /Email%3A%20ada%40example\.com/);
-    assert.match(dom.formStatus.textContent, /ready/i);
-    assert.doesNotMatch(dom.formStatus.textContent, /\bsent\b/i);
-    assert.equal(dom.formStatus.classList.contains('is-success'), true);
-    assert.equal(dom.document.activeElement, dom.emailDraftLink);
-});
-
-test('editing a contact field clears stale draft state', () => {
-    const dom = createContactDom();
-    dom.formStatus.classList.add('persistent-status-hook');
-    dom.nameInput.value = 'Ada Lovelace';
-    dom.emailInput.value = 'ada@example.com';
-    dom.messageInput.value = 'I would like to discuss a portfolio opportunity.';
-
-    runMain({ document: dom.document });
-    dom.contactForm.dispatchEvent(createEvent('submit'));
-
-    assert.equal(dom.emailDraftLink.hidden, false);
-
-    dom.messageInput.dispatchEvent(createEvent('input'));
-
-    assert.equal(dom.formStatus.textContent, '');
-    assert.equal(dom.formStatus.classList.contains('form-status'), true);
-    assert.equal(dom.formStatus.classList.contains('persistent-status-hook'), true);
-    assert.equal(dom.formStatus.classList.contains('is-success'), false);
-    assert.equal(dom.emailDraftLink.hidden, true);
-    assert.equal(dom.emailDraftLink.getAttribute('href'), null);
 });
 
 test('card reveals observe targets and disconnect after the final reveal', () => {

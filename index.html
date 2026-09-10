@@ -34,27 +34,26 @@
     <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml" />
     <script src="js/theme-init.js"></script>
     <link rel="stylesheet" href="css/reset.css" />
-    <link rel="stylesheet" href="css/tokens.css?v=20260722" />
-    <link rel="stylesheet" href="css/base.css?v=20260722" />
-    <link rel="stylesheet" href="css/layout.css?v=20260722" />
-    <link rel="stylesheet" href="css/components.css?v=20260722" />
-    <link rel="stylesheet" href="css/sections.css?v=20260722" />
-    <link rel="stylesheet" href="css/responsive.css?v=20260722" />
-    <link rel="stylesheet" href="css/motion.css?v=20260722" />
+    <link rel="stylesheet" href="css/tokens.css?v=20260910-4" />
+    <link rel="stylesheet" href="css/base.css?v=20260910-4" />
+    <link rel="stylesheet" href="css/layout.css?v=20260910-4" />
+    <link rel="stylesheet" href="css/components.css?v=20260910-4" />
+    <link rel="stylesheet" href="css/sections.css?v=20260910-4" />
+    <link rel="stylesheet" href="css/responsive.css?v=20260910-4" />
+    <link rel="stylesheet" href="css/motion.css?v=20260910-4" />
   </head>
   <body>
     <div class="portfolio-shell">
       <main id="main-content" class="portfolio-grid">
         <section
           id="hero"
-          class="card intro-card card-spotlight"
+          class="intro-card"
           data-section-panel="about"
           aria-label="About"
           tabindex="-1"
         >
           <div class="intro-layout">
-            <div class="intro-copy">
-              <p class="eyebrow">Portfolio / 2026</p>
+            <div class="card intro-copy card-spotlight">
               <h1>
                 Hi, I'm Aleksandre, a software developer learning by building.
               </h1>
@@ -68,27 +67,8 @@
               </p>
             </div>
 
-            <aside
-              class="intro-portrait"
-              aria-label="Portrait and current role"
-            >
-              <img
-                src="assets/images/portrait.jpeg"
-                alt="Aleksandre Davitashvili standing in front of a geometric wall decoration"
-                width="560"
-                height="560"
-                fetchpriority="high"
-              />
-              <div class="intro-portrait-copy">
-                <p class="eyebrow">42 Wolfsburg</p>
-                <p>
-                  Software developer focused on frontend craft and Unix systems.
-                </p>
-              </div>
-            </aside>
-
             <section
-              class="github-activity"
+              class="card github-activity card-spotlight"
               aria-labelledby="github-activity-heading"
               data-github-activity
               data-github-username="Adavitas"
@@ -143,7 +123,9 @@
               <noscript>
                 <p>
                   JavaScript is required to display live GitHub activity.
-                  <a href="https://github.com/Adavitas">View the GitHub profile</a>.
+                  <a href="https://github.com/Adavitas"
+                    >View the GitHub profile</a
+                  >.
                 </p>
               </noscript>
             </section>
@@ -152,1080 +134,914 @@
 
         <section
           id="projects"
-          class="card projects-card card-spotlight"
+          class="projects-card"
           data-section-panel="projects"
           aria-label="Selected projects"
           tabindex="-1"
         >
-          <div class="project-filter">
-            <div
-              class="project-filter-buttons"
-              role="group"
-              aria-label="Project filters"
+          <nav class="project-selector" aria-label="Choose a project">
+            <a
+              class="project-choice"
+              href="#case-portfolio"
+              data-project-link="case-portfolio"
+              aria-controls="case-portfolio"
             >
-              <button
-                class="project-filter-button"
-                type="button"
-                data-project-filter="all"
-                aria-pressed="true"
-              >
-                All
-              </button>
-              <button
-                class="project-filter-button"
-                type="button"
-                data-project-filter="interfaces"
-                aria-pressed="false"
-              >
-                Interfaces
-              </button>
-              <button
-                class="project-filter-button"
-                type="button"
-                data-project-filter="systems"
-                aria-pressed="false"
-              >
-                Systems
-              </button>
-              <button
-                class="project-filter-button"
-                type="button"
-                data-project-filter="games"
-                aria-pressed="false"
-              >
-                Games
-              </button>
-              <button
-                class="project-filter-button"
-                type="button"
-                data-project-filter="algorithms"
-                aria-pressed="false"
-              >
-                Algorithms
-              </button>
-            </div>
-            <p
-              class="project-filter-status"
-              id="project-filter-status"
-              aria-live="polite"
+              <span class="project-choice-name">Personal portfolio</span>
+              <span class="project-choice-stack">HTML · CSS · JavaScript</span>
+            </a>
+            <a
+              class="project-choice"
+              href="#case-minishell"
+              data-project-link="case-minishell"
+              aria-controls="case-minishell"
             >
-              Showing all 7 projects.
-            </p>
-          </div>
+              <span class="project-choice-name">Minishell</span>
+              <span class="project-choice-stack">C · Unix</span>
+            </a>
+            <a
+              class="project-choice"
+              href="#case-push-swap"
+              data-project-link="case-push-swap"
+              aria-controls="case-push-swap"
+            >
+              <span class="project-choice-name">Push Swap</span>
+              <span class="project-choice-stack">C · Algorithms</span>
+            </a>
+            <a
+              class="project-choice"
+              href="#case-so-long"
+              data-project-link="case-so-long"
+              aria-controls="case-so-long"
+            >
+              <span class="project-choice-name">so_long</span>
+              <span class="project-choice-stack">C · MiniLibX</span>
+            </a>
+            <a
+              class="project-choice"
+              href="#case-cub3d"
+              data-project-link="case-cub3d"
+              aria-controls="case-cub3d"
+            >
+              <span class="project-choice-name">cub3D</span>
+              <span class="project-choice-stack">C · Raycasting</span>
+            </a>
+            <a
+              class="project-choice"
+              href="#case-movie-mania"
+              data-project-link="case-movie-mania"
+              aria-controls="case-movie-mania"
+            >
+              <span class="project-choice-name">Movie Mania</span>
+              <span class="project-choice-stack">Python · tkinter</span>
+            </a>
+            <a
+              class="project-choice"
+              href="#case-philosophers"
+              data-project-link="case-philosophers"
+              aria-controls="case-philosophers"
+            >
+              <span class="project-choice-name">Philosophers</span>
+              <span class="project-choice-stack">C · Threads</span>
+            </a>
+          </nav>
 
-          <div class="grid-gallery">
-            <article
-              class="card project-card featured-project card-spotlight"
-              data-project-categories="interfaces"
-              data-reveal
-            >
-              <img
-                src="assets/images/portfolio-preview.svg"
-                alt="Abstract preview of this portfolio's bento card layout"
-                width="800"
-                height="450"
-                loading="lazy"
-                decoding="async"
-              />
-              <div class="project-copy">
-                <h3>Personal portfolio</h3>
-                <p>
-                  A dependency-free portfolio with accessible panel navigation,
-                  project filters, persistent preferences, and responsive layout.
-                </p>
-                <ul class="tag-list">
-                  <li>HTML</li>
-                  <li>CSS</li>
-                  <li>JavaScript</li>
-                  <li>Accessibility</li>
-                </ul>
-                <div class="project-links">
-                  <a href="#case-portfolio" data-panel-link="case-portfolio"
-                    >Read portfolio case study</a
-                  >
-                  <a
-                    href="https://github.com/Adavitas/portfolio"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    >View portfolio source</a
-                  >
+          <section
+            id="case-portfolio"
+            class="card case-panel card-spotlight"
+            data-project-panel="case-portfolio"
+            aria-label="Portfolio case study"
+            tabindex="-1"
+          >
+            <article class="case-study">
+              <header class="case-study-hero">
+                <div class="case-study-hero-copy">
+                  <h2>Personal portfolio</h2>
+                  <p class="case-study-introduction">
+                    This dependency-free portfolio presents browser-interface
+                    and Unix-systems work through an accessible, responsive
+                    single-page shell built with semantic HTML, layered CSS, and
+                    carefully guarded JavaScript enhancements.
+                  </p>
+                  <dl class="case-study-meta">
+                    <div>
+                      <dt>Type</dt>
+                      <dd>Single-page portfolio</dd>
+                    </div>
+                    <div>
+                      <dt>Stack</dt>
+                      <dd>HTML, CSS, JavaScript</dd>
+                    </div>
+                    <div>
+                      <dt>Focus</dt>
+                      <dd>Accessibility and state</dd>
+                    </div>
+                  </dl>
                 </div>
+                <img
+                  src="assets/images/portfolio-preview.svg"
+                  alt="Abstract preview of this portfolio's bento card layout"
+                  width="800"
+                  height="450"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </header>
+
+              <section class="case-study-section">
+                <h3>What it does</h3>
+                <p>
+                  The page keeps its main sections and project cases in one
+                  document. Hash navigation, project selection, theme and accent
+                  preferences, and timezone formatting remain usable without
+                  runtime dependencies or a build step.
+                </p>
+              </section>
+
+              <section class="case-study-section">
+                <h3>Key engineering</h3>
+                <ul class="case-study-section-list">
+                  <li>
+                    Semantic landmarks, labelled controls, visible focus states,
+                    and reduced-motion behavior support keyboard and
+                    assistive-technology users.
+                  </li>
+                  <li>
+                    Shared design tokens and responsibility-based stylesheets
+                    coordinate themes, layout, components, responsive
+                    breakpoints, and motion.
+                  </li>
+                  <li>
+                    Guarded enhancements preserve direct links and prevent an
+                    unavailable optional feature from blocking unrelated
+                    initialization.
+                  </li>
+                </ul>
+              </section>
+
+              <div class="case-panel-actions">
+                <a
+                  href="https://github.com/Adavitas/portfolio"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >View portfolio source</a
+                >
               </div>
             </article>
+          </section>
 
-            <article
-              class="card project-card card-spotlight"
-              data-project-categories="systems"
-              data-reveal
-            >
-              <img
-                src="assets/images/minishell-preview.svg"
-                alt="Terminal illustration representing the Minishell project"
-                width="800"
-                height="450"
-                loading="lazy"
-                decoding="async"
-              />
-              <div class="project-copy">
-                <h3>Minishell</h3>
-                <p>
-                  A C shell implementing parsing, expansion, pipelines,
-                  redirections, built-ins, signals, and process execution.
-                </p>
-                <ul class="tag-list">
-                  <li>C</li>
-                  <li>Unix</li>
-                  <li>Parsing</li>
-                </ul>
-                <div class="project-links">
-                  <a href="#case-minishell" data-panel-link="case-minishell"
-                    >Read Minishell case study</a
-                  >
-                  <a
-                    href="https://github.com/Adavitas/minishell"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    >View Minishell source</a
-                  >
+          <section
+            id="case-minishell"
+            class="card case-panel card-spotlight"
+            data-project-panel="case-minishell"
+            aria-label="Minishell case study"
+            tabindex="-1"
+          >
+            <article class="case-study">
+              <header class="case-study-hero">
+                <div class="case-study-hero-copy">
+                  <h2>Minishell</h2>
+                  <p class="case-study-introduction">
+                    Minishell is a collaborative C implementation of a focused
+                    Unix shell, connecting tokenization and syntax trees to
+                    processes, file descriptors, environment expansion,
+                    built-ins, heredocs, and signal behavior.
+                  </p>
+                  <dl class="case-study-meta">
+                    <div>
+                      <dt>Type</dt>
+                      <dd>Collaborative Unix shell</dd>
+                    </div>
+                    <div>
+                      <dt>Stack</dt>
+                      <dd>C, Unix, Readline</dd>
+                    </div>
+                    <div>
+                      <dt>Focus</dt>
+                      <dd>Parsing and processes</dd>
+                    </div>
+                  </dl>
                 </div>
+                <img
+                  src="assets/images/minishell-preview.svg"
+                  alt="Terminal illustration representing the Minishell project"
+                  width="800"
+                  height="450"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </header>
+
+              <section class="case-study-section">
+                <h3>What it does</h3>
+                <p>
+                  Readline input moves through lexical analysis, quote-aware
+                  expansion, parsing, and execution. Commands can form
+                  pipelines, redirect streams, update shell state through
+                  parent-run built-ins, or launch external programs with
+                  inherited environments while preserving exit statuses.
+                </p>
+              </section>
+
+              <section class="case-study-section">
+                <h3>Key engineering</h3>
+                <ul class="case-study-section-list">
+                  <li>
+                    Token types retain quote context so variable expansion and
+                    the previous exit status occur at the correct stage.
+                  </li>
+                  <li>
+                    An abstract syntax tree fixes command, pipeline, and
+                    redirection order before process creation.
+                  </li>
+                  <li>
+                    Centralized descriptor cleanup, syntax checks, heredoc
+                    handling, and signal paths define predictable failure
+                    behavior.
+                  </li>
+                </ul>
+              </section>
+
+              <div class="case-panel-actions">
+                <a
+                  href="https://github.com/Adavitas/minishell"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >View Minishell source</a
+                >
               </div>
             </article>
+          </section>
 
-            <article
-              class="card project-card card-spotlight"
-              data-project-categories="algorithms"
-              data-reveal
-              data-reveal-delay="short"
-            >
-              <img
-                src="assets/images/push-swap-preview.svg"
-                alt="Two numbered stacks representing the Push Swap sorting project"
-                width="800"
-                height="450"
-                loading="lazy"
-                decoding="async"
-              />
-              <div class="project-copy">
-                <h3>Push Swap</h3>
-                <p>
-                  A C program that validates integers and generates legal
-                  two-stack operations to sort them.
-                </p>
-                <ul class="tag-list">
-                  <li>C</li>
-                  <li>Algorithms</li>
-                  <li>Data structures</li>
-                </ul>
-                <div class="project-links">
-                  <a href="#case-push-swap" data-panel-link="case-push-swap"
-                    >Read Push Swap case study</a
-                  >
-                  <a
-                    href="https://github.com/Adavitas/push_swap"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    >View Push Swap source</a
-                  >
+          <section
+            id="case-push-swap"
+            class="card case-panel card-spotlight"
+            data-project-panel="case-push-swap"
+            aria-label="Push Swap case study"
+            tabindex="-1"
+          >
+            <article class="case-study">
+              <header class="case-study-hero">
+                <div class="case-study-hero-copy">
+                  <h2>Push Swap</h2>
+                  <p class="case-study-introduction">
+                    Push Swap validates integer input, stores ranked values in
+                    linked-list stacks, and prints a legal instruction sequence
+                    that sorts stack A under a deliberately restricted operation
+                    set using C and Make.
+                  </p>
+                  <dl class="case-study-meta">
+                    <div>
+                      <dt>Type</dt>
+                      <dd>Constrained sorting program</dd>
+                    </div>
+                    <div>
+                      <dt>Stack</dt>
+                      <dd>C, linked lists, Make</dd>
+                    </div>
+                    <div>
+                      <dt>Focus</dt>
+                      <dd>Ranking and operation planning</dd>
+                    </div>
+                  </dl>
                 </div>
+                <img
+                  src="assets/images/push-swap-preview.svg"
+                  alt="Two numbered stacks representing the Push Swap sorting project"
+                  width="800"
+                  height="450"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </header>
+
+              <section class="case-study-section">
+                <h3>What it does</h3>
+                <p>
+                  The program can only swap, push, rotate, or reverse-rotate two
+                  stacks. Dedicated small-input strategies handle short
+                  permutations, while larger inputs move ranked chunks before
+                  rebuilding the sorted primary stack in order.
+                </p>
+              </section>
+
+              <section class="case-study-section">
+                <h3>Key engineering</h3>
+                <ul class="case-study-section-list">
+                  <li>
+                    Validation rejects malformed numbers, duplicates, and values
+                    outside the signed integer range.
+                  </li>
+                  <li>
+                    Relative ranks separate movement planning from each input
+                    value's original magnitude.
+                  </li>
+                  <li>
+                    A companion checker applies instructions independently and
+                    reports whether the final state is sorted correctly.
+                  </li>
+                </ul>
+              </section>
+
+              <div class="case-panel-actions">
+                <a
+                  href="https://github.com/Adavitas/push_swap"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >View Push Swap source</a
+                >
               </div>
             </article>
+          </section>
 
-            <article
-              class="card project-card card-spotlight"
-              data-project-categories="games"
-              data-reveal
-            >
-              <img
-                src="assets/images/so-long-preview.svg"
-                alt="Grid maze illustration with a player, collectibles, and an exit for so_long"
-                width="800"
-                height="450"
-                loading="lazy"
-                decoding="async"
-              />
-              <div class="project-copy">
-                <h3>so_long</h3>
-                <p>
-                  A MiniLibX grid game where players collect every item, then
-                  reach the exit through a validated map.
-                </p>
-                <ul class="tag-list">
-                  <li>C</li>
-                  <li>MiniLibX</li>
-                  <li>Flood fill</li>
-                </ul>
-                <div class="project-links">
-                  <a href="#case-so-long" data-panel-link="case-so-long"
-                    >Read so_long case study</a
-                  >
-                  <a
-                    href="https://github.com/Adavitas/so_long"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    >View so_long source</a
-                  >
+          <section
+            id="case-so-long"
+            class="card case-panel card-spotlight"
+            data-project-panel="case-so-long"
+            aria-label="so_long case study"
+            tabindex="-1"
+          >
+            <article class="case-study">
+              <header class="case-study-hero">
+                <div class="case-study-hero-copy">
+                  <h2>so_long</h2>
+                  <p class="case-study-introduction">
+                    so_long is a 2D MiniLibX game in C where the player crosses
+                    a map, collects every item, and unlocks the exit while each
+                    movement is counted.
+                  </p>
+                  <dl class="case-study-meta">
+                    <div>
+                      <dt>Type</dt>
+                      <dd>2D grid game</dd>
+                    </div>
+                    <div>
+                      <dt>Stack</dt>
+                      <dd>C, MiniLibX, X11</dd>
+                    </div>
+                    <div>
+                      <dt>Focus</dt>
+                      <dd>Parsing and reachability</dd>
+                    </div>
+                  </dl>
                 </div>
+                <img
+                  src="assets/images/so-long-preview.svg"
+                  alt="Grid maze illustration with a player, collectibles, and an exit for so_long"
+                  width="800"
+                  height="450"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </header>
+
+              <section class="case-study-section">
+                <h3>What it does</h3>
+                <p>
+                  The program loads a rectangular <code>.ber</code> grid,
+                  validates its symbols and enclosing walls, then renders
+                  32-pixel XPM tiles. Keyboard hooks move the player and redraw
+                  only the changed cells after every step.
+                </p>
+              </section>
+
+              <section class="case-study-section">
+                <h3>Key engineering</h3>
+                <ul class="case-study-section-list">
+                  <li>
+                    Flood fill runs on a duplicate map to prove every
+                    collectible and exit is reachable.
+                  </li>
+                  <li>
+                    Validation rejects malformed dimensions, unsupported tiles,
+                    missing entities, and maps larger than configured limits.
+                  </li>
+                  <li>
+                    Window, sprite, map, and movement paths share cleanup and
+                    explicit, safe error handling.
+                  </li>
+                </ul>
+              </section>
+
+              <div class="case-panel-actions">
+                <a
+                  href="https://github.com/Adavitas/so_long"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >View so_long source</a
+                >
               </div>
             </article>
+          </section>
 
-            <article
-              class="card project-card card-spotlight"
-              data-project-categories="games systems"
-              data-reveal
-              data-reveal-delay="short"
-            >
-              <img
-                src="assets/images/cub3d-preview.jpg"
-                alt="cub3D gameplay showing a textured first-person maze, minimap, and wand"
-                width="800"
-                height="450"
-                loading="lazy"
-                decoding="async"
-              />
-              <div class="project-copy">
-                <h3>cub3D</h3>
-                <p>
-                  A C raycaster that turns validated 2D maps into textured
-                  first-person mazes with doors and lighting.
-                </p>
-                <ul class="tag-list">
-                  <li>C</li>
-                  <li>Raycasting</li>
-                  <li>MiniLibX</li>
-                </ul>
-                <div class="project-links">
-                  <a href="#case-cub3d" data-panel-link="case-cub3d"
-                    >Read cub3D case study</a
-                  >
-                  <a
-                    href="https://github.com/Adavitas/cub3d"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    >View cub3D source</a
-                  >
+          <section
+            id="case-cub3d"
+            class="card case-panel card-spotlight"
+            data-project-panel="case-cub3d"
+            aria-label="cub3D case study"
+            tabindex="-1"
+          >
+            <article class="case-study">
+              <header class="case-study-hero">
+                <div class="case-study-hero-copy">
+                  <h2>cub3D</h2>
+                  <p class="case-study-introduction">
+                    cub3D is a collaborative C graphics engine project that
+                    renders a textured first-person maze from a validated 2D
+                    map, with interactive doors, mouse look, and wand-driven
+                    lighting.
+                  </p>
+                  <dl class="case-study-meta">
+                    <div>
+                      <dt>Type</dt>
+                      <dd>Collaborative raycaster</dd>
+                    </div>
+                    <div>
+                      <dt>Stack</dt>
+                      <dd>C, MiniLibX, X11</dd>
+                    </div>
+                    <div>
+                      <dt>Focus</dt>
+                      <dd>Rendering and map parsing</dd>
+                    </div>
+                  </dl>
                 </div>
+                <img
+                  src="assets/images/cub3d-preview.jpg"
+                  alt="cub3D gameplay showing a textured first-person maze, minimap, and wand"
+                  width="800"
+                  height="450"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </header>
+
+              <section class="case-study-section">
+                <h3>What it does</h3>
+                <p>
+                  For every screen column, the renderer performs DDA traversal,
+                  calculates perpendicular wall distance, and samples a wall
+                  slice. Separate passes add angle-based sky, floor casting,
+                  fog, the minimap, and HUD effects.
+                </p>
+              </section>
+
+              <section class="case-study-section">
+                <h3>Key engineering</h3>
+                <ul class="case-study-section-list">
+                  <li>
+                    The parser validates texture paths, RGB values, player
+                    orientation, wall enclosure, and door placement.
+                  </li>
+                  <li>
+                    Closed doors participate in both collision checks and ray
+                    hits until the player opens them.
+                  </li>
+                  <li>
+                    Animated wand state dynamically controls local lighting,
+                    glow, sparkles, and first-person sprite frames.
+                  </li>
+                </ul>
+              </section>
+
+              <div class="case-panel-actions">
+                <a
+                  href="https://github.com/Adavitas/cub3d"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >View cub3D source</a
+                >
               </div>
             </article>
+          </section>
 
-            <article
-              class="card project-card card-spotlight"
-              data-project-categories="interfaces games"
-              data-reveal
-            >
-              <img
-                src="assets/images/movie-mania-preview.svg"
-                alt="Movie trivia interface illustration with a timer and four answer choices"
-                width="800"
-                height="450"
-                loading="lazy"
-                decoding="async"
-              />
-              <div class="project-copy">
-                <h3>Movie Mania</h3>
-                <p>
-                  A Python movie-trivia game with timed rounds, randomized
-                  questions, lifelines, and a persistent leaderboard.
-                </p>
-                <ul class="tag-list">
-                  <li>Python</li>
-                  <li>tkinter</li>
-                  <li>Game UI</li>
-                </ul>
-                <div class="project-links">
-                  <a
-                    href="#case-movie-mania"
-                    data-panel-link="case-movie-mania"
-                    >Read Movie Mania case study</a
-                  >
-                  <a
-                    href="https://github.com/Adavitas/movie_mania"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    >View Movie Mania source</a
-                  >
+          <section
+            id="case-movie-mania"
+            class="card case-panel card-spotlight"
+            data-project-panel="case-movie-mania"
+            aria-label="Movie Mania case study"
+            tabindex="-1"
+          >
+            <article class="case-study">
+              <header class="case-study-hero">
+                <div class="case-study-hero-copy">
+                  <h2>Movie Mania</h2>
+                  <p class="case-study-introduction">
+                    Movie Mania is a Python desktop trivia game for Stanford
+                    Code in Place 2025, combining timed movie questions,
+                    lifelines, animated feedback, and a custom tkinter canvas
+                    interface.
+                  </p>
+                  <dl class="case-study-meta">
+                    <div>
+                      <dt>Type</dt>
+                      <dd>Desktop trivia game</dd>
+                    </div>
+                    <div>
+                      <dt>Stack</dt>
+                      <dd>Python, tkinter, JSON</dd>
+                    </div>
+                    <div>
+                      <dt>Focus</dt>
+                      <dd>Event-driven game state</dd>
+                    </div>
+                  </dl>
                 </div>
+                <img
+                  src="assets/images/movie-mania-preview.svg"
+                  alt="Movie trivia interface illustration with a timer and four answer choices"
+                  width="800"
+                  height="450"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </header>
+
+              <section class="case-study-section">
+                <h3>What it does</h3>
+                <p>
+                  Each round selects two easy, three medium, and three hard
+                  questions from a 100-question bank. Players answer through
+                  keyboard input while a monotonic deadline and timer display
+                  enforce 30-second turns.
+                </p>
+              </section>
+
+              <section class="case-study-section">
+                <h3>Key engineering</h3>
+                <ul class="case-study-section-list">
+                  <li>
+                    Question and option shuffling keeps correct answers and
+                    audience-poll data aligned across each randomized round.
+                  </li>
+                  <li>
+                    One-use 50/50, phone, and audience lifelines update the
+                    current interface without changing the question.
+                  </li>
+                  <li>
+                    Successful eight-answer runs persist timestamped scores to a
+                    validated JSON leaderboard after a complete round.
+                  </li>
+                </ul>
+              </section>
+
+              <div class="case-panel-actions">
+                <a
+                  href="https://github.com/Adavitas/movie_mania"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >View Movie Mania source</a
+                >
               </div>
             </article>
+          </section>
 
-            <article
-              class="card project-card card-spotlight"
-              data-project-categories="systems"
-              data-reveal
-              data-reveal-delay="short"
-            >
-              <img
-                src="assets/images/philosophers-preview.svg"
-                alt="Circular thread and fork diagram representing the Philosophers simulation"
-                width="800"
-                height="450"
-                loading="lazy"
-                decoding="async"
-              />
-              <div class="project-copy">
-                <h3>Philosophers</h3>
-                <p>
-                  A POSIX-thread simulation coordinating shared forks, meal
-                  timing, starvation detection, and clean shutdown conditions.
-                </p>
-                <ul class="tag-list">
-                  <li>C</li>
-                  <li>Threads</li>
-                  <li>Mutexes</li>
-                </ul>
-                <div class="project-links">
-                  <a
-                    href="#case-philosophers"
-                    data-panel-link="case-philosophers"
-                    >Read Philosophers case study</a
-                  >
-                  <a
-                    href="https://github.com/Adavitas/philosophers"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    >View Philosophers source</a
-                  >
+          <section
+            id="case-philosophers"
+            class="card case-panel card-spotlight"
+            data-project-panel="case-philosophers"
+            aria-label="Philosophers case study"
+            tabindex="-1"
+          >
+            <article class="case-study">
+              <header class="case-study-hero">
+                <div class="case-study-hero-copy">
+                  <h2>Philosophers</h2>
+                  <p class="case-study-introduction">
+                    Philosophers models the Dining Philosophers concurrency
+                    problem in C, running one POSIX thread per philosopher plus
+                    a monitor thread while mutexes coordinate shared forks,
+                    timestamps, output, meals, and simulation state.
+                  </p>
+                  <dl class="case-study-meta">
+                    <div>
+                      <dt>Type</dt>
+                      <dd>Concurrency simulation</dd>
+                    </div>
+                    <div>
+                      <dt>Stack</dt>
+                      <dd>C, POSIX threads, mutexes</dd>
+                    </div>
+                    <div>
+                      <dt>Focus</dt>
+                      <dd>Synchronization and timing</dd>
+                    </div>
+                  </dl>
                 </div>
+                <img
+                  src="assets/images/philosophers-preview.svg"
+                  alt="Circular thread and fork diagram representing the Philosophers simulation"
+                  width="800"
+                  height="450"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </header>
+
+              <section class="case-study-section">
+                <h3>What it does</h3>
+                <p>
+                  Each philosopher cycles through eating, sleeping, and thinking
+                  until the monitor detects starvation or every required meal is
+                  complete. Millisecond timestamps make thread activity
+                  observable while shared-state reads remain synchronized.
+                </p>
+              </section>
+
+              <section class="case-study-section">
+                <h3>Key engineering</h3>
+                <ul class="case-study-section-list">
+                  <li>
+                    Odd and even philosophers acquire forks in opposite orders
+                    to break circular waiting.
+                  </li>
+                  <li>
+                    Even threads start staggered, and odd table sizes receive
+                    calculated think time.
+                  </li>
+                  <li>
+                    The monitor locks meal state before checking last-eat
+                    timestamps and completion counts for every philosopher.
+                  </li>
+                </ul>
+              </section>
+
+              <div class="case-panel-actions">
+                <a
+                  href="https://github.com/Adavitas/philosophers"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >View Philosophers source</a
+                >
               </div>
             </article>
-          </div>
-        </section>
-
-        <section
-          id="case-portfolio"
-          class="card case-panel card-spotlight"
-          data-section-panel="case-portfolio"
-          aria-label="Portfolio case study"
-          tabindex="-1"
-        >
-          <article class="case-study">
-            <header class="case-study-hero">
-              <div class="case-study-hero-copy">
-                <p class="eyebrow">Case study / Interfaces</p>
-                <h2>Personal portfolio</h2>
-                <p class="case-study-introduction">
-                  This dependency-free portfolio presents browser-interface and
-                  Unix-systems work through an accessible, responsive single-page
-                  shell built with semantic HTML, layered CSS, and carefully
-                  guarded JavaScript enhancements.
-                </p>
-                <dl class="case-study-meta">
-                  <div>
-                    <dt>Type</dt>
-                    <dd>Single-page portfolio</dd>
-                  </div>
-                  <div>
-                    <dt>Stack</dt>
-                    <dd>HTML, CSS, JavaScript</dd>
-                  </div>
-                  <div>
-                    <dt>Focus</dt>
-                    <dd>Accessibility and state</dd>
-                  </div>
-                </dl>
-              </div>
-              <img
-                src="assets/images/portfolio-preview.svg"
-                alt="Abstract preview of this portfolio's bento card layout"
-                width="800"
-                height="450"
-                loading="lazy"
-                decoding="async"
-              />
-            </header>
-
-            <section class="case-study-section">
-              <h3>What it does</h3>
-              <p>
-                The page keeps its main sections and project cases in one
-                document. Hash navigation, filters, theme and accent preferences,
-                timezone formatting, and contact-draft validation remain usable
-                without runtime dependencies or a build step.
-              </p>
-            </section>
-
-            <section class="case-study-section">
-              <h3>Key engineering</h3>
-              <ul class="case-study-section-list">
-                <li>
-                  Semantic landmarks, labelled controls, visible focus states,
-                  and reduced-motion behavior support keyboard and
-                  assistive-technology users.
-                </li>
-                <li>
-                  Shared design tokens and responsibility-based stylesheets
-                  coordinate themes, layout, components, responsive breakpoints,
-                  and motion.
-                </li>
-                <li>
-                  Guarded enhancements preserve direct links and prevent an
-                  unavailable optional feature from blocking unrelated
-                  initialization.
-                </li>
-              </ul>
-            </section>
-
-            <div class="case-panel-actions">
-              <a href="#projects" data-panel-link="projects"
-                >Back to projects</a
-              >
-              <a
-                href="https://github.com/Adavitas/portfolio"
-                target="_blank"
-                rel="noopener noreferrer"
-                >View portfolio source</a
-              >
-            </div>
-          </article>
-        </section>
-
-        <section
-          id="case-minishell"
-          class="card case-panel card-spotlight"
-          data-section-panel="case-minishell"
-          aria-label="Minishell case study"
-          tabindex="-1"
-        >
-          <article class="case-study">
-            <header class="case-study-hero">
-              <div class="case-study-hero-copy">
-                <p class="eyebrow">Case study / Systems</p>
-                <h2>Minishell</h2>
-                <p class="case-study-introduction">
-                  Minishell is a collaborative C implementation of a focused
-                  Unix shell, connecting tokenization and syntax trees to
-                  processes, file descriptors, environment expansion, built-ins,
-                  heredocs, and signal behavior.
-                </p>
-                <dl class="case-study-meta">
-                  <div>
-                    <dt>Type</dt>
-                    <dd>Collaborative Unix shell</dd>
-                  </div>
-                  <div>
-                    <dt>Stack</dt>
-                    <dd>C, Unix, Readline</dd>
-                  </div>
-                  <div>
-                    <dt>Focus</dt>
-                    <dd>Parsing and processes</dd>
-                  </div>
-                </dl>
-              </div>
-              <img
-                src="assets/images/minishell-preview.svg"
-                alt="Terminal illustration representing the Minishell project"
-                width="800"
-                height="450"
-                loading="lazy"
-                decoding="async"
-              />
-            </header>
-
-            <section class="case-study-section">
-              <h3>What it does</h3>
-              <p>
-                Readline input moves through lexical analysis, quote-aware
-                expansion, parsing, and execution. Commands can form pipelines,
-                redirect streams, update shell state through parent-run built-ins,
-                or launch external programs with inherited environments while
-                preserving exit statuses.
-              </p>
-            </section>
-
-            <section class="case-study-section">
-              <h3>Key engineering</h3>
-              <ul class="case-study-section-list">
-                <li>
-                  Token types retain quote context so variable expansion and the
-                  previous exit status occur at the correct stage.
-                </li>
-                <li>
-                  An abstract syntax tree fixes command, pipeline, and
-                  redirection order before process creation.
-                </li>
-                <li>
-                  Centralized descriptor cleanup, syntax checks, heredoc
-                  handling, and signal paths define predictable failure behavior.
-                </li>
-              </ul>
-            </section>
-
-            <div class="case-panel-actions">
-              <a href="#projects" data-panel-link="projects"
-                >Back to projects</a
-              >
-              <a
-                href="https://github.com/Adavitas/minishell"
-                target="_blank"
-                rel="noopener noreferrer"
-                >View Minishell source</a
-              >
-            </div>
-          </article>
-        </section>
-
-        <section
-          id="case-push-swap"
-          class="card case-panel card-spotlight"
-          data-section-panel="case-push-swap"
-          aria-label="Push Swap case study"
-          tabindex="-1"
-        >
-          <article class="case-study">
-            <header class="case-study-hero">
-              <div class="case-study-hero-copy">
-                <p class="eyebrow">Case study / Algorithms</p>
-                <h2>Push Swap</h2>
-                <p class="case-study-introduction">
-                  Push Swap validates integer input, stores ranked values in
-                  linked-list stacks, and prints a legal instruction sequence
-                  that sorts stack A under a deliberately restricted operation
-                  set using C and Make.
-                </p>
-                <dl class="case-study-meta">
-                  <div>
-                    <dt>Type</dt>
-                    <dd>Constrained sorting program</dd>
-                  </div>
-                  <div>
-                    <dt>Stack</dt>
-                    <dd>C, linked lists, Make</dd>
-                  </div>
-                  <div>
-                    <dt>Focus</dt>
-                    <dd>Ranking and operation planning</dd>
-                  </div>
-                </dl>
-              </div>
-              <img
-                src="assets/images/push-swap-preview.svg"
-                alt="Two numbered stacks representing the Push Swap sorting project"
-                width="800"
-                height="450"
-                loading="lazy"
-                decoding="async"
-              />
-            </header>
-
-            <section class="case-study-section">
-              <h3>What it does</h3>
-              <p>
-                The program can only swap, push, rotate, or reverse-rotate two
-                stacks. Dedicated small-input strategies handle short
-                permutations, while larger inputs move ranked chunks before
-                rebuilding the sorted primary stack in order.
-              </p>
-            </section>
-
-            <section class="case-study-section">
-              <h3>Key engineering</h3>
-              <ul class="case-study-section-list">
-                <li>
-                  Validation rejects malformed numbers, duplicates, and values
-                  outside the signed integer range.
-                </li>
-                <li>
-                  Relative ranks separate movement planning from each input
-                  value's original magnitude.
-                </li>
-                <li>
-                  A companion checker applies instructions independently and
-                  reports whether the final state is sorted correctly.
-                </li>
-              </ul>
-            </section>
-
-            <div class="case-panel-actions">
-              <a href="#projects" data-panel-link="projects"
-                >Back to projects</a
-              >
-              <a
-                href="https://github.com/Adavitas/push_swap"
-                target="_blank"
-                rel="noopener noreferrer"
-                >View Push Swap source</a
-              >
-            </div>
-          </article>
-        </section>
-
-        <section
-          id="case-so-long"
-          class="card case-panel card-spotlight"
-          data-section-panel="case-so-long"
-          aria-label="so_long case study"
-          tabindex="-1"
-        >
-          <article class="case-study">
-            <header class="case-study-hero">
-              <div class="case-study-hero-copy">
-                <p class="eyebrow">Case study / Games</p>
-                <h2>so_long</h2>
-                <p class="case-study-introduction">
-                  so_long is a 2D MiniLibX game in C where the player crosses a
-                  map, collects every item, and unlocks the exit while each
-                  movement is counted.
-                </p>
-                <dl class="case-study-meta">
-                  <div>
-                    <dt>Type</dt>
-                    <dd>2D grid game</dd>
-                  </div>
-                  <div>
-                    <dt>Stack</dt>
-                    <dd>C, MiniLibX, X11</dd>
-                  </div>
-                  <div>
-                    <dt>Focus</dt>
-                    <dd>Parsing and reachability</dd>
-                  </div>
-                </dl>
-              </div>
-              <img
-                src="assets/images/so-long-preview.svg"
-                alt="Grid maze illustration with a player, collectibles, and an exit for so_long"
-                width="800"
-                height="450"
-                loading="lazy"
-                decoding="async"
-              />
-            </header>
-
-            <section class="case-study-section">
-              <h3>What it does</h3>
-              <p>
-                The program loads a rectangular <code>.ber</code> grid,
-                validates its symbols and enclosing walls, then renders 32-pixel
-                XPM tiles. Keyboard hooks move the player and redraw only the
-                changed cells after every step.
-              </p>
-            </section>
-
-            <section class="case-study-section">
-              <h3>Key engineering</h3>
-              <ul class="case-study-section-list">
-                <li>
-                  Flood fill runs on a duplicate map to prove every collectible
-                  and exit is reachable.
-                </li>
-                <li>
-                  Validation rejects malformed dimensions, unsupported tiles,
-                  missing entities, and maps larger than configured limits.
-                </li>
-                <li>
-                  Window, sprite, map, and movement paths share cleanup and
-                  explicit, safe error handling.
-                </li>
-              </ul>
-            </section>
-
-            <div class="case-panel-actions">
-              <a href="#projects" data-panel-link="projects"
-                >Back to projects</a
-              >
-              <a
-                href="https://github.com/Adavitas/so_long"
-                target="_blank"
-                rel="noopener noreferrer"
-                >View so_long source</a
-              >
-            </div>
-          </article>
-        </section>
-
-        <section
-          id="case-cub3d"
-          class="card case-panel card-spotlight"
-          data-section-panel="case-cub3d"
-          aria-label="cub3D case study"
-          tabindex="-1"
-        >
-          <article class="case-study">
-            <header class="case-study-hero">
-              <div class="case-study-hero-copy">
-                <p class="eyebrow">Case study / Games and systems</p>
-                <h2>cub3D</h2>
-                <p class="case-study-introduction">
-                  cub3D is a collaborative C graphics engine project that
-                  renders a textured first-person maze from a validated 2D map,
-                  with interactive doors, mouse look, and wand-driven lighting.
-                </p>
-                <dl class="case-study-meta">
-                  <div>
-                    <dt>Type</dt>
-                    <dd>Collaborative raycaster</dd>
-                  </div>
-                  <div>
-                    <dt>Stack</dt>
-                    <dd>C, MiniLibX, X11</dd>
-                  </div>
-                  <div>
-                    <dt>Focus</dt>
-                    <dd>Rendering and map parsing</dd>
-                  </div>
-                </dl>
-              </div>
-              <img
-                src="assets/images/cub3d-preview.jpg"
-                alt="cub3D gameplay showing a textured first-person maze, minimap, and wand"
-                width="800"
-                height="450"
-                loading="lazy"
-                decoding="async"
-              />
-            </header>
-
-            <section class="case-study-section">
-              <h3>What it does</h3>
-              <p>
-                For every screen column, the renderer performs DDA traversal,
-                calculates perpendicular wall distance, and samples a wall
-                slice. Separate passes add angle-based sky, floor casting, fog,
-                the minimap, and HUD effects.
-              </p>
-            </section>
-
-            <section class="case-study-section">
-              <h3>Key engineering</h3>
-              <ul class="case-study-section-list">
-                <li>
-                  The parser validates texture paths, RGB values, player
-                  orientation, wall enclosure, and door placement.
-                </li>
-                <li>
-                  Closed doors participate in both collision checks and ray hits
-                  until the player opens them.
-                </li>
-                <li>
-                  Animated wand state dynamically controls local lighting, glow,
-                  sparkles, and first-person sprite frames.
-                </li>
-              </ul>
-            </section>
-
-            <div class="case-panel-actions">
-              <a href="#projects" data-panel-link="projects"
-                >Back to projects</a
-              >
-              <a
-                href="https://github.com/Adavitas/cub3d"
-                target="_blank"
-                rel="noopener noreferrer"
-                >View cub3D source</a
-              >
-            </div>
-          </article>
-        </section>
-
-        <section
-          id="case-movie-mania"
-          class="card case-panel card-spotlight"
-          data-section-panel="case-movie-mania"
-          aria-label="Movie Mania case study"
-          tabindex="-1"
-        >
-          <article class="case-study">
-            <header class="case-study-hero">
-              <div class="case-study-hero-copy">
-                <p class="eyebrow">Case study / Interfaces and games</p>
-                <h2>Movie Mania</h2>
-                <p class="case-study-introduction">
-                  Movie Mania is a Python desktop trivia game for Stanford Code
-                  in Place 2025, combining timed movie questions, lifelines,
-                  animated feedback, and a custom tkinter canvas interface.
-                </p>
-                <dl class="case-study-meta">
-                  <div>
-                    <dt>Type</dt>
-                    <dd>Desktop trivia game</dd>
-                  </div>
-                  <div>
-                    <dt>Stack</dt>
-                    <dd>Python, tkinter, JSON</dd>
-                  </div>
-                  <div>
-                    <dt>Focus</dt>
-                    <dd>Event-driven game state</dd>
-                  </div>
-                </dl>
-              </div>
-              <img
-                src="assets/images/movie-mania-preview.svg"
-                alt="Movie trivia interface illustration with a timer and four answer choices"
-                width="800"
-                height="450"
-                loading="lazy"
-                decoding="async"
-              />
-            </header>
-
-            <section class="case-study-section">
-              <h3>What it does</h3>
-              <p>
-                Each round selects two easy, three medium, and three hard
-                questions from a 100-question bank. Players answer through
-                keyboard input while a monotonic deadline and timer display
-                enforce 30-second turns.
-              </p>
-            </section>
-
-            <section class="case-study-section">
-              <h3>Key engineering</h3>
-              <ul class="case-study-section-list">
-                <li>
-                  Question and option shuffling keeps correct answers and
-                  audience-poll data aligned across each randomized round.
-                </li>
-                <li>
-                  One-use 50/50, phone, and audience lifelines update the current
-                  interface without changing the question.
-                </li>
-                <li>
-                  Successful eight-answer runs persist timestamped scores to a
-                  validated JSON leaderboard after a complete round.
-                </li>
-              </ul>
-            </section>
-
-            <div class="case-panel-actions">
-              <a href="#projects" data-panel-link="projects"
-                >Back to projects</a
-              >
-              <a
-                href="https://github.com/Adavitas/movie_mania"
-                target="_blank"
-                rel="noopener noreferrer"
-                >View Movie Mania source</a
-              >
-            </div>
-          </article>
-        </section>
-
-        <section
-          id="case-philosophers"
-          class="card case-panel card-spotlight"
-          data-section-panel="case-philosophers"
-          aria-label="Philosophers case study"
-          tabindex="-1"
-        >
-          <article class="case-study">
-            <header class="case-study-hero">
-              <div class="case-study-hero-copy">
-                <p class="eyebrow">Case study / Systems</p>
-                <h2>Philosophers</h2>
-                <p class="case-study-introduction">
-                  Philosophers models the Dining Philosophers concurrency problem
-                  in C, running one POSIX thread per philosopher plus a monitor
-                  thread while mutexes coordinate shared forks, timestamps,
-                  output, meals, and simulation state.
-                </p>
-                <dl class="case-study-meta">
-                  <div>
-                    <dt>Type</dt>
-                    <dd>Concurrency simulation</dd>
-                  </div>
-                  <div>
-                    <dt>Stack</dt>
-                    <dd>C, POSIX threads, mutexes</dd>
-                  </div>
-                  <div>
-                    <dt>Focus</dt>
-                    <dd>Synchronization and timing</dd>
-                  </div>
-                </dl>
-              </div>
-              <img
-                src="assets/images/philosophers-preview.svg"
-                alt="Circular thread and fork diagram representing the Philosophers simulation"
-                width="800"
-                height="450"
-                loading="lazy"
-                decoding="async"
-              />
-            </header>
-
-            <section class="case-study-section">
-              <h3>What it does</h3>
-              <p>
-                Each philosopher cycles through eating, sleeping, and thinking
-                until the monitor detects starvation or every required meal is
-                complete. Millisecond timestamps make thread activity observable
-                while shared-state reads remain synchronized.
-              </p>
-            </section>
-
-            <section class="case-study-section">
-              <h3>Key engineering</h3>
-              <ul class="case-study-section-list">
-                <li>
-                  Odd and even philosophers acquire forks in opposite orders to
-                  break circular waiting.
-                </li>
-                <li>
-                  Even threads start staggered, and odd table sizes receive
-                  calculated think time.
-                </li>
-                <li>
-                  The monitor locks meal state before checking last-eat
-                  timestamps and completion counts for every philosopher.
-                </li>
-              </ul>
-            </section>
-
-            <div class="case-panel-actions">
-              <a href="#projects" data-panel-link="projects"
-                >Back to projects</a
-              >
-              <a
-                href="https://github.com/Adavitas/philosophers"
-                target="_blank"
-                rel="noopener noreferrer"
-                >View Philosophers source</a
-              >
-            </div>
-          </article>
+          </section>
         </section>
 
         <section
           id="certificates"
-          class="card certificates-card card-spotlight"
+          class="certificates-card"
           data-section-panel="certificates"
           aria-label="Certificates"
           data-reveal
           tabindex="-1"
         >
-          <div class="certificates-header">
-            <p class="eyebrow">Certificates</p>
-            <h2>Learning proof I can point to.</h2>
-            <p>
-              This section collects verified course and learning certificates.
-              Each entry links to the original proof instead of only listing a
-              title.
-            </p>
-          </div>
-
           <div class="certificate-list">
             <article class="certificate-item">
-              <div class="certificate-copy">
-                <p class="eyebrow">Stanford Code in Place</p>
-                <h3>Code in Place certificate</h3>
-                <p>
-                  A Stanford University introductory coding course focused on
-                  programming fundamentals and problem solving.
-                </p>
-                <ul class="tag-list">
-                  <li>Programming fundamentals</li>
-                  <li>Python</li>
-                  <li>Course certificate</li>
-                </ul>
-              </div>
-              <a
-                class="certificate-link"
-                href="https://codeinplace.stanford.edu/cip5/certificate/ic8whm"
-                target="_blank"
-                rel="noopener noreferrer"
-                >View certificate</a
+              <h3 class="certificate-heading">
+                <button
+                  type="button"
+                  class="certificate-toggle"
+                  aria-expanded="true"
+                  aria-controls="certificate-01"
+                  id="certificate-toggle-01"
+                  disabled
+                >
+                  <span class="certificate-number">01</span>
+                  <span class="certificate-label">Code in Place</span>
+                  <span class="certificate-indicator" aria-hidden="true"
+                    >↗</span
+                  >
+                </button>
+              </h3>
+              <div
+                class="certificate-detail"
+                id="certificate-01"
+                role="region"
+                aria-labelledby="certificate-toggle-01"
               >
+                <div class="certificate-copy">
+                  <p class="eyebrow">Stanford Code in Place</p>
+                  <p class="certificate-title">Code in Place certificate</p>
+                  <p>
+                    A Stanford University introductory coding course focused on
+                    programming fundamentals and problem solving.
+                  </p>
+                  <ul class="tag-list">
+                    <li>Programming fundamentals</li>
+                    <li>Python</li>
+                    <li>Course certificate</li>
+                  </ul>
+                </div>
+                <a
+                  class="certificate-link"
+                  href="https://codeinplace.stanford.edu/cip5/certificate/ic8whm"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >View certificate</a
+                >
+              </div>
+            </article>
+            <article class="certificate-item">
+              <h3 class="certificate-heading">
+                <button
+                  type="button"
+                  class="certificate-toggle"
+                  aria-expanded="true"
+                  aria-controls="certificate-02"
+                  id="certificate-toggle-02"
+                  disabled
+                >
+                  <span class="certificate-number">02</span>
+                  <span class="certificate-label">Coming soon</span>
+                  <span class="certificate-indicator" aria-hidden="true"
+                    >↗</span
+                  >
+                </button>
+              </h3>
+              <div
+                class="certificate-detail"
+                id="certificate-02"
+                role="region"
+                aria-labelledby="certificate-toggle-02"
+              >
+                <p class="eyebrow">Future learning</p>
+                <p class="certificate-title">Coming soon</p>
+                <p>
+                  A new certificate will be added here as my learning continues.
+                </p>
+              </div>
+            </article>
+            <article class="certificate-item">
+              <h3 class="certificate-heading">
+                <button
+                  type="button"
+                  class="certificate-toggle"
+                  aria-expanded="true"
+                  aria-controls="certificate-03"
+                  id="certificate-toggle-03"
+                  disabled
+                >
+                  <span class="certificate-number">03</span>
+                  <span class="certificate-label">Coming soon</span>
+                  <span class="certificate-indicator" aria-hidden="true"
+                    >↗</span
+                  >
+                </button>
+              </h3>
+              <div
+                class="certificate-detail"
+                id="certificate-03"
+                role="region"
+                aria-labelledby="certificate-toggle-03"
+              >
+                <p class="eyebrow">Future learning</p>
+                <p class="certificate-title">Coming soon</p>
+                <p>
+                  A new certificate will be added here as my learning continues.
+                </p>
+              </div>
+            </article>
+            <article class="certificate-item">
+              <h3 class="certificate-heading">
+                <button
+                  type="button"
+                  class="certificate-toggle"
+                  aria-expanded="true"
+                  aria-controls="certificate-04"
+                  id="certificate-toggle-04"
+                  disabled
+                >
+                  <span class="certificate-number">04</span>
+                  <span class="certificate-label">Coming soon</span>
+                  <span class="certificate-indicator" aria-hidden="true"
+                    >↗</span
+                  >
+                </button>
+              </h3>
+              <div
+                class="certificate-detail"
+                id="certificate-04"
+                role="region"
+                aria-labelledby="certificate-toggle-04"
+              >
+                <p class="eyebrow">Future learning</p>
+                <p class="certificate-title">Coming soon</p>
+                <p>
+                  A new certificate will be added here as my learning continues.
+                </p>
+              </div>
+            </article>
+            <article class="certificate-item">
+              <h3 class="certificate-heading">
+                <button
+                  type="button"
+                  class="certificate-toggle"
+                  aria-expanded="true"
+                  aria-controls="certificate-05"
+                  id="certificate-toggle-05"
+                  disabled
+                >
+                  <span class="certificate-number">05</span>
+                  <span class="certificate-label">Coming soon</span>
+                  <span class="certificate-indicator" aria-hidden="true"
+                    >↗</span
+                  >
+                </button>
+              </h3>
+              <div
+                class="certificate-detail"
+                id="certificate-05"
+                role="region"
+                aria-labelledby="certificate-toggle-05"
+              >
+                <p class="eyebrow">Future learning</p>
+                <p class="certificate-title">Coming soon</p>
+                <p>
+                  A new certificate will be added here as my learning continues.
+                </p>
+              </div>
+            </article>
+            <article class="certificate-item">
+              <h3 class="certificate-heading">
+                <button
+                  type="button"
+                  class="certificate-toggle"
+                  aria-expanded="true"
+                  aria-controls="certificate-06"
+                  id="certificate-toggle-06"
+                  disabled
+                >
+                  <span class="certificate-number">06</span>
+                  <span class="certificate-label">Coming soon</span>
+                  <span class="certificate-indicator" aria-hidden="true"
+                    >↗</span
+                  >
+                </button>
+              </h3>
+              <div
+                class="certificate-detail"
+                id="certificate-06"
+                role="region"
+                aria-labelledby="certificate-toggle-06"
+              >
+                <p class="eyebrow">Future learning</p>
+                <p class="certificate-title">Coming soon</p>
+                <p>
+                  A new certificate will be added here as my learning continues.
+                </p>
+              </div>
+            </article>
+            <article class="certificate-item">
+              <h3 class="certificate-heading">
+                <button
+                  type="button"
+                  class="certificate-toggle"
+                  aria-expanded="true"
+                  aria-controls="certificate-07"
+                  id="certificate-toggle-07"
+                  disabled
+                >
+                  <span class="certificate-number">07</span>
+                  <span class="certificate-label">Coming soon</span>
+                  <span class="certificate-indicator" aria-hidden="true"
+                    >↗</span
+                  >
+                </button>
+              </h3>
+              <div
+                class="certificate-detail"
+                id="certificate-07"
+                role="region"
+                aria-labelledby="certificate-toggle-07"
+              >
+                <p class="eyebrow">Future learning</p>
+                <p class="certificate-title">Coming soon</p>
+                <p>
+                  A new certificate will be added here as my learning continues.
+                </p>
+              </div>
+            </article>
+            <article class="certificate-item">
+              <h3 class="certificate-heading">
+                <button
+                  type="button"
+                  class="certificate-toggle"
+                  aria-expanded="true"
+                  aria-controls="certificate-08"
+                  id="certificate-toggle-08"
+                  disabled
+                >
+                  <span class="certificate-number">08</span>
+                  <span class="certificate-label">Coming soon</span>
+                  <span class="certificate-indicator" aria-hidden="true"
+                    >↗</span
+                  >
+                </button>
+              </h3>
+              <div
+                class="certificate-detail"
+                id="certificate-08"
+                role="region"
+                aria-labelledby="certificate-toggle-08"
+              >
+                <p class="eyebrow">Future learning</p>
+                <p class="certificate-title">Coming soon</p>
+                <p>
+                  A new certificate will be added here as my learning continues.
+                </p>
+              </div>
             </article>
           </div>
-        </section>
-
-        <section
-          id="contact"
-          class="card contact-card card-spotlight"
-          data-section-panel="contact"
-          aria-label="Contact"
-          data-reveal
-          tabindex="-1"
-        >
-          <h2>Let's work together</h2>
-          <p>
-            Have a project, learning suggestion, or opportunity? Send me a
-            message or contact me directly by email.
-          </p>
-
-          <address>
-            <a href="mailto:leqso.davitashvili.st@gmail.com"
-              >leqso.davitashvili.st@gmail.com</a
-            >
-          </address>
-
-          <p class="form-note" id="form-note" hidden>
-            This form prepares an email draft. You will review and send it from
-            your email application.
-          </p>
-
-          <noscript>
-            <p class="form-note">
-              JavaScript is unavailable. Use the email address above to contact
-              me directly.
-            </p>
-          </noscript>
-
-          <form id="contact-form" aria-describedby="form-note" hidden>
-            <div class="form-field">
-              <label for="name">Name</label>
-              <input
-                id="name"
-                name="name"
-                type="text"
-                autocomplete="name"
-                minlength="2"
-                maxlength="80"
-                aria-describedby="name-help name-error"
-                required
-              />
-              <p class="form-help" id="name-help">
-                Enter at least two characters.
-              </p>
-              <p class="form-error" id="name-error"></p>
-            </div>
-
-            <div class="form-field">
-              <label for="email">Email</label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                autocomplete="email"
-                maxlength="254"
-                aria-describedby="email-help email-error"
-                required
-              />
-              <p class="form-help" id="email-help">
-                Use an address such as name@example.com.
-              </p>
-              <p class="form-error" id="email-error"></p>
-            </div>
-
-            <div class="form-field">
-              <label for="message">Message</label>
-              <textarea
-                id="message"
-                name="message"
-                rows="6"
-                minlength="20"
-                maxlength="2000"
-                aria-describedby="message-help message-error"
-                required
-              ></textarea>
-              <p class="form-help" id="message-help">
-                Explain your idea in at least 20 characters.
-              </p>
-              <p class="form-error" id="message-error"></p>
-            </div>
-
-            <button type="submit">Prepare email</button>
-            <p
-              class="form-status"
-              id="form-status"
-              aria-live="polite"
-              aria-atomic="true"
-            ></p>
-            <a class="email-draft-link" id="email-draft-link" hidden
-              >Open email draft</a
-            >
-          </form>
         </section>
 
         <aside class="section-rail" aria-label="Portfolio controls">
@@ -1235,23 +1051,360 @@
           >
             <ul>
               <li>
-                <a href="#hero" data-section-link="about" aria-current="page"
+                <a
+                  href="#hero"
+                  data-section-link="about"
+                  data-avatar-state="about"
+                  aria-current="page"
                   >About</a
                 >
               </li>
               <li>
-                <a href="#projects" data-section-link="projects">Projects</a>
-              </li>
-              <li>
-                <a href="#certificates" data-section-link="certificates"
-                  >Certificates</a
+                <a
+                  href="#projects"
+                  data-section-link="projects"
+                  data-avatar-state="works"
+                  >Projects</a
                 >
               </li>
               <li>
-                <a href="#contact" data-section-link="contact">Contact</a>
+                <a
+                  href="#certificates"
+                  data-section-link="certificates"
+                  data-avatar-state="hire"
+                  >Certificates</a
+                >
               </li>
             </ul>
           </nav>
+
+          <section
+            class="card rail-avatar-card card-spotlight"
+            aria-label="Interactive portrait"
+          >
+            <div class="avatar-wrap">
+              <svg
+                id="avatar"
+                class="avatar"
+                viewBox="0 0 260 260"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-label="Hand-drawn portrait of Aleksandre reacting to the selected portfolio section"
+                role="img"
+              >
+                <defs>
+                  <mask
+                    id="av-mask-laptop"
+                    maskUnits="userSpaceOnUse"
+                    x="-20"
+                    y="-20"
+                    width="300"
+                    height="300"
+                  >
+                    <rect
+                      x="-20"
+                      y="-20"
+                      width="300"
+                      height="300"
+                      fill="#fff"
+                    />
+                    <g transform="translate(0, 8)" fill="#000">
+                      <path
+                        d="M28 170 q-2 -6 5 -7 l92 -8 q7 -1 8 6 l6 56 q1 7 -6 7 l-98 2 q-7 0 -8 -7 Z"
+                      />
+                      <path d="M35 226 h122 q7 0 8 6 l1 4 h-136 Z" />
+                    </g>
+                  </mask>
+                  <mask
+                    id="av-mask-paper"
+                    maskUnits="userSpaceOnUse"
+                    x="-20"
+                    y="-20"
+                    width="300"
+                    height="300"
+                  >
+                    <rect
+                      x="-20"
+                      y="-20"
+                      width="300"
+                      height="300"
+                      fill="#fff"
+                    />
+                    <g transform="translate(0, 26)" fill="#000">
+                      <path d="M158 118 l64 -10 q4 -1 5 3 l10 74 -6 1 Z" />
+                      <path d="M156 122 l68 -6 q4 0 4 4 l6 76 -6 1 Z" />
+                      <path
+                        d="M152 126 q0 -4 4 -4 l66 -2 q4 0 4 4 l4 82 q0 4 -4 4 l-66 2 q-4 0 -4 -4 Z"
+                      />
+                    </g>
+                  </mask>
+                </defs>
+
+                <path
+                  class="av-torso"
+                  d="M28 252
+                     q2 -44 34 -62 q20 -12 42 -14
+                     M232 252
+                     q-2 -44 -34 -62 q-20 -12 -42 -14"
+                />
+
+                <path
+                  class="av-face"
+                  d="M80 96
+                     q-6 22 0 44 q8 30 50 32 q42 -2 50 -32 q6 -22 0 -44"
+                />
+                <path d="M78 112 q-9 2 -7 12 q2 9 9 8" />
+                <path d="M182 112 q9 2 7 12 q-2 9 -9 8" />
+
+                <g class="av-hair" stroke-width="2.8">
+                  <ellipse
+                    cx="94"
+                    cy="62"
+                    rx="13"
+                    ry="10"
+                    transform="rotate(-24 94 62)"
+                  />
+                  <ellipse
+                    cx="118"
+                    cy="48"
+                    rx="14"
+                    ry="10"
+                    transform="rotate(12 118 48)"
+                  />
+                  <ellipse
+                    cx="146"
+                    cy="52"
+                    rx="13"
+                    ry="10"
+                    transform="rotate(-14 146 52)"
+                  />
+                  <ellipse
+                    cx="168"
+                    cy="66"
+                    rx="12"
+                    ry="9"
+                    transform="rotate(28 168 66)"
+                  />
+                  <ellipse
+                    cx="80"
+                    cy="82"
+                    rx="11"
+                    ry="9"
+                    transform="rotate(40 80 82)"
+                  />
+                  <ellipse
+                    cx="104"
+                    cy="76"
+                    rx="12"
+                    ry="9"
+                    transform="rotate(-30 104 76)"
+                  />
+                  <ellipse
+                    cx="130"
+                    cy="70"
+                    rx="13"
+                    ry="9"
+                    transform="rotate(18 130 70)"
+                  />
+                  <ellipse
+                    cx="156"
+                    cy="78"
+                    rx="11"
+                    ry="8"
+                    transform="rotate(-38 156 78)"
+                  />
+                  <ellipse
+                    cx="176"
+                    cy="90"
+                    rx="9"
+                    ry="7"
+                    transform="rotate(20 176 90)"
+                  />
+                  <ellipse
+                    cx="86"
+                    cy="98"
+                    rx="8"
+                    ry="6"
+                    transform="rotate(-16 86 98)"
+                  />
+                  <ellipse
+                    cx="112"
+                    cy="90"
+                    rx="9"
+                    ry="7"
+                    transform="rotate(34 112 90)"
+                  />
+                  <ellipse
+                    cx="140"
+                    cy="88"
+                    rx="10"
+                    ry="7"
+                    transform="rotate(-22 140 88)"
+                  />
+                  <ellipse
+                    cx="162"
+                    cy="96"
+                    rx="7"
+                    ry="6"
+                    transform="rotate(12 162 96)"
+                  />
+                  <path d="M74 70 q4 -12 14 -12" />
+                  <path d="M182 76 q6 -8 2 -16" />
+                </g>
+
+                <path class="av-nose" d="M128 124 q-4 8 2 12" />
+
+                <g class="av-face-idle">
+                  <path d="M97 112 q8 -5 17 -1" />
+                  <path d="M146 111 q9 -4 17 2" />
+                  <g class="av-pupils">
+                    <ellipse
+                      cx="106"
+                      cy="123"
+                      rx="3.2"
+                      ry="4.2"
+                      fill="currentColor"
+                      stroke="none"
+                    />
+                    <ellipse
+                      cx="154"
+                      cy="123"
+                      rx="3.2"
+                      ry="4.2"
+                      fill="currentColor"
+                      stroke="none"
+                    />
+                  </g>
+                  <path d="M116 152 q13 9 26 0" />
+                </g>
+
+                <g class="av-face-works">
+                  <path d="M94 108 q10 -6 20 -2" stroke-width="4.5" />
+                  <path d="M146 106 q10 -4 20 2" stroke-width="4.5" />
+                  <g class="av-pupils">
+                    <ellipse
+                      cx="106"
+                      cy="123"
+                      rx="3.4"
+                      ry="4.6"
+                      fill="currentColor"
+                      stroke="none"
+                    />
+                    <ellipse
+                      cx="154"
+                      cy="123"
+                      rx="3.4"
+                      ry="4.6"
+                      fill="currentColor"
+                      stroke="none"
+                    />
+                  </g>
+                  <path d="M124 150 q6 -3 12 0" />
+                  <path d="M126 156 q5 3 9 0" />
+                </g>
+
+                <g class="av-face-hire">
+                  <path d="M96 112 q9 -5 18 -1" />
+                  <path d="M146 111 q9 -4 18 1" />
+                  <g class="av-pupils">
+                    <ellipse
+                      cx="105"
+                      cy="122"
+                      rx="3.4"
+                      ry="4.4"
+                      fill="currentColor"
+                      stroke="none"
+                    />
+                    <ellipse
+                      cx="155"
+                      cy="122"
+                      rx="3.4"
+                      ry="4.4"
+                      fill="currentColor"
+                      stroke="none"
+                    />
+                  </g>
+                  <path d="M112 148 q14 12 30 1 q-4 8 -15 8 q-11 0 -15 -9 Z" />
+                </g>
+
+                <g class="av-coffee">
+                  <g class="av-steam" stroke-width="2.6">
+                    <path
+                      class="av-steam-1"
+                      d="M118 172 q-4 -8 1 -14 q4 -6 0 -12"
+                    />
+                    <path
+                      class="av-steam-2"
+                      d="M130 168 q-5 -9 1 -16 q5 -7 1 -14"
+                    />
+                    <path
+                      class="av-steam-3"
+                      d="M142 172 q-4 -8 1 -14 q4 -6 0 -12"
+                    />
+                  </g>
+                  <path
+                    d="M100 186 q0 -5 6 -5 h48 q6 0 6 5 q0 22 -30 22 q-30 0 -30 -22 Z"
+                  />
+                  <ellipse cx="130" cy="184" rx="27" ry="5.5" />
+                  <path d="M160 190 q14 -4 14 6 q0 10 -16 8" />
+                  <path d="M92 214 q38 12 76 0" />
+                  <path d="M96 219 q34 9 68 0" />
+                  <path d="M46 252 q4 -30 30 -38 q14 -5 24 2" />
+                  <path d="M96 214 q-12 -4 -18 4 q-4 6 2 10 q8 5 18 1" />
+                  <path d="M84 222 q6 -1 10 2" />
+                  <path d="M84 228 q6 -1 10 1" />
+                  <path d="M214 252 q-4 -30 -28 -40" />
+                  <path d="M186 212 q-8 -8 -16 -4 q4 -6 12 -6 q-6 -4 -14 -2" />
+                  <path d="M170 210 q8 0 12 6" />
+                </g>
+
+                <g class="av-laptop">
+                  <g transform="translate(0, 8)">
+                    <path
+                      d="M28 170 q-2 -6 5 -7 l92 -8 q7 -1 8 6 l6 56 q1 7 -6 7 l-98 2 q-7 0 -8 -7 Z"
+                    />
+                    <path d="M35 226 h122 q7 0 8 6 l1 4 h-136 Z" />
+                    <path
+                      class="av-mark"
+                      d="M95 182
+                         q-9 3 -12 9
+                         q-2 -5 -8 -4
+                         q-8 2 -8 12
+                         q0 11 12 12
+                         q13 1 14 -12
+                         q1 -9 -6 -13"
+                      stroke-width="2.8"
+                    />
+                    <path d="M212 244 q-2 -36 -34 -44 q-16 -4 -28 6" />
+                    <path d="M150 210 q-10 6 -6 12" />
+                  </g>
+                </g>
+
+                <g class="av-paper">
+                  <g class="av-paper-inner">
+                    <g transform="translate(0, 26)">
+                      <path d="M158 118 l64 -10 q4 -1 5 3 l10 74 -6 1" />
+                      <path d="M156 122 l68 -6 q4 0 4 4 l6 76 -6 1" />
+                      <path
+                        d="M152 126 q0 -4 4 -4 l66 -2 q4 0 4 4 l4 82 q0 4 -4 4 l-66 2 q-4 0 -4 -4 Z"
+                      />
+                      <path
+                        d="M176 122 q-1 -9 6 -9 q7 0 7 8 l1 14 q0 5 -4 5 q-4 0 -4 -5 l-1 -10"
+                        stroke-width="2.4"
+                      />
+                    </g>
+                    <path d="M48 252 q2 -34 30 -44 q20 -8 52 -6" />
+                    <path d="M130 202 q10 -4 16 0 q5 4 3 9 q-2 5 -8 5" />
+                    <path d="M134 208 q7 -2 11 1" />
+                    <path d="M134 214 q6 -1 10 1" />
+                  </g>
+                </g>
+              </svg>
+            </div>
+          </section>
 
           <section
             class="card rail-skills-card card-spotlight"
@@ -1418,18 +1571,18 @@
           </section>
 
           <section
-            class="card connect-card card-spotlight"
-            aria-label="Contact and profile links"
+            class="card profile-card card-spotlight"
+            aria-label="Email and profile links"
             data-reveal
             data-reveal-delay="short"
           >
             <a
-              class="connect-primary-link"
+              class="profile-primary-link"
               href="mailto:leqso.davitashvili.st@gmail.com?subject=Portfolio%20enquiry"
             >
               Let's work together
             </a>
-            <div class="connect-links">
+            <div class="profile-links">
               <a
                 href="https://github.com/Adavitas"
                 target="_blank"
@@ -1448,6 +1601,6 @@
       </main>
     </div>
 
-    <script src="js/main.js?v=20260722" defer></script>
+    <script src="js/main.js?v=20260910-4" defer></script>
   </body>
 </html>

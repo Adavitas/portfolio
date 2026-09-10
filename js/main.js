@@ -3,6 +3,40 @@
 document.documentElement.classList.add('js-enabled');
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Certificate accordion: retain readable content if enhancement is unavailable.
+    const certificateList = document.querySelector('.certificate-list');
+    const certificateButtons = Array.from(document.querySelectorAll('.certificate-toggle'));
+    const certificateDetails = certificateButtons.map((button) =>
+        document.getElementById(button.getAttribute('aria-controls')),
+    );
+    if (certificateList && certificateButtons.length && certificateDetails.every(Boolean)) {
+        function selectCertificate(index) {
+            certificateButtons.forEach((button, itemIndex) => {
+                const expanded = itemIndex === index;
+                button.setAttribute('aria-expanded', String(expanded));
+                certificateDetails[itemIndex].hidden = !expanded;
+            });
+        }
+        certificateButtons.forEach((button, index) => {
+            button.disabled = false;
+            button.addEventListener('click', () => selectCertificate(index));
+            button.addEventListener('keydown', (event) => {
+                let next = index;
+                if (event.key === 'ArrowRight' || event.key === 'ArrowDown') next++;
+                else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') next--;
+                else if (event.key === 'Home') next = 0;
+                else if (event.key === 'End') next = certificateButtons.length - 1;
+                else return;
+                event.preventDefault();
+                next = (next + certificateButtons.length) % certificateButtons.length;
+                selectCertificate(next);
+                certificateButtons[next].focus();
+            });
+        });
+        selectCertificate(0);
+        certificateList.classList.add('is-ready');
+    }
+
     const accentStorageKey = 'portfolio-accent';
     const allowedAccents = ['mint', 'amber', 'blue', 'rose'];
 
@@ -243,12 +277,132 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch(showGithubActivityError);
     }
 
+    // Interactive Section Avatar
+    const avatar = document.getElementById('avatar');
+    const avatarStateTriggers = document.querySelectorAll(
+        '[data-avatar-state]',
+    );
+    const avatarStateClasses = ['st-works', 'st-hire'];
+    const allowedAvatarStates = new Set(['about', 'works', 'hire']);
+    let selectedAvatarState = 'about';
+
+    function applyAvatarState(state) {
+        if (!avatar) {
+            return;
+        }
+
+        const nextState = allowedAvatarStates.has(state) ? state : 'about';
+
+        avatarStateClasses.forEach((className) => {
+            avatar.classList.toggle(
+                className,
+                className === `st-${nextState}`,
+            );
+        });
+    }
+
+    function selectAvatarState(state) {
+        selectedAvatarState = allowedAvatarStates.has(state) ? state : 'about';
+        applyAvatarState(selectedAvatarState);
+    }
+
+    function getAvatarStateForSection(section) {
+        if (section === 'certificates') {
+            return 'hire';
+        }
+
+        if (section === 'projects' || section.startsWith('case-')) {
+            return 'works';
+        }
+
+        return 'about';
+    }
+
+    if (avatar) {
+        const pupilGroups = avatar.querySelectorAll('.av-pupils');
+        const prefersReducedAvatarMotion = window.matchMedia(
+            '(prefers-reduced-motion: reduce)',
+        ).matches;
+        const scheduleAnimationFrame =
+            typeof window.requestAnimationFrame === 'function'
+                ? window.requestAnimationFrame.bind(window)
+                : null;
+
+        if (
+            pupilGroups.length > 0 &&
+            !prefersReducedAvatarMotion &&
+            scheduleAnimationFrame
+        ) {
+            let targetX = 0;
+            let targetY = 0;
+            let eyeX = 0;
+            let eyeY = 0;
+            const pupilEase = 0.14;
+
+            document.addEventListener('pointermove', (event) => {
+                const avatarBounds = avatar.getBoundingClientRect();
+                const avatarCenterX =
+                    avatarBounds.left + avatarBounds.width / 2;
+                const avatarEyeY =
+                    avatarBounds.top + avatarBounds.height * 0.47;
+                const distanceX = event.clientX - avatarCenterX;
+                const distanceY = event.clientY - avatarEyeY;
+                const distance =
+                    Math.hypot(distanceX, distanceY) || 1;
+                const reach = Math.min(distance / 60, 1) * 5;
+
+                targetX = (distanceX / distance) * reach;
+                targetY = (distanceY / distance) * reach;
+            });
+
+            function animatePupils() {
+                eyeX += (targetX - eyeX) * pupilEase;
+                eyeY += (targetY - eyeY) * pupilEase;
+
+                const pupilTransform = `translate(${eyeX.toFixed(
+                    2,
+                )}px, ${eyeY.toFixed(2)}px)`;
+
+                pupilGroups.forEach((pupilGroup) => {
+                    pupilGroup.style.transform = pupilTransform;
+                });
+
+                scheduleAnimationFrame(animatePupils);
+            }
+
+            scheduleAnimationFrame(animatePupils);
+        }
+
+        avatarStateTriggers.forEach((trigger) => {
+            const previewState = trigger.dataset.avatarState;
+
+            trigger.addEventListener('mouseenter', () => {
+                applyAvatarState(previewState);
+            });
+            trigger.addEventListener('mouseleave', () => {
+                applyAvatarState(selectedAvatarState);
+            });
+            trigger.addEventListener('focus', () => {
+                applyAvatarState(previewState);
+            });
+            trigger.addEventListener('blur', () => {
+                applyAvatarState(selectedAvatarState);
+            });
+        });
+
+        applyAvatarState(selectedAvatarState);
+    }
+
     // Home Section Switcher
     const sectionLinks = document.querySelectorAll('[data-section-link]');
-    const panelLinks = document.querySelectorAll('[data-panel-link]');
     const sectionPanels = document.querySelectorAll('[data-section-panel]');
+    const projectLinks = [...document.querySelectorAll('[data-project-link]')];
+    const projectPanels = [...document.querySelectorAll('[data-project-panel]')];
+    const projectIds = new Set(projectPanels.map((panel) => panel.dataset.projectPanel));
+    let selectedProject = projectPanels[0]?.dataset.projectPanel;
 
     if (sectionLinks.length > 0 && sectionPanels.length > 0) {
+        document.getElementById('projects')?.classList.add('is-ready');
         const defaultSection = 'about';
         const sections = new Set(
             [...sectionPanels]
@@ -263,11 +417,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 return 'about';
             }
 
-            return sections.has(hash) ? hash : defaultSection;
+            return sections.has(hash) || projectIds.has(hash) ? hash : defaultSection;
         }
 
         function setActiveSection(section) {
+            if (projectIds.has(section)) {
+                selectedProject = section;
+                section = 'projects';
+            }
             const activeSection = sections.has(section) ? section : defaultSection;
+
+            projectPanels.forEach((panel) => {
+                panel.hidden = activeSection !== 'projects' || panel.dataset.projectPanel !== selectedProject;
+            });
+            projectLinks.forEach((link) => {
+                if (link.dataset.projectLink === selectedProject) {
+                    link.setAttribute('aria-current', 'true');
+                } else {
+                    link.removeAttribute('aria-current');
+                }
+            });
 
             sectionPanels.forEach((panel) => {
                 panel.hidden = panel.dataset.sectionPanel !== activeSection;
@@ -284,6 +453,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             document.documentElement.dataset.activeSection = activeSection;
+            selectAvatarState(getAvatarStateForSection(activeSection));
 
             return (
                 [...sectionPanels].find(
@@ -351,7 +521,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         function bindPanelLink(link) {
             link.addEventListener('click', (event) => {
-                const section = link.dataset.sectionLink ?? link.dataset.panelLink;
+                const section = link.dataset.sectionLink;
 
                 if (!sections.has(section)) {
                     return;
@@ -374,8 +544,29 @@ document.addEventListener('DOMContentLoaded', () => {
             bindPanelLink(link);
         });
 
-        panelLinks.forEach((link) => {
-            bindPanelLink(link);
+        projectLinks.forEach((link, index) => {
+            link.addEventListener('click', (event) => {
+                if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+                const project = link.dataset.projectLink;
+                if (!projectIds.has(project)) return;
+                event.preventDefault();
+                pushHash(link.getAttribute('href'));
+                showSection(project);
+                const panel = projectPanels.find((item) => item.dataset.projectPanel === project);
+                if (panel) panel.scrollTop = 0;
+                link.scrollIntoView?.({ block: 'nearest', inline: 'nearest', behavior: 'auto' });
+            });
+            // Arrow keys move focus; Enter selects, just like clicking a name.
+            link.addEventListener('keydown', (event) => {
+                let next = index;
+                if (event.key === 'ArrowRight') next++;
+                else if (event.key === 'ArrowLeft') next--;
+                else if (event.key === 'Home') next = 0;
+                else if (event.key === 'End') next = projectLinks.length - 1;
+                else return;
+                event.preventDefault();
+                projectLinks[(next + projectLinks.length) % projectLinks.length].focus();
+            });
         });
 
         if (window.addEventListener) {
@@ -456,85 +647,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 card.style.removeProperty('--spotlight-y');
             });
         });
-    }
-
-    // Project Filter
-    const projectFilterButtons = document.querySelectorAll(
-        '.project-filter-button',
-    );
-    const projectCards = document.querySelectorAll('.project-card');
-    const projectFilterStatus = document.getElementById(
-        'project-filter-status',
-    );
-
-    if (
-        projectFilterButtons.length > 0 &&
-        projectCards.length > 0 &&
-        projectFilterStatus
-    ) {
-        function projectMatchesFilter(projectCard, filter) {
-            if (filter === 'all') {
-                return true;
-            }
-
-            const categories = (
-                projectCard.dataset.projectCategories ?? ''
-            ).split(/\s+/);
-
-            return categories.includes(filter);
-        }
-
-        function getFilterLabel(filterButton, isSingular) {
-            const label = filterButton.textContent.trim().toLowerCase();
-            return isSingular ? label.replace(/s$/, '') : label;
-        }
-
-        function updateProjectFilter(activeButton) {
-            const activeFilter = activeButton.dataset.projectFilter ?? 'all';
-            let visibleProjects = 0;
-
-            projectFilterButtons.forEach((button) => {
-                const isActive = button === activeButton;
-                button.setAttribute('aria-pressed', String(isActive));
-            });
-
-            projectCards.forEach((projectCard) => {
-                const shouldShow = projectMatchesFilter(
-                    projectCard,
-                    activeFilter,
-                );
-
-                projectCard.hidden = !shouldShow;
-
-                if (shouldShow) {
-                    visibleProjects += 1;
-                }
-            });
-
-            const projectWord = visibleProjects === 1 ? 'project' : 'projects';
-            const filterLabel = getFilterLabel(
-                activeButton,
-                visibleProjects === 1,
-            );
-
-            projectFilterStatus.textContent =
-                activeFilter === 'all'
-                    ? `Showing all ${visibleProjects} ${projectWord}.`
-                    : `Showing ${visibleProjects} ${filterLabel} ${projectWord}.`;
-        }
-
-        projectFilterButtons.forEach((button) => {
-            button.addEventListener('click', () => {
-                updateProjectFilter(button);
-            });
-        });
-
-        const initialActiveButton =
-            [...projectFilterButtons].find(
-                (button) => button.getAttribute('aria-pressed') === 'true',
-            ) ?? projectFilterButtons[0];
-
-        updateProjectFilter(initialActiveButton);
     }
 
     // Dynamic Timezone Display
@@ -676,133 +788,4 @@ document.addEventListener('DOMContentLoaded', () => {
         scheduleNextTimezoneUpdate();
     }
 
-    // Contact Form Validation and Email Draft
-    const contactForm = document.getElementById('contact-form');
-    const nameInput = document.getElementById('name');
-    const emailInput = document.getElementById('email');
-    const messageInput = document.getElementById('message');
-    const nameError = document.getElementById('name-error');
-    const emailError = document.getElementById('email-error');
-    const messageError = document.getElementById('message-error');
-    const formNote = document.getElementById('form-note');
-    const formStatus = document.getElementById('form-status');
-    const emailDraftLink = document.getElementById('email-draft-link');
-
-    if (
-        contactForm &&
-        nameInput &&
-        emailInput &&
-        messageInput &&
-        nameError &&
-        emailError &&
-        messageError &&
-        formNote &&
-        formStatus &&
-        emailDraftLink
-    ) {
-        const fields = [
-            { input: nameInput, error: nameError },
-            { input: emailInput, error: emailError },
-            { input: messageInput, error: messageError },
-        ];
-
-        contactForm.noValidate = true;
-        formNote.hidden = false;
-        contactForm.hidden = false;
-
-        function clearFieldError(input, errorElement) {
-            input.removeAttribute('aria-invalid');
-            errorElement.textContent = '';
-        }
-
-        function showFieldError(input, errorElement, message) {
-            input.setAttribute('aria-invalid', 'true');
-            errorElement.textContent = message;
-        }
-
-        function resetPreparedEmail() {
-            formStatus.textContent = '';
-            formStatus.classList.remove('is-error', 'is-success');
-            emailDraftLink.hidden = true;
-            emailDraftLink.removeAttribute('href');
-        }
-
-        fields.forEach(({ input, error }) => {
-            input.addEventListener('input', () => {
-                clearFieldError(input, error);
-                resetPreparedEmail();
-            });
-        });
-
-        contactForm.addEventListener('submit', (event) => {
-            event.preventDefault();
-
-            fields.forEach(({ input, error }) => {
-                clearFieldError(input, error);
-            });
-            resetPreparedEmail();
-
-            const name = nameInput.value.trim();
-            const email = emailInput.value.trim();
-            const message = messageInput.value.trim();
-            let firstInvalidField = null;
-
-            if (name.length < 2) {
-                showFieldError(
-                    nameInput,
-                    nameError,
-                    'Enter a name with at least two characters.',
-                );
-                firstInvalidField = nameInput;
-            }
-
-            if (!email) {
-                showFieldError(
-                    emailInput,
-                    emailError,
-                    'Enter your email address.',
-                );
-                firstInvalidField = firstInvalidField || emailInput;
-            } else if (!emailInput.validity.valid) {
-                showFieldError(
-                    emailInput,
-                    emailError,
-                    'Enter an email address in the format name@example.com.',
-                );
-                firstInvalidField = firstInvalidField || emailInput;
-            }
-
-            if (message.length < 20) {
-                showFieldError(
-                    messageInput,
-                    messageError,
-                    'Write a message with at least 20 characters.',
-                );
-                firstInvalidField = firstInvalidField || messageInput;
-            }
-
-            if (firstInvalidField) {
-                formStatus.textContent = 'Please correct the highlighted fields.';
-                formStatus.classList.add('is-error');
-                firstInvalidField.focus();
-                return;
-            }
-
-            const subject = encodeURIComponent(`Portfolio enquiry from ${name}`);
-            const body = encodeURIComponent(
-                [`Name: ${name}`, `Email: ${email}`, '', 'Message:', message].join(
-                    '\n',
-                ),
-            );
-
-            emailDraftLink.href =
-                `mailto:leqso.davitashvili.st@gmail.com?subject=${subject}` +
-                `&body=${body}`;
-            emailDraftLink.hidden = false;
-            formStatus.textContent =
-                'Your message is ready. Open the draft, review it, and send it from your email application.';
-            formStatus.classList.add('is-success');
-            emailDraftLink.focus();
-        });
-    }
 });

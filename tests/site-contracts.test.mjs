@@ -29,7 +29,7 @@ const cssFiles = [
 ];
 
 const expectedStylesheetHrefs = cssFiles.map((file) =>
-    file === 'css/reset.css' ? file : `${file}?v=20260722`,
+    file === 'css/reset.css' ? file : `${file}?v=20260910-4`,
 );
 
 const expectedProjects = [
@@ -107,7 +107,6 @@ const expectedProjects = [
 
 const requiredAssets = [
     'assets/images/favicon.svg',
-    'assets/images/portrait.jpeg',
     ...expectedProjects.map(({ preview }) => preview),
 ];
 
@@ -454,13 +453,8 @@ test('home section panels share one outer layout contract', () => {
 
     assert.match(
         styleSource,
-        /#contact-form\s*{[\s\S]*?width:\s*min\(100%,\s*44rem\);[\s\S]*?margin:\s*1\.5rem auto 0;/,
-        'contact form should stay readable inside the full-width contact panel',
-    );
-    assert.match(
-        styleSource,
-        /\.projects-card,\s*\n\s*\.certificates-card,\s*\n\s*\.case-panel,\s*\n\s*\.contact-card\s*{[\s\S]*?order:\s*2;[\s\S]*?}/,
-        'Projects, Certificates, case studies, and Contact should share the same main-panel order',
+        /\.projects-card,\s*\n\s*\.certificates-card,\s*\n\s*\.case-panel\s*{[\s\S]*?order:\s*2;[\s\S]*?}/,
+        'Projects, Certificates, and case studies should share the same main-panel order',
     );
     assert.match(
         styleSource,
@@ -469,12 +463,12 @@ test('home section panels share one outer layout contract', () => {
     );
     assert.match(
         styleSource,
-        /@media \(max-width: 899px\) {[\s\S]*?\.section-switcher\s*{[\s\S]*?order:\s*1;[\s\S]*?\.rail-skills-card\s*{[\s\S]*?order:\s*3;[\s\S]*?\.rail-credit-card\s*{[\s\S]*?order:\s*4;[\s\S]*?}/,
-        'small screens should order section controls before panels, then skills, persistent info, and credits',
+        /@media \(max-width: 899px\) {[\s\S]*?\.section-switcher\s*{[\s\S]*?order:\s*1;[\s\S]*?\.rail-avatar-card\s*{[\s\S]*?order:\s*3;[\s\S]*?\.rail-skills-card\s*{[\s\S]*?order:\s*4;[\s\S]*?\.info-grid\s*{[\s\S]*?order:\s*5;[\s\S]*?\.rail-credit-card\s*{[\s\S]*?order:\s*6;[\s\S]*?}/,
+        'small screens should order section controls before panels, then avatar, skills, persistent info, and credits',
     );
     assert.match(
         styleSource,
-        /\.section-switcher ul\s*{[\s\S]*?display:\s*grid;[\s\S]*?grid-template-columns:\s*minmax\(0,\s*0\.85fr\)\s*minmax\(0,\s*1\.05fr\)\s*minmax\(0,\s*1\.45fr\)\s*minmax\(0,\s*1fr\);[\s\S]*?}/,
+        /\.section-switcher ul\s*{[\s\S]*?display:\s*grid;[\s\S]*?grid-template-columns:\s*repeat\(3,\s*minmax\(0,\s*1fr\)\);[\s\S]*?}/,
         'mobile and tablet section controls should stay on one adaptive row',
     );
     assert.match(
@@ -484,7 +478,7 @@ test('home section panels share one outer layout contract', () => {
     );
     assert.match(
         styleSource,
-        /@media \(min-width: 900px\) {[\s\S]*?\.section-switcher ul\s*{[\s\S]*?grid-template-columns:\s*1fr;[\s\S]*?\.intro-card,\s*\n\s*\.projects-card,\s*\n\s*\.certificates-card,\s*\n\s*\.case-panel,\s*\n\s*\.contact-card,\s*\n\s*\.info-grid\s*{[\s\S]*?grid-column:\s*1 \/ 13;/,
+        /@media \(min-width: 900px\) {[\s\S]*?\.section-switcher ul\s*{[\s\S]*?grid-template-columns:\s*1fr;[\s\S]*?\.intro-card,\s*\n\s*\.projects-card,\s*\n\s*\.certificates-card,\s*\n\s*\.case-panel,\s*\n\s*\.info-grid\s*{[\s\S]*?grid-column:\s*1 \/ 13;/,
         'Certificates and case studies should share the same desktop width as the other main panels',
     );
     assert.doesNotMatch(
@@ -514,11 +508,29 @@ test('home section panels share one outer layout contract', () => {
     );
 });
 
+test('interactive avatar stays still while its internal details can animate', () => {
+    assert.doesNotMatch(
+        styleSource,
+        /@keyframes\s+avatar-float\b|\.avatar\s*{[^}]*animation\s*:/,
+        'avatar root should not bob or float vertically',
+    );
+    assert.match(
+        styleSource,
+        /@keyframes\s+avatar-steam\b/,
+        'coffee steam may keep its independent internal animation',
+    );
+    assert.match(
+        styleSource,
+        /\.avatar\s*{[^}]*translate:\s*0 -0\.5rem;/,
+        'avatar should keep its static upward optical offset',
+    );
+});
+
 test('home persistent info cards stay compact below the active panel', () => {
     assert.match(
         styleSource,
         /--persistent-info-card-block-size:\s*9rem;/,
-        'copyright, Now, appearance, Time, and contact-link cards should share one compact height token',
+        'copyright, Now, appearance, Time, and profile cards should share one compact height token',
     );
 
     const infoGridRule = styleSource.match(/\.info-grid\s*{([\s\S]*?)\n}/);
@@ -545,14 +557,14 @@ test('home persistent info cards stay compact below the active panel', () => {
     );
     assert.match(
         desktopRailRule[1],
-        /grid-template-rows:\s*auto minmax\(0,\s*1fr\) var\(\s*--persistent-info-card-block-size\s*\);/,
-        'desktop rail should keep sections and appearance above a fixed-height credit row',
+        /grid-template-rows:\s*auto minmax\(0,\s*1fr\) minmax\(0,\s*1fr\)\s*var\(\s*--persistent-info-card-block-size\s*\);/,
+        'desktop rail should split its flexible space equally between avatar and skills above a fixed-height credit row',
     );
 
     assert.match(
         styleSource,
         /\.rail-credit-card,\s*\n\s*\.info-grid > \.card\s*{[\s\S]*?block-size:\s*var\(--persistent-info-card-block-size\);[\s\S]*?}/,
-        'copyright, Now, appearance, Time, and contact-link cards should share the same desktop height',
+        'copyright, Now, appearance, Time, and profile cards should share the same desktop height',
     );
     assert.match(
         styleSource,
@@ -561,8 +573,8 @@ test('home persistent info cards stay compact below the active panel', () => {
     );
     assert.match(
         styleSource,
-        /#now,\s*\n\s*\.info-appearance-card,\s*\n\s*\.time-card,\s*\n\s*\.connect-card\s*{[\s\S]*?grid-column:\s*span 1;[\s\S]*?}/,
-        'desktop Now, appearance, Time, and contact-link cards should each use one equal track',
+        /#now,\s*\n\s*\.info-appearance-card,\s*\n\s*\.time-card,\s*\n\s*\.profile-card\s*{[\s\S]*?grid-column:\s*span 1;[\s\S]*?}/,
+        'desktop Now, appearance, Time, and profile cards should each use one equal track',
     );
     assert.match(
         styleSource,
@@ -576,7 +588,7 @@ test('home persistent info cards stay compact below the active panel', () => {
     );
     assert.match(
         styleSource,
-        /@media \(max-width: 899px\) {[\s\S]*?\.section-rail\s*{[\s\S]*?display:\s*contents;[\s\S]*?\.rail-credit-card\s*{[\s\S]*?order:\s*4;[\s\S]*?}/,
+        /@media \(max-width: 899px\) {[\s\S]*?\.section-rail\s*{[\s\S]*?display:\s*contents;[\s\S]*?\.info-grid\s*{[\s\S]*?order:\s*5;[\s\S]*?\.rail-credit-card\s*{[\s\S]*?order:\s*6;[\s\S]*?}/,
         'small screens should place the credits card after persistent info cards',
     );
     assert.match(
@@ -652,7 +664,7 @@ test('home time card exposes accent-aware format controls', () => {
 
     assert.match(
         source,
-        /<script\b(?=[^>]*src=["']js\/main\.js\?v=20260722["'])(?=[^>]*\bdefer\b)/i,
+        /<script\b(?=[^>]*src=["']js\/main\.js\?v=20260910-4["'])(?=[^>]*\bdefer\b)/i,
         'home page should load the current cache-busted main behavior',
     );
     assert.doesNotMatch(
@@ -730,87 +742,20 @@ test('external blank links use noopener and noreferrer', () => {
     }
 });
 
-test('home project card link labels remain specific and unique', () => {
+test('project selector opens all seven full case studies directly', () => {
     const source = pageSources.get('index.html');
-    const galleryMatch = source.match(
-        /<div class=["']grid-gallery["']>([\s\S]*?)<\/section>/i,
-    );
-    assert.ok(galleryMatch, 'home page should have a project gallery');
-
-    const links = [...galleryMatch[1].matchAll(/<a\b[^>]*>([\s\S]*?)<\/a\s*>/gi)];
-    const linkTexts = links.map(([, text]) => stripTags(text));
-    const expectedLinkTexts = expectedProjects.flatMap(
-        ({ caseLabel, sourceLabel }) => [caseLabel, sourceLabel],
-    );
-    const expectedLinkHrefs = expectedProjects.flatMap(({ panelId, source }) => [
-        `#${panelId}`,
-        source,
-    ]);
-
-    assert.deepEqual(linkTexts, expectedLinkTexts);
-    assert.equal(new Set(linkTexts).size, linkTexts.length);
-
-    assert.deepEqual(
-        links.map(([tag]) => getAttribute(tag, 'href')),
-        expectedLinkHrefs,
-    );
-    assert.equal(
-        links.filter(([tag]) => getAttribute(tag, 'data-panel-link')).length,
-        expectedProjects.length,
-        'case-study project links should switch same-shell panels',
-    );
-});
-
-test('home project cards keep the verified seven-project mapping', () => {
-    const source = pageSources.get('index.html');
-    const cards = [
-        ...source.matchAll(
-            /(<article\b(?=[^>]*class=["'][^"']*\bproject-card\b)[^>]*>)([\s\S]*?)<\/article>/gi,
-        ),
-    ];
-
-    assert.equal(cards.length, expectedProjects.length);
-    assert.deepEqual(
-        [...source.matchAll(/data-project-filter=["']([^"']+)["']/gi)].map(
-            ([, filter]) => filter,
-        ),
-        ['all', 'interfaces', 'systems', 'games', 'algorithms'],
-    );
-    assert.match(source, /Showing all 7 projects\./);
-
-    cards.forEach(([, tag, body], index) => {
-        const project = expectedProjects[index];
-        const heading = body.match(/<h3\b[^>]*>([\s\S]*?)<\/h3>/i);
-        const description = body.match(/<p\b[^>]*>([\s\S]*?)<\/p>/i)?.[1];
-        const tagList =
-            body.match(
-                /<ul\b[^>]*class=["']tag-list["'][^>]*>([\s\S]*?)<\/ul>/i,
-            )?.[1] ?? '';
-        const tags = [
-            ...tagList.matchAll(/<li\b[^>]*>([\s\S]*?)<\/li>/gi),
-        ];
-        const image = getTags(body, 'img')[0];
-
-        assert.equal(
-            getAttribute(tag, 'data-project-categories'),
-            project.categories,
-        );
-        assert.equal(stripTags(heading?.[1] ?? ''), project.title);
-        assert.ok(
-            countWords(description) <= 22,
-            `${project.title} card copy is too long`,
-        );
-        assert.ok(
-            tags.length >= 2 && tags.length <= 4,
-            `${project.title} needs two to four card tags`,
-        );
-        assert.equal(getAttribute(image, 'src'), project.preview);
-        assert.equal(getAttribute(image, 'width'), '800');
-        assert.equal(getAttribute(image, 'height'), '450');
-        assert.equal(getAttribute(image, 'loading'), 'lazy');
-        assert.equal(getAttribute(image, 'decoding'), 'async');
-        assert.ok(getAttribute(image, 'alt')?.trim());
+    const selector = source.match(/<nav class="project-selector"[^>]*>([\s\S]*?)<\/nav>/)?.[1];
+    assert.ok(selector);
+    const links = getTags(selector, 'a');
+    assert.equal(links.length, expectedProjects.length);
+    expectedProjects.forEach((project, index) => {
+        assert.equal(getAttribute(links[index], 'href'), `#${project.panelId}`);
+        assert.equal(getAttribute(links[index], 'data-project-link'), project.panelId);
+        assert.equal(getAttribute(links[index], 'aria-controls'), project.panelId);
+        assert.ok(selector.includes(project.title));
     });
+    assert.doesNotMatch(source, /class="grid-gallery"|data-project-filter|Back to projects/);
+    assert.match(styleSource, /\.project-selector\s*{[^}]*overflow-x:\s*auto/);
 });
 
 test('same-shell project panels keep the compact content contract', () => {
@@ -930,7 +875,6 @@ test('accessibility references point to existing IDs', () => {
                 about: 'hero',
                 projects: 'projects',
                 certificates: 'certificates',
-                contact: 'contact',
             };
 
             for (const [section, fragment] of Object.entries(sectionFragments)) {
@@ -949,12 +893,12 @@ test('accessibility references point to existing IDs', () => {
                 );
             }
 
-            const contactIndex = source.indexOf('id="contact"');
             const certificatesIndex = source.indexOf('id="certificates"');
             const caseIndexes = expectedProjects.map(({ panelId }) =>
                 source.indexOf(`id="${panelId}"`),
             );
             const sectionRailIndex = source.indexOf('class="section-rail"');
+            const railAvatarCardIndex = source.indexOf('rail-avatar-card');
             const railSkillsCardIndex = source.indexOf('rail-skills-card');
             const creditCardIndex = source.indexOf('rail-credit-card');
             const infoGridIndex = source.indexOf('class="info-grid"');
@@ -962,11 +906,10 @@ test('accessibility references point to existing IDs', () => {
                 'info-appearance-card',
             );
             const timeCardIndex = source.indexOf('class="card time-card');
-            const connectCardIndex = source.indexOf('class="card connect-card');
+            const profileCardIndex = source.indexOf('class="card profile-card');
             const orderedPanelIndexes = [
                 ...caseIndexes,
                 certificatesIndex,
-                contactIndex,
                 sectionRailIndex,
                 infoGridIndex,
             ];
@@ -982,7 +925,7 @@ test('accessibility references point to existing IDs', () => {
                 assert.match(
                     source,
                     new RegExp(
-                        `<section\\b(?=[^>]*id=["']${section}["'])(?=[^>]*class=["'][^"']*\\bcase-panel\\b)(?=[^>]*data-section-panel=["']${section}["'])`,
+                        `<section\\b(?=[^>]*id=["']${section}["'])(?=[^>]*class=["'][^"']*\\bcase-panel\\b)(?=[^>]*data-project-panel=["']${section}["'])`,
                         'i',
                     ),
                     `home page needs a same-shell ${section} case-study panel`,
@@ -990,7 +933,7 @@ test('accessibility references point to existing IDs', () => {
                 assert.match(
                     source,
                     new RegExp(
-                        `href=["']#${section}["'][^>]*data-panel-link=["']${section}["']`,
+                        `href=["']#${section}["'][^>]*data-project-link=["']${section}["']`,
                         'i',
                     ),
                     `home page needs a same-shell link for #${section}`,
@@ -1001,8 +944,8 @@ test('accessibility references point to existing IDs', () => {
                     source,
                     /href=["']#projects["'][^>]*data-panel-link=["']projects["']/gi,
                 ),
-                expectedProjects.length,
-                'each same-shell case study should include a Back to projects link',
+                0,
+                'full project views replace the intermediate gallery and back links',
             );
             assert.doesNotMatch(
                 source,
@@ -1020,17 +963,35 @@ test('accessibility references point to existing IDs', () => {
                 'Certificates panel should link to the Stanford Code in Place certificate proof',
             );
             assert.ok(
-                railSkillsCardIndex < creditCardIndex &&
+                sectionRailIndex < railAvatarCardIndex &&
+                    railAvatarCardIndex < railSkillsCardIndex &&
+                    railSkillsCardIndex < creditCardIndex &&
                     creditCardIndex < infoGridIndex,
-                'home page credits should sit below skills in the rail',
+                'home rail should place the avatar above skills and credits',
             );
             assert.ok(
                 infoGridIndex < infoAppearanceCardIndex &&
                     infoAppearanceCardIndex < timeCardIndex &&
-                    timeCardIndex < connectCardIndex,
+                    timeCardIndex < profileCardIndex,
                 'home page info grid should place appearance controls between Now and the compact time card',
             );
             assert.match(source, /class=["'][^"']*\brail-skills-card\b/i);
+            assert.match(source, /class=["'][^"']*\brail-avatar-card\b/i);
+            assert.match(
+                source,
+                /<svg\b(?=[^>]*id=["']avatar["'])(?=[^>]*class=["'][^"']*\bavatar\b)(?=[^>]*viewBox=["']0 0 260 260["'])(?=[^>]*fill=["']none["'])/i,
+                'rail avatar should preserve the transparent 260 by 260 stroke-only SVG contract',
+            );
+            assert.match(
+                source,
+                /data-avatar-state=["']about["'][\s\S]*data-avatar-state=["']works["'][\s\S]*data-avatar-state=["']hire["']/i,
+                'section switcher should expose all three avatar states',
+            );
+            assert.match(
+                source,
+                /id=["']av-mask-laptop["'][\s\S]*id=["']av-mask-paper["']/i,
+                'avatar should retain laptop and paper occlusion masks',
+            );
             assert.match(
                 source,
                 /<li>\s*C\+\+\s*<\/li>[\s\S]*<li>\s*Python\s*<\/li>/i,
@@ -1076,8 +1037,8 @@ test('accessibility references point to existing IDs', () => {
             const appearanceTag = source.match(
                 /<section\b(?=[^>]*class=["'][^"']*\binfo-appearance-card\b)[^>]*>/i,
             )?.[0];
-            const connectTag = source.match(
-                /<section\b(?=[^>]*class=["'][^"']*\bconnect-card\b)[^>]*>/i,
+            const profileTag = source.match(
+                /<section\b(?=[^>]*class=["'][^"']*\bprofile-card\b)[^>]*>/i,
             )?.[0];
 
             assert.ok(nowTag, 'home page needs a persistent Now card');
@@ -1086,11 +1047,11 @@ test('accessibility references point to existing IDs', () => {
                 'home page needs a persistent appearance controls card',
             );
             assert.ok(timeTag, 'home page needs a persistent Time card');
-            assert.ok(connectTag, 'home page needs a persistent contact-links card');
+            assert.ok(profileTag, 'home page needs a persistent profile-links card');
             assert.doesNotMatch(nowTag, /\bdata-section-panel\b/i);
             assert.doesNotMatch(appearanceTag, /\bdata-section-panel\b/i);
             assert.doesNotMatch(timeTag, /\bdata-section-panel\b/i);
-            assert.doesNotMatch(connectTag, /\bdata-section-panel\b/i);
+            assert.doesNotMatch(profileTag, /\bdata-section-panel\b/i);
             assert.match(
                 appearanceTag,
                 /\baria-label=["']Appearance controls["']/i,
@@ -1099,37 +1060,14 @@ test('accessibility references point to existing IDs', () => {
             assert.doesNotMatch(timeTag, /\baria-labelledby\b/i);
             assert.doesNotMatch(source, /<h2\b[^>]*>\s*Time zones\s*<\/h2>/i);
             assert.doesNotMatch(source, /\bhero-actions\b|\bcall-to-action\b/);
-            assert.match(source, /class=["']connect-primary-link["']/i);
+            assert.match(
+                source,
+                /<a\b(?=[^>]*class=["']profile-primary-link["'])(?=[^>]*href=["']mailto:leqso\.davitashvili\.st@gmail\.com\?subject=Portfolio%20enquiry["'])[^>]*>\s*Let's work together\s*<\/a>/i,
+                'profile card should keep the direct email call to action',
+            );
+            assert.match(source, /class=["']profile-links["']/i);
         }
     }
-});
-
-test('home form labels target real controls', () => {
-    const source = pageSources.get('index.html');
-    const idSet = getIdSet('index.html');
-
-    for (const tag of getTags(source, 'label')) {
-        const controlId = getAttribute(tag, 'for');
-
-        assert.ok(controlId, 'every form label needs a for attribute');
-        assert.ok(idSet.has(controlId), `label points to missing #${controlId}`);
-    }
-
-    assert.match(
-        source,
-        /<p\b(?=[^>]*id=["']form-note["'])(?=[^>]*\bhidden\b)/i,
-        'enhanced form guidance should stay hidden until JavaScript initializes it',
-    );
-    assert.match(
-        source,
-        /<form\b(?=[^>]*id=["']contact-form["'])(?=[^>]*\bhidden\b)/i,
-        'the enhanced contact form should not submit inertly without JavaScript',
-    );
-    assert.match(
-        source,
-        /<noscript>[\s\S]*?Use the email address above[\s\S]*?<\/noscript>/i,
-        'contact should provide a no-JavaScript fallback',
-    );
 });
 
 test('informative images have non-empty alternative text', () => {
