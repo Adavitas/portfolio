@@ -109,9 +109,6 @@
 
   .av-steam path {
     animation: none;
-  }
-
-  .av-steam path {
     opacity: 0.5;
   }
 
@@ -137,7 +134,6 @@
   .profile-primary-link,
   .profile-links a,
   .case-panel-actions a,
-  .project-links a::after,
   .status-pulse::after,
   .card-spotlight::before,
   .github-activity-grid.is-loading {
@@ -153,9 +149,7 @@
   .case-panel-actions a:hover,
   .case-panel-actions a:focus-visible,
   .profile-links a:hover,
-  .profile-links a:focus-visible,
-  .project-links a:hover::after,
-  .project-links a:focus-visible::after {
+  .profile-links a:focus-visible {
     transform: none;
   }
 }
