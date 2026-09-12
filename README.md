@@ -9,6 +9,9 @@ systems work.
 - Semantic single-page structure
 - Responsive bento-style CSS Grid layout
 - Accessible section switching
+- Separate introduction and GitHub activity cards
+- Horizontally scrollable project selection with full case studies and no auto-switching
+- Eight expandable certificate panels, including seven coming-soon placeholders
 - Interactive line-art avatar that reacts to section previews and selections
 - Cursor-following eyes with a reduced-motion fallback
 - Persistent light and dark themes
@@ -92,8 +95,8 @@ pointer. SVG masks keep body lines from showing through the laptop and papers
 without adding background-colored fills. The animation and eye tracking respect
 `prefers-reduced-motion`.
 
-On desktop, the rail gives the avatar and Skills and tools cards equal shares of
-the space that previously belonged to the skills card. The avatar sits above
+On desktop, the rail gives the avatar and Skills and tools cards equal heights.
+The avatar sits above
 the compact skills card; the same order is preserved in the stacked small-screen
 layout.
 

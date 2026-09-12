@@ -29,7 +29,7 @@ const cssFiles = [
 ];
 
 const expectedStylesheetHrefs = cssFiles.map((file) =>
-    file === 'css/reset.css' ? file : `${file}?v=20260910-4`,
+    file === 'css/reset.css' ? file : `${file}?v=20260912`,
 );
 
 const expectedProjects = [
@@ -37,70 +37,49 @@ const expectedProjects = [
         panelId: 'case-portfolio',
         standaloneSlug: 'portfolio',
         title: 'Personal portfolio',
-        categories: 'interfaces',
         preview: 'assets/images/portfolio-preview.svg',
-        caseLabel: 'Read portfolio case study',
-        sourceLabel: 'View portfolio source',
         source: 'https://github.com/Adavitas/portfolio',
     },
     {
         panelId: 'case-minishell',
         standaloneSlug: 'minishell',
         title: 'Minishell',
-        categories: 'systems',
         preview: 'assets/images/minishell-preview.svg',
-        caseLabel: 'Read Minishell case study',
-        sourceLabel: 'View Minishell source',
         source: 'https://github.com/Adavitas/minishell',
     },
     {
         panelId: 'case-push-swap',
         standaloneSlug: 'push-swap',
         title: 'Push Swap',
-        categories: 'algorithms',
         preview: 'assets/images/push-swap-preview.svg',
-        caseLabel: 'Read Push Swap case study',
-        sourceLabel: 'View Push Swap source',
         source: 'https://github.com/Adavitas/push_swap',
     },
     {
         panelId: 'case-so-long',
         standaloneSlug: 'so-long',
         title: 'so_long',
-        categories: 'games',
         preview: 'assets/images/so-long-preview.svg',
-        caseLabel: 'Read so_long case study',
-        sourceLabel: 'View so_long source',
         source: 'https://github.com/Adavitas/so_long',
     },
     {
         panelId: 'case-cub3d',
         standaloneSlug: 'cub3d',
         title: 'cub3D',
-        categories: 'games systems',
         preview: 'assets/images/cub3d-preview.jpg',
-        caseLabel: 'Read cub3D case study',
-        sourceLabel: 'View cub3D source',
         source: 'https://github.com/Adavitas/cub3d',
     },
     {
         panelId: 'case-movie-mania',
         standaloneSlug: 'movie-mania',
         title: 'Movie Mania',
-        categories: 'interfaces games',
         preview: 'assets/images/movie-mania-preview.svg',
-        caseLabel: 'Read Movie Mania case study',
-        sourceLabel: 'View Movie Mania source',
         source: 'https://github.com/Adavitas/movie_mania',
     },
     {
         panelId: 'case-philosophers',
         standaloneSlug: 'philosophers',
         title: 'Philosophers',
-        categories: 'systems',
         preview: 'assets/images/philosophers-preview.svg',
-        caseLabel: 'Read Philosophers case study',
-        sourceLabel: 'View Philosophers source',
         source: 'https://github.com/Adavitas/philosophers',
     },
 ];
@@ -453,8 +432,8 @@ test('home section panels share one outer layout contract', () => {
 
     assert.match(
         styleSource,
-        /\.projects-card,\s*\n\s*\.certificates-card,\s*\n\s*\.case-panel\s*{[\s\S]*?order:\s*2;[\s\S]*?}/,
-        'Projects, Certificates, and case studies should share the same main-panel order',
+        /\.projects-card,\s*\n\s*\.certificates-card\s*{[\s\S]*?order:\s*2;[\s\S]*?}/,
+        'Projects and Certificates should share the same main-panel order',
     );
     assert.match(
         styleSource,
@@ -478,8 +457,8 @@ test('home section panels share one outer layout contract', () => {
     );
     assert.match(
         styleSource,
-        /@media \(min-width: 900px\) {[\s\S]*?\.section-switcher ul\s*{[\s\S]*?grid-template-columns:\s*1fr;[\s\S]*?\.intro-card,\s*\n\s*\.projects-card,\s*\n\s*\.certificates-card,\s*\n\s*\.case-panel,\s*\n\s*\.info-grid\s*{[\s\S]*?grid-column:\s*1 \/ 13;/,
-        'Certificates and case studies should share the same desktop width as the other main panels',
+        /@media \(min-width: 900px\) {[\s\S]*?\.section-switcher ul\s*{[\s\S]*?grid-template-columns:\s*1fr;[\s\S]*?\.intro-card,\s*\n\s*\.projects-card,\s*\n\s*\.certificates-card,\s*\n\s*\.info-grid\s*{[\s\S]*?grid-column:\s*1 \/ 13;/,
+        'Certificates should share the same desktop width as the other main panels',
     );
     assert.doesNotMatch(
         styleSource,
@@ -664,7 +643,7 @@ test('home time card exposes accent-aware format controls', () => {
 
     assert.match(
         source,
-        /<script\b(?=[^>]*src=["']js\/main\.js\?v=20260910-4["'])(?=[^>]*\bdefer\b)/i,
+        /<script\b(?=[^>]*src=["']js\/main\.js\?v=20260912["'])(?=[^>]*\bdefer\b)/i,
         'home page should load the current cache-busted main behavior',
     );
     assert.doesNotMatch(

@@ -102,25 +102,6 @@
   font-size: 0.8rem;
 }
 
-.project-links {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.35rem 0.75rem;
-  font-size: 0.9rem;
-}
-
-.project-links a {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  padding-block: 0.25rem;
-  color: var(--primary-color);
-  font-weight: 600;
-  text-underline-offset: 0.25rem;
-}
-
-.project-links a::after,
 .certificate-link::after {
   display: inline-block;
   content: "\2197";
@@ -132,15 +113,12 @@
     transform 0.2s ease;
 }
 
-.project-links a:hover::after,
-.project-links a:focus-visible::after,
 .certificate-link:hover::after,
 .certificate-link:focus-visible::after {
   opacity: 1;
   transform: translate(0.12rem, -0.12rem);
 }
 
-.project-links a:focus-visible,
 .certificate-link:focus-visible {
   outline: 3px solid var(--focus-outline-color);
   outline-offset: 3px;

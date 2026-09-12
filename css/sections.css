@@ -280,11 +280,6 @@
   min-height: 0;
 }
 
-.intro-copy,
-.intro-portrait {
-  min-width: 0;
-}
-
 .intro-copy {
   display: grid;
   gap: 0.5rem;
@@ -302,32 +297,6 @@
 .intro-copy > p {
   max-width: 60ch;
   line-height: 1.55;
-}
-
-.intro-portrait {
-  display: grid;
-  align-content: start;
-  gap: 0.55rem;
-  padding-top: clamp(0.6rem, 1.4vw, 0.9rem);
-  border-top: 1px solid var(--border-color);
-}
-
-.intro-portrait img,
-.project-card img {
-  width: 100%;
-  border-radius: var(--radius-inner);
-  object-fit: cover;
-}
-
-.intro-portrait img {
-  aspect-ratio: 1;
-  max-height: 12rem;
-  filter: saturate(0.9) contrast(1.04);
-}
-
-.intro-portrait-copy {
-  display: grid;
-  gap: 0.4rem;
 }
 
 .github-activity {

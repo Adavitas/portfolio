@@ -311,7 +311,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return 'hire';
         }
 
-        if (section === 'projects' || section.startsWith('case-')) {
+        if (section === 'projects') {
             return 'works';
         }
 
@@ -477,19 +477,11 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        function focusSectionPanel(sectionPanel) {
-            if (!sectionPanel?.focus) {
-                return;
-            }
-
-            sectionPanel.focus({ preventScroll: true });
-        }
-
         function showSection(section, options = {}) {
             const activePanel = setActiveSection(section);
 
             if (!activePanel) {
-                return null;
+                return;
             }
 
             if (options.resetPanelScroll) {
@@ -501,10 +493,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             if (options.focus) {
-                focusSectionPanel(activePanel);
+                activePanel.focus?.({ preventScroll: true });
             }
-
-            return activePanel;
         }
 
         function pushHash(targetHash) {
@@ -519,7 +509,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        function bindPanelLink(link) {
+        sectionLinks.forEach((link) => {
             link.addEventListener('click', (event) => {
                 const section = link.dataset.sectionLink;
 
@@ -538,10 +528,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     scroll: true,
                 });
             });
-        }
-
-        sectionLinks.forEach((link) => {
-            bindPanelLink(link);
         });
 
         projectLinks.forEach((link, index) => {
